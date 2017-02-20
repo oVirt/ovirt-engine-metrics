@@ -1,0 +1,8 @@
+yum-utils
+autoconf
+automake
+make
+python-devel
+gettext-devel
+pyflakes
+python-pep8
