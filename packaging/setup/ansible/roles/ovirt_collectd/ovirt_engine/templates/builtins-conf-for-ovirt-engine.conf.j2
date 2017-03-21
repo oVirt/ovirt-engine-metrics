@@ -1,5 +1,7 @@
 # The following are added to retrieve additional host info
 LoadPlugin disk
+#Disk plugin with defaults only
+
 LoadPlugin cpu
 
 <Plugin cpu>
@@ -16,7 +18,11 @@ LoadPlugin memory
 </Plugin>
 
 LoadPlugin load
+#Load plugin with defaults only
+
 LoadPlugin nfs
+#NFS plugin no config values
+
 LoadPlugin entropy
 LoadPlugin swap
 
@@ -56,7 +62,6 @@ LoadPlugin aggregation
    </Aggregation>
 </Plugin>
 
-#LoadPlugin ipmi
 LoadPlugin processes
 
 <Plugin processes>
@@ -66,11 +71,38 @@ LoadPlugin processes
      Process "vdsmd"
 </Plugin>
 
-#Disk plugin with defaults only
+LoadPlugin postgresql
 
-#Load plugin with defaults only
+<Plugin postgresql>
+  <Query custom_deadlocks>
+      Statement "SELECT deadlocks as num_deadlocks \
+          FROM pg_stat_database \
+          WHERE datname = $1;"
 
-#IPMI plugin with defaults only
+      Param database
 
-#NFS plugin no config values
+      <Result>
+          Type "pg_xact"
+          InstancePrefix "num_deadlocks"
+          ValuesFrom "num_deadlocks"
+      </Result>
+  </Query>
 
+  <Database {{pg_db_name}}>
+    Host {{pg_host}}
+    User {{pg_user}}
+    Password {{pg_password}}
+    Query custom_deadlocks
+    Query backends
+    Query transactions
+    Query queries
+#    Query queries_by_table
+#    Query query_plans
+    Query table_states
+#    Query query_plans_by_table
+#    Query table_states_by_table
+    Query disk_io
+#    Query disk_io_by_table
+    Query disk_usage
+  </Database>
+</Plugin>
