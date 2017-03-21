@@ -68,6 +68,13 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Mar 21 2017 Shirly Radco <sradco@redhat.com> - 1.0.1
+Fixed issues:
+- Bug 1410044 - Support configuring collectd/fluentd on the engine
+- Bug 1424997 - fluentd:update hosts and engine ovirt-processing.conf
+- Bug 1434570 - collectd: load postgresql plugin on engine machine
+- Bug 1434573 - collectd: load apache plugin
+
 * Sun Feb 12 2017 Shirly Radco <sradco@redhat.com> - 1.0.0-0.0.master
 - initial packaging
 
