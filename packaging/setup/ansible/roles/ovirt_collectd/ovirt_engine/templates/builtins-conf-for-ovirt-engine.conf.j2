@@ -70,13 +70,3 @@ LoadPlugin processes
      Process "qemu"
      Process "vdsmd"
 </Plugin>
-
-LoadPlugin apache
-
-<Plugin apache>
-   <Instance {{apache_instance}}>
-       URL {{apache_url}}
-       User {{apache_user}}
-       Password {{apache_password}}
-   </Instance>
-</Plugin>
