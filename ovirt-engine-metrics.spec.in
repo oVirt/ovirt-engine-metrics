@@ -22,6 +22,7 @@
 	PREFIX=%{_prefix} \\\
 	SYSCONF_DIR=%{_sysconfdir} \\\
 	DATAROOT_DIR=%{_datadir} \\\
+	LOCALSTATE_DIR=%{_localstatedir} \\\
 	BUILD_VALIDATION=0
 
 Summary:        oVirt Engine Metrics

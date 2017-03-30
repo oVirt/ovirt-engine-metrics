@@ -36,6 +36,7 @@
   hosts: ovirt_engine
   roles:
     - ovirt_collectd/ovirt_engine
+    - ovirt_collectd/collectd_postgresql
 
 - name: Create firewall rules
   hosts: ovirt_nodes
