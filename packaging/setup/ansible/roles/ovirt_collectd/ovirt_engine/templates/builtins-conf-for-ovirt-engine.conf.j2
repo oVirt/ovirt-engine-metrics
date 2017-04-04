@@ -67,6 +67,5 @@ LoadPlugin processes
 <Plugin processes>
      Process "fluentd"
      Process "collectd"
-     Process "qemu"
-     Process "vdsmd"
+     ProcessMatch "ovirt-engine" "ovirt-engine\.xml"
 </Plugin>
