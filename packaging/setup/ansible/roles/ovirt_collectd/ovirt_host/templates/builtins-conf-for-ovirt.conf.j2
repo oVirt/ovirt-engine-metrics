@@ -63,9 +63,9 @@ LoadPlugin processes
 <Plugin processes>
      Process "fluentd"
      Process "collectd"
-     Process "libvirt"
-     Process "qemu"
-     Process "vdsmd"
+     ProcessMatch "libvirt" "/usr/sbin/libvirtd --listen"
+     ProcessMatch "qemu" "/usr/libexec/qemu-kvm"
+     ProcessMatch "vdsmd" "/usr/bin/python2 /usr/share/vdsm/vdsm"
 </Plugin>
 
 #Disk plugin with defaults only
