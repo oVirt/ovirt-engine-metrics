@@ -68,6 +68,13 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Apr 04 2017 Shirly Radco <sradco@redhat.com> - 1.0.2
+Fixed issues:
+- Bug 1434836 - fixed bug in statsd parsing
+- Bug 1436087 - update the postgresql plugin queries
+- Bug 1436001 - move postgresql plugin to a separate file
+- Bug 1429875 - move apache plugin to a separate file
+
 * Tue Mar 21 2017 Shirly Radco <sradco@redhat.com> - 1.0.1
 Fixed issues:
 - Bug 1410044 - Support configuring collectd/fluentd on the engine
