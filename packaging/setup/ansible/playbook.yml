@@ -20,6 +20,7 @@
   hosts: ovirt_engine
   roles:
     - ovirt_fluentd/ovirt_engine
+    - ovirt_fluentd/ovirt_engine_logs
 
 - name: Configure CollectD
   hosts: ovirt_nodes:ovirt_engine
