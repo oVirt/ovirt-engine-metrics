@@ -68,6 +68,15 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Apr 25 2017 Shirly Radco <sradco@redhat.com> - 1.0.3
+Fixed issues:
+- Bug 1439536 - fluentd:fixed hosts.elapsed_time type_instance
+- Bug 1439544 - fluentd:fixed parsing of statsd hosts nics and storage
+- fluentd: added prefix to the statsd value field
+- Bug 1438863 - collectd: Fixed processes plugin configurations
+- Bug 1435993 - collectd: updated engine processes plugin
+
+
 * Tue Apr 04 2017 Shirly Radco <sradco@redhat.com> - 1.0.2
 Fixed issues:
 - Bug 1434836 - fixed bug in statsd parsing
