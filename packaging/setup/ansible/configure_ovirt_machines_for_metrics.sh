@@ -78,6 +78,5 @@ if [ -r "${CONFIG_FILE}" ]; then
 		-e pg_db_name="${ENGINE_DB_DATABASE}" \
 		-l "${SCOPE}"
 else
-	# Do nothing for now
-	:
+	die "${CONFIG_FILE} is missing. Copy and amend /etc/ovirt-engine-metrics/config.yml.example"
 fi
