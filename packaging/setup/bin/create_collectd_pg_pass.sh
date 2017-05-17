@@ -24,6 +24,6 @@ __EOF__
 chmod 600 "${PG_PASS}" || die "Failed to chmod 600 ${PG_PASS}"
 
 if selinuxenabled; then
-	semanage fcontext -a -t collectd_var_lib_t "${COLLECTD_PGPASS_DIR}(/.*)?'"
+	semanage fcontext -a -t collectd_var_lib_t "${COLLECTD_PGPASS_DIR}(/.*)?"
 	restorecon -rv "${COLLECTD_PGPASS_DIR}"
 fi
