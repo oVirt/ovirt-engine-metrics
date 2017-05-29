@@ -9,6 +9,7 @@
   roles:
     - ovirt_fluentd/client
     - ovirt_fluentd/http_input
+    - ovirt_fluentd/ovirt_post_processing_common
 
 - name: Configure Fluentd for oVirt hosts
   hosts: ovirt_nodes
