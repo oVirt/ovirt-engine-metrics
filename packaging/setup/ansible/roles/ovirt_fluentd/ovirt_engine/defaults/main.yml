@@ -1,0 +1,3 @@
+---
+# ENGINE_FQDN as set by engine-setup
+ovirt_engine_fqdn:

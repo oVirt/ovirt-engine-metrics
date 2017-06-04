@@ -76,6 +76,7 @@ if [ -r "${CONFIG_FILE}" ]; then
 		-e @"${CONFIG_FILE}" \
 		-e ansible_ssh_private_key_file="${ENGINE_PKI}/keys/engine_id_rsa" \
 		-e pg_db_name="${ENGINE_DB_DATABASE}" \
+		-e ovirt_engine_fqdn="${ENGINE_FQDN}" \
 		-l "${SCOPE}"
 else
 	die "${CONFIG_FILE} is missing. Copy and amend /etc/ovirt-engine-metrics/config.yml.example"
