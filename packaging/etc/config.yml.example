@@ -11,3 +11,11 @@ fluentd_shared_key: my_shared_key
 # To use the engine internal CA, use:
 # local_fluentd_ca_cert_path: /etc/pki/ovirt-engine/ca.pem
 local_fluentd_ca_cert_path: /path/to/fluentd_ca_cert.pem
+
+# Environment name. Can be used to identify data collected in a single central
+# store sent from more than one oVirt engine.
+# Maximum field length is 49 characters.
+# For more details see:
+# https://bugzilla.redhat.com/1419858
+# TODO replace above link with some nicer page on ovirt.org
+ovirt_env_name: engine
