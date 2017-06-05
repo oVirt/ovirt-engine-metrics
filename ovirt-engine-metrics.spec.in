@@ -69,6 +69,16 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Mon Jun 05 2017 Shirly Radco <sradco@redhat.com> - 1.0.4
+Fixed issues:
+- Bug 1429861 - Pass engine db credentials to collectd-postgresql
+- Bug 1429861 - create_collectd_pg_pass.sh: Fix path for selinux fcontext
+- Bug 1456238 - fluentd: added ipv4 and ipv6 to records
+- Bug 1434575 - fluentd:update hosts and engine to use nest plugin
+- Bug 1434315 - fluentd: added post processing for all records
+- Bug 1458682 - Exit and notify the user config.yml is missing
+- Bug 1418659 - fluentd:added engine.log to the fluentd configuration
+
 * Tue Apr 25 2017 Shirly Radco <sradco@redhat.com> - 1.0.3
 Fixed issues:
 - Bug 1439536 - fluentd:fixed hosts.elapsed_time type_instance
