@@ -69,6 +69,10 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Jun 06 2017 Shirly Radco <sradco@redhat.com> - 1.0.4.1
+Fixed issues:
+- Bug 1459015 - fluentd: added keep_time_key to the logs parser
+
 * Mon Jun 05 2017 Shirly Radco <sradco@redhat.com> - 1.0.4
 Fixed issues:
 - Bug 1429861 - Pass engine db credentials to collectd-postgresql
