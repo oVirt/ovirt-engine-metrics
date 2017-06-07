@@ -69,6 +69,10 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Wed Jun 07 2017 Shirly Radco <sradco@redhat.com> - 1.0.4.2
+Fixed issues:
+- Bug 1459425 - fluentd: parse engine.log time as iso8601
+
 * Tue Jun 06 2017 Shirly Radco <sradco@redhat.com> - 1.0.4.1
 Fixed issues:
 - Bug 1459015 - fluentd: added keep_time_key to the logs parser
