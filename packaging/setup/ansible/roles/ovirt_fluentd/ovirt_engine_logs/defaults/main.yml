@@ -1,0 +1,12 @@
+---
+# Path to the Fluentd configuration directory.
+fluentd_pos_files_dir: /var/lib/ovirt-fluentd/pos-files
+
+# Path to the oVirt engine.log file.
+fluentd_ovirt_engine_log_pos_file: '{{ fluentd_pos_files_dir }}/ovirt-engine.log.pos'
+
+# File mode for Fluentd configuration files.
+fluentd_pos_files_mode: 0640
+
+# File mode for Fluentd configuration directories.
+fluentd_pos_files_dir_mode: 0750
