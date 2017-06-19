@@ -4,3 +4,5 @@ manage_services: true
 fluentd_use_ssl: true
 
 collectd_write_http_path: ovirt_collectd
+
+ovirt_env_name: engine
