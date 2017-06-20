@@ -69,6 +69,14 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Jun 20 2017 Shirly Radco <sradco@redhat.com> - 1.0.4.3
+Fixed issues:
+- Bug 1461322 - roles: fluentd: change group to root
+- Bug 1419858 - Add ovirt_env_name
+- Bug 1458735 - fluentd: update engine logs format to support multiline
+- Bug 1419858 - Pass ENGINE_FQDN
+- fluentd: add default value to ovirt_env_name
+
 * Wed Jun 07 2017 Shirly Radco <sradco@redhat.com> - 1.0.4.2
 Fixed issues:
 - Bug 1459425 - fluentd: parse engine.log time as iso8601
