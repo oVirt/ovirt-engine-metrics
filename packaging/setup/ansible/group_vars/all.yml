@@ -1,4 +1,6 @@
 ---
+manage_packages: true
+
 manage_services: true
 
 fluentd_use_ssl: true

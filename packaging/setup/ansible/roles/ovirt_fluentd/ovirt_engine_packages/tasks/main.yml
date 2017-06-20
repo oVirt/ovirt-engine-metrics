@@ -1,0 +1,11 @@
+---
+- name: Install fluentd engine plugins
+  package:
+    name: '{{ item }}'
+    state: present
+  with_flattened:
+    - '{{ fluentd_package_name }}'
+    - '{{ fluentd_common_plugin_packages }}'
+    - '{{ fluentd_engine_plugin_packages }}'
+  when: manage_packages|default(false)
+  notify: restart fluentd

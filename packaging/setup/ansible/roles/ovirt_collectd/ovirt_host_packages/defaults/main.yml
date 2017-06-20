@@ -1,0 +1,5 @@
+---
+# a list of additional packages to install (presumably ones that
+# provide collectd plugins).
+collectd_host_plugin_packages:
+  - collectd-virt

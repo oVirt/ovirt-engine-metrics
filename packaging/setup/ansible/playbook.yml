@@ -3,6 +3,7 @@
   hosts: ovirt_nodes
   roles:
     - ovirt_fluentd/read_local_ca_cert
+    - ovirt_fluentd/ovirt_host_packages
     - ovirt_fluentd/client
     - ovirt_fluentd/http_input
     - ovirt_fluentd/ovirt_host
@@ -11,6 +12,7 @@
 - name: Configure Collectd on nodes
   hosts: ovirt_nodes
   roles:
+    - ovirt_collectd/ovirt_host_packages
     - collectd
     - ovirt_collectd/write_http
     - ovirt_collectd/ovirt_host
@@ -21,6 +23,7 @@
   hosts: ovirt_engine
   roles:
     - ovirt_fluentd/read_local_ca_cert
+    - ovirt_fluentd/ovirt_engine_packages
     - ovirt_fluentd/client
     - ovirt_fluentd/http_input
     - ovirt_fluentd/ovirt_engine
@@ -30,6 +33,7 @@
 - name: Configure Collectd on engine
   hosts: ovirt_engine
   roles:
+    - ovirt_collectd/ovirt_engine_packages
     - collectd
     - ovirt_collectd/write_http
     - ovirt_collectd/ovirt_engine
