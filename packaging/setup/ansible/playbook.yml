@@ -12,12 +12,14 @@
 - name: Configure Collectd on nodes
   hosts: ovirt_nodes
   roles:
+    - ovirt_collectd/ovirt_check_fluentd_status
     - ovirt_collectd/ovirt_host_packages
     - collectd
     - ovirt_collectd/write_http
     - ovirt_collectd/ovirt_host
     - ovirt_collectd/read_statsd
     - firewall/commit
+    - ovirt_collectd/restart_collectd_if_needed
 
 - name: Configure Fluentd on engine
   hosts: ovirt_engine
@@ -33,8 +35,10 @@
 - name: Configure Collectd on engine
   hosts: ovirt_engine
   roles:
+    - ovirt_collectd/ovirt_check_fluentd_status
     - ovirt_collectd/ovirt_engine_packages
     - collectd
     - ovirt_collectd/write_http
     - ovirt_collectd/ovirt_engine
     - ovirt_collectd/collectd_postgresql
+    - ovirt_collectd/restart_collectd_if_needed

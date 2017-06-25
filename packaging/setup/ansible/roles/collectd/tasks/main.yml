@@ -2,7 +2,6 @@
 - name: Enable collectd
   service:
     name: '{{ collectd_service_name }}'
-    state: started
     enabled: yes
   when: manage_services|default(false)
 
@@ -12,3 +11,9 @@
     state: yes
     persistent: yes
   when: '"{{ ansible_selinux.mode }}" in ["enforcing", "permissive"]'
+
+- name: Stop collectd service
+  service:
+      name: '{{ collectd_service_name }}'
+      state: stopped
+  when: fluentd_is_running|default(false)|bool == false

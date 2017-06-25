@@ -33,9 +33,8 @@
     mode: '{{ fluentd_config_mode }}'
   when: fluentd_use_ssl
 
-- name: Activate fluentd service
+- name: Enable fluentd service
   service:
     name: '{{ fluentd_service_name }}'
-    state: running
     enabled: true
   when: manage_services|default(false)
