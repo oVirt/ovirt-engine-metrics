@@ -1,47 +1,36 @@
 ---
-- name: Get ca cert from local file
-  hosts: ovirt_nodes:ovirt_engine
-  roles:
-    - ovirt_fluentd/read_local_ca_cert
-
-- name: Configure Fluentd for oVirt
-  hosts: ovirt_nodes:ovirt_engine
-  roles:
-    - ovirt_fluentd/client
-    - ovirt_fluentd/http_input
-    - ovirt_fluentd/ovirt_post_processing_common
-
-- name: Configure Fluentd for oVirt hosts
+- name: Configure Fluentd on nodes
   hosts: ovirt_nodes
   roles:
+    - ovirt_fluentd/read_local_ca_cert
+    - ovirt_fluentd/client
+    - ovirt_fluentd/http_input
     - ovirt_fluentd/ovirt_host
+    - ovirt_fluentd/ovirt_post_processing_common
 
-- name: Configure Fluentd for oVirt engine
-  hosts: ovirt_engine
-  roles:
-    - ovirt_fluentd/ovirt_engine
-    - ovirt_fluentd/ovirt_engine_logs
-
-- name: Configure CollectD
-  hosts: ovirt_nodes:ovirt_engine
+- name: Configure Collectd on nodes
+  hosts: ovirt_nodes
   roles:
     - collectd
     - ovirt_collectd/write_http
-
-- name: Configure CollectD for oVirt hosts
-  hosts: ovirt_nodes
-  roles:
     - ovirt_collectd/ovirt_host
     - ovirt_collectd/read_statsd
-
-- name: Configure CollectD for oVirt engine
-  hosts: ovirt_engine
-  roles:
-    - ovirt_collectd/ovirt_engine
-    - ovirt_collectd/collectd_postgresql
-
-- name: Create firewall rules
-  hosts: ovirt_nodes
-  roles:
     - firewall/commit
 
+- name: Configure Fluentd on engine
+  hosts: ovirt_engine
+  roles:
+    - ovirt_fluentd/read_local_ca_cert
+    - ovirt_fluentd/client
+    - ovirt_fluentd/http_input
+    - ovirt_fluentd/ovirt_engine
+    - ovirt_fluentd/ovirt_engine_logs
+    - ovirt_fluentd/ovirt_post_processing_common
+
+- name: Configure Collectd on engine
+  hosts: ovirt_engine
+  roles:
+    - collectd
+    - ovirt_collectd/write_http
+    - ovirt_collectd/ovirt_engine
+    - ovirt_collectd/collectd_postgresql
