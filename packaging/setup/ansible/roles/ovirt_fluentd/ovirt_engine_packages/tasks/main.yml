@@ -2,7 +2,7 @@
 - name: Install fluentd engine plugins
   package:
     name: '{{ item }}'
-    state: present
+    state: latest
   with_flattened:
     - '{{ fluentd_package_name }}'
     - '{{ fluentd_common_plugin_packages }}'
