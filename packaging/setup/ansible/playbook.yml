@@ -4,6 +4,7 @@
   roles:
     - ovirt_fluentd/read_local_ca_cert
     - ovirt_fluentd/ovirt_host_packages
+    - ovirt_fluentd/fluentd_setup
     - ovirt_fluentd/client
     - ovirt_fluentd/http_input
     - ovirt_fluentd/ovirt_host
@@ -14,7 +15,7 @@
   roles:
     - ovirt_collectd/ovirt_check_fluentd_status
     - ovirt_collectd/ovirt_host_packages
-    - collectd
+    - ovirt_collectd/collectd_setup
     - ovirt_collectd/write_http
     - ovirt_collectd/ovirt_host
     - ovirt_collectd/read_statsd
@@ -26,6 +27,7 @@
   roles:
     - ovirt_fluentd/read_local_ca_cert
     - ovirt_fluentd/ovirt_engine_packages
+    - ovirt_fluentd/fluentd_setup
     - ovirt_fluentd/client
     - ovirt_fluentd/http_input
     - ovirt_fluentd/ovirt_engine
@@ -37,7 +39,7 @@
   roles:
     - ovirt_collectd/ovirt_check_fluentd_status
     - ovirt_collectd/ovirt_engine_packages
-    - collectd
+    - ovirt_collectd/collectd_setup
     - ovirt_collectd/write_http
     - ovirt_collectd/ovirt_engine
     - ovirt_collectd/collectd_postgresql
