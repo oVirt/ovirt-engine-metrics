@@ -69,6 +69,16 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Jul 10 2017 Shirly Radco <sradco@redhat.com> - 1.0.5
+Fixed issues:
+- Bug 1438821 - ansible.cfg: Disable host key checking
+- refactor playbook.yml
+- Bug 1459431 - fluentd: add pos_file to engine.log
+- Bug 1451490 - Check and install missing collectd and fluentd packages
+- Bug 1464737 - fluentd: restart collectd only if fluentd is running
+- Bug 1468208 - ansible: upgrade packages to latest
+- Bug 1451490 - ansible: update package installation to run first
+
 * Tue Jun 20 2017 Shirly Radco <sradco@redhat.com> - 1.0.4.3
 Fixed issues:
 - Bug 1461322 - roles: fluentd: change group to root
