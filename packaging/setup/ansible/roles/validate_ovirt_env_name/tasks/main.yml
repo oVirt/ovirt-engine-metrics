@@ -1,0 +1,25 @@
+---
+- name: Check environment name length
+  fail:
+    msg: "Length must be up to 49 characters"
+  when:  ovirt_env_name | length > 49
+
+- name: Check environment name does not start with a number
+  fail:
+    msg: "Environment name can not begin with a number"
+  when: ovirt_env_name | match('^[0-9]')
+
+- name: Check environment name does not start a with dash
+  fail:
+    msg: "Environment name can not begin with '-'"
+  when: ovirt_env_name.startswith('-')
+
+- name: Check environment name does not end a with dash
+  fail:
+    msg: "Environment name can not end with '-'"
+  when: ovirt_env_name.endswith('-')
+
+- name: Check environment name includes only alphanum and dashes
+  fail:
+    msg: "Environment name can include only alpahnumerics and '-'"
+  when: ovirt_env_name | match('.*[^a-zA-Z0-9-].*')
