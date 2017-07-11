@@ -2,6 +2,7 @@
 - name: Configure Fluentd on nodes
   hosts: ovirt_nodes
   roles:
+    - validate_ovirt_env_name
     - ovirt_fluentd/read_local_ca_cert
     - ovirt_fluentd/ovirt_host_packages
     - ovirt_fluentd/fluentd_setup
@@ -25,6 +26,7 @@
 - name: Configure Fluentd on engine
   hosts: ovirt_engine
   roles:
+    - validate_ovirt_env_name
     - ovirt_fluentd/read_local_ca_cert
     - ovirt_fluentd/ovirt_engine_packages
     - ovirt_fluentd/fluentd_setup
