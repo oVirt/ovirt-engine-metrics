@@ -11,5 +11,5 @@
     proto: udp
     setype: collectd_port_t
     state: present
-  when: '"{{ ansible_selinux.mode }}" in ["enforcing", "permissive"]'
+  when: 'ansible_selinux.mode in ["enforcing", "permissive"]'
   notify: restart collectd
