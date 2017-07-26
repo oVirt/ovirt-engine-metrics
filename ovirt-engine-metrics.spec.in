@@ -69,7 +69,17 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
-* Tue Jul 10 2017 Shirly Radco <sradco@redhat.com> - 1.0.5
+* Wed Jul 26 2017 Shirly Radco <sradco@redhat.com> - 1.1.0
+Fixed issues:
+- Bug 1462500 - validate ovirt_env_name
+- Bug 1468894 - update jinja2 templates
+- Bug 1471949 - refactor collectd conf file
+- Bug 1469119 - remove collectd-virt plugin collection
+- Bug 1446480 - collectd: load uptime plugin
+- Bug 1462500 - added the ovirt_env_name to fail messages
+
+
+* Mon Jul 10 2017 Shirly Radco <sradco@redhat.com> - 1.0.5
 Fixed issues:
 - Bug 1438821 - ansible.cfg: Disable host key checking
 - refactor playbook.yml
