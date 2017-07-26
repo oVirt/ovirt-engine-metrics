@@ -69,6 +69,11 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Wed Jul 26 2017 Shirly Radco <sradco@redhat.com> - 1.0.6
+Fixed issues:
+- Bug 1462500 - validate ovirt_env_name
+- Bug 1462500 - added the ovirt_env_name to fail messages
+
 * Tue Jul 10 2017 Shirly Radco <sradco@redhat.com> - 1.0.5
 Fixed issues:
 - Bug 1438821 - ansible.cfg: Disable host key checking
