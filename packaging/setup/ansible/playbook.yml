@@ -11,6 +11,7 @@
     - ovirt_fluentd/client
     - ovirt_fluentd/http_input
     - ovirt_fluentd/ovirt_host
+    - ovirt_fluentd/ovirt_host_logs
     - ovirt_fluentd/ovirt_post_processing_common
 
 - name: Configure Collectd on nodes
