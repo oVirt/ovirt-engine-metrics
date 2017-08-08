@@ -1,0 +1,13 @@
+---
+dependencies:
+  - ovirt_collectd/ovirt_check_fluentd_status
+  - ovirt_collectd/ovirt_collectd_package
+  - { role: ovirt_collectd/ovirt_host_packages, when: inventory_hostname in groups.hosts }
+  - { role: ovirt_collectd/ovirt_engine_packages, when: inventory_hostname in groups.engine }
+  - ovirt_collectd/collectd_setup
+  - ovirt_collectd/write_http
+  - { role: ovirt_collectd/ovirt_host, when: inventory_hostname in groups.hosts }
+  - { role: ovirt_collectd/ovirt_engine, when: inventory_hostname in groups.engine }
+  - { role: ovirt_collectd/collectd_postgresql, when: inventory_hostname in groups.engine }
+  - { role: ovirt_collectd/read_statsd, when: inventory_hostname in groups.hosts }
+  - ovirt_collectd/restart_collectd_if_needed

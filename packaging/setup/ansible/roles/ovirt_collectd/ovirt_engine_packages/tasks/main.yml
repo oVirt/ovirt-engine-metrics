@@ -1,11 +1,9 @@
 ---
-- name: Install collectd package and plugins
-  package:
+- name: Install collectd plugins
+  yum:
     name: '{{ item }}'
     state: latest
-  with_flattened:
-    - '{{ collectd_package_name }}'
-    - '{{ collectd_common_plugin_packages }}'
+  with_items:
     - '{{ collectd_engine_plugin_packages }}'
   when: manage_packages|default(false)
   notify: restart collectd

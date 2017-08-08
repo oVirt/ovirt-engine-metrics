@@ -1,11 +1,9 @@
 ---
 - name: Install fluentd host plugins
-  package:
+  yum:
     name: '{{ item }}'
     state: latest
-  with_flattened:
-    - '{{ fluentd_package_name }}'
-    - '{{ fluentd_common_plugin_packages }}'
+  with_items:
     - '{{ fluentd_host_plugin_packages }}'
   when: manage_packages|default(false)
   notify: restart fluentd

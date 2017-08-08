@@ -1,0 +1,3 @@
+---
+# Fluentd package name.
+fluentd_package_name: fluentd

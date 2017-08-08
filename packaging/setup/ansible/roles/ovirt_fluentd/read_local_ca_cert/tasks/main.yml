@@ -1,6 +1,7 @@
 ---
 - name: Check if local fluentd certificate exists
   delegate_to: localhost
+  run_once: true
   stat:
     path: "{{ local_fluentd_ca_cert_path }}"
   register: local_fluentd_ca_cert_path_exists

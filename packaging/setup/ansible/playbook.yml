@@ -1,48 +1,9 @@
 ---
-- name: Configure Fluentd on nodes
-  hosts: ovirt_nodes
+- name: Configure Metrics
+  hosts: ovirt_nodes:ovirt_engine
+  tags:
+    - configure
   roles:
     - validate_ovirt_env_name
-    - ovirt_fluentd/read_local_ca_cert
-    - ovirt_fluentd/ovirt_host_packages
-    - ovirt_fluentd/fluentd_setup
-    - ovirt_fluentd/client
-    - ovirt_fluentd/http_input
-    - ovirt_fluentd/ovirt_host
-    - ovirt_fluentd/ovirt_post_processing_common
-
-- name: Configure Collectd on nodes
-  hosts: ovirt_nodes
-  roles:
-    - ovirt_collectd/ovirt_check_fluentd_status
-    - ovirt_collectd/ovirt_host_packages
-    - ovirt_collectd/collectd_setup
-    - ovirt_collectd/write_http
-    - ovirt_collectd/ovirt_host
-    - ovirt_collectd/read_statsd
-    - firewall/commit
-    - ovirt_collectd/restart_collectd_if_needed
-
-- name: Configure Fluentd on engine
-  hosts: ovirt_engine
-  roles:
-    - validate_ovirt_env_name
-    - ovirt_fluentd/read_local_ca_cert
-    - ovirt_fluentd/ovirt_engine_packages
-    - ovirt_fluentd/fluentd_setup
-    - ovirt_fluentd/client
-    - ovirt_fluentd/http_input
-    - ovirt_fluentd/ovirt_engine
-    - ovirt_fluentd/ovirt_engine_logs
-    - ovirt_fluentd/ovirt_post_processing_common
-
-- name: Configure Collectd on engine
-  hosts: ovirt_engine
-  roles:
-    - ovirt_collectd/ovirt_check_fluentd_status
-    - ovirt_collectd/ovirt_engine_packages
-    - ovirt_collectd/collectd_setup
-    - ovirt_collectd/write_http
-    - ovirt_collectd/ovirt_engine
-    - ovirt_collectd/collectd_postgresql
-    - ovirt_collectd/restart_collectd_if_needed
+    - fluentd
+    - collectd
