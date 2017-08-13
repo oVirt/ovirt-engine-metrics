@@ -54,6 +54,7 @@ __EOF__
 	systemctl daemon-reload
 }
 
+extra_opts=()
 while [ -n "$1" ]; do
 	x="$1"
 	v="${x#*=}"
@@ -69,7 +70,7 @@ while [ -n "$1" ]; do
 			usage
 		;;
 		*)
-			die "Invalid option '${x}'"
+			extra_opts+="${x}"
 		;;
 	esac
 done
