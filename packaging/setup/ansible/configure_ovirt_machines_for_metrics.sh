@@ -48,6 +48,7 @@ __EOF__
 	systemctl daemon-reload
 }
 
+extra_opts=()
 while [ -n "$1" ]; do
 	x="$1"
 	v="${x#*=}"
@@ -60,7 +61,7 @@ while [ -n "$1" ]; do
 			usage
 		;;
 		*)
-			die "Invalid option '${x}'"
+			extra_opts+="${x}"
 		;;
 	esac
 done
@@ -77,7 +78,8 @@ if [ -r "${CONFIG_FILE}" ]; then
 		-e ansible_ssh_private_key_file="${ENGINE_PKI}/keys/engine_id_rsa" \
 		-e pg_db_name="${ENGINE_DB_DATABASE}" \
 		-e ovirt_engine_fqdn="${ENGINE_FQDN}" \
-		-l "${SCOPE}"
+		-l "${SCOPE}" \
+		"${extra_opts[@]}"
 else
 	die "${CONFIG_FILE} is missing. Copy and amend /etc/ovirt-engine-metrics/config.yml.example"
 fi
