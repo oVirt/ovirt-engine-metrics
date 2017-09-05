@@ -1,0 +1,7 @@
+---
+- name: manage services
+  service:
+    name: '{{ item }}'
+    state: '{{ service_state }}'
+    enabled: '{{ service_enabled }}'
+  with_items: '{{ service_name }}'

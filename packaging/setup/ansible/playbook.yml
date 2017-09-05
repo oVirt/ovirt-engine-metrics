@@ -7,3 +7,11 @@
     - validate_ovirt_env_name
     - fluentd
     - collectd
+
+- name: Manage metrics related services
+  hosts: ovirt_nodes:ovirt_engine
+  tags:
+    - manage_services
+
+  roles:
+    - manage_services

@@ -2,8 +2,12 @@
 
 usage() {
 	cat << __EOF__
-Usage: $0 --scope=SCOPE
+Usage: $0
+
+  --scope=SCOPE
         SCOPE is one of 'hosts', 'engine', 'all'
+  --tags=TAGS
+        TAGS is one of 'configure' (default), 'manage_services'
 __EOF__
 	exit 1
 }
@@ -18,6 +22,8 @@ MY_BIN_DIR="$(dirname ${PWD})/bin"
 CONFIG_FILE="${PKG_SYSCONF_DIR}/config.yml"
 
 SCOPE=all
+
+TAGS=configure
 
 COLLECTD_SYSTEMD_PG_CONF=/etc/systemd/system/collectd.service.d/postgresql.conf
 CREATE_PG_PASS="${MY_BIN_DIR}"/create_collectd_pg_pass.sh
@@ -57,6 +63,9 @@ while [ -n "$1" ]; do
 		--scope=*)
 			SCOPE="${v}"
 		;;
+		--tags=*)
+			TAGS="${v}"
+		;;
 		--help)
 			usage
 		;;
@@ -79,6 +88,7 @@ if [ -r "${CONFIG_FILE}" ]; then
 		-e pg_db_name="${ENGINE_DB_DATABASE}" \
 		-e ovirt_engine_fqdn="${ENGINE_FQDN}" \
 		-l "${SCOPE}" \
+		-t "${TAGS}" \
 		"${extra_opts[@]}"
 else
 	die "${CONFIG_FILE} is missing. Copy and amend /etc/ovirt-engine-metrics/config.yml.example"
