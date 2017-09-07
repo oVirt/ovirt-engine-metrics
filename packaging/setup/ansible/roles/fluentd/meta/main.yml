@@ -6,6 +6,7 @@ dependencies:
   - { role: ovirt_fluentd/ovirt_host_packages, when: inventory_hostname in groups.hosts }
   - { role: ovirt_fluentd/ovirt_engine_packages, when: inventory_hostname in groups.engine }
   - ovirt_fluentd/fluentd_setup
+  - ovirt_fluentd/set_fluentd_system_configurations
   - ovirt_fluentd/client
   - ovirt_fluentd/http_input
   - { role: ovirt_fluentd/ovirt_host, when: inventory_hostname in groups.hosts }
