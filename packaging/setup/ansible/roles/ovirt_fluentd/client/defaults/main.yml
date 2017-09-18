@@ -1,3 +1,6 @@
 ---
 # Address of the fluentd server host.
 fluentd_fluentd_host: localhost
+
+# The size of the chunk queue
+fluentd_buffer_chunk_limit: 4m
