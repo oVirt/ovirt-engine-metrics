@@ -69,6 +69,10 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Sep 19 2017 Shirly Radco <sradco@redhat.com> - 1.0.7
+Fixed issues:
+- Bug 1468895 - add manage services playbook
+
 * Wed Jul 26 2017 Shirly Radco <sradco@redhat.com> - 1.0.6
 Fixed issues:
 - Bug 1462500 - validate ovirt_env_name
