@@ -29,10 +29,10 @@ In order to set the required action there are the following variables
 
 
 In order to set these variable add the required variables to the config.yml
-or in the command line
+or in the command line.
 
-For example, if you wanted to stop collectd and fluentd services,
-you would need to run the Ovirt metrics configuration script like this :
+For example, if you want to stop collectd and fluentd services,
+you would need to run the Ovirt metrics configuration script like this:
 
 ::
 
@@ -40,10 +40,10 @@ you would need to run the Ovirt metrics configuration script like this :
     configure_ovirt_machines_for_metrics.sh --tags=manage_services -e "service_state=stopped"
 
 
-Or add the following line to the config.yml file and run  configure_ovirt_machines_for_metrics.sh
+or add the following line to the config.yml file and run configure_ovirt_machines_for_metrics.sh
 
 ::
 
     service_state: stopped
 
-You don't need a configuration file if you wish to use default options.
+You don't need to update the configuration file if you wish to use default options.
