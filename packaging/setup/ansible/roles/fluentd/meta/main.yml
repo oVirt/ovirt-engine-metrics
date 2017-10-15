@@ -1,6 +1,5 @@
 ---
 dependencies:
-  - firewall
   - ovirt_fluentd/read_local_ca_cert
   - ovirt_fluentd/ovirt_fluentd_package
   - { role: ovirt_fluentd/ovirt_host_packages, when: inventory_hostname in groups.hosts }
