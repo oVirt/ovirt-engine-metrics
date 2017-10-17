@@ -69,6 +69,13 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Oct 17 2017 Shirly Radco <sradco@redhat.com> - 1.0.7.1
+Fixed issues:
+- Bug 1493002, 1492188 - fluentd: set buffer configurations
+- Bug 1502931 - Allow passing extra opts to ansible
+- Bug 1502931 - remove configure_ovirt_hosts_for_metrics.sh
+
+
 * Tue Sep 19 2017 Shirly Radco <sradco@redhat.com> - 1.0.7
 Fixed issues:
 - Bug 1468895 - add manage services playbook
