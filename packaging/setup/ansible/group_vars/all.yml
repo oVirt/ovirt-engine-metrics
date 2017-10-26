@@ -5,6 +5,10 @@ manage_services: true
 
 fluentd_use_ssl: true
 
+fluentd_output_plugin: elasticsearch
+
+fluentd_elasticsearch_ssl_verify: false
+
 collectd_write_http_path: ovirt_collectd
 
 ovirt_env_name: engine

@@ -5,7 +5,7 @@
     - configure
   roles:
     - validate_ovirt_env_name
-    - ovirt_fluentd/read_local_ca_cert
+    - ovirt_fluentd/read_local_pki_files
     - ovirt_fluentd/ovirt_host_packages
     - ovirt_fluentd/fluentd_setup
     - ovirt_fluentd/client
@@ -33,7 +33,7 @@
     - configure
   roles:
     - validate_ovirt_env_name
-    - ovirt_fluentd/read_local_ca_cert
+    - ovirt_fluentd/read_local_pki_files
     - ovirt_fluentd/ovirt_engine_packages
     - ovirt_fluentd/fluentd_setup
     - ovirt_fluentd/client

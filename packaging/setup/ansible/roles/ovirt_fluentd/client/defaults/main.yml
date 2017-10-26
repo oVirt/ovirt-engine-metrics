@@ -1,8 +1,22 @@
 ---
 # Address of the fluentd server host.
-fluentd_fluentd_host: localhost
+fluentd_fluentd_host: ""
 
 fluentd_keepalive: 300
+
+# Names of the available output plugins
+fluentd_output_plugin_elasticsearch: elasticsearch
+
+fluentd_output_plugin_fluentd: fluentd
+
+# Address of the elasticsearch server host.
+fluentd_elasticsearch_host: ""
+
+fluentd_elasticsearch_target_index_key: ovirt_index_name
+
+fluentd_elasticsearch_remove_keys: ovirt_index_name
+
+fluentd_elasticsearch_ssl_verify: true
 
 # Metrics buffer configurations
 
@@ -28,7 +42,9 @@ fluentd_num_threads_metrics: 1
 
 fluentd_slow_flush_log_threshold_metrics: 20.0
 
+fluentd_elasticsearch_type_name_metrics: com.redhat.viaq.common
 
+fluentd_elasticsearch_request_timeout_metrics: 600
 
 # Logs buffer configurations
 
@@ -38,7 +54,7 @@ fluentd_flush_interval_logs: 10s
 
 fluentd_buffer_queue_limit_logs: 8
 
-fluentd_buffer_queue_full_action_logs: exception
+fluentd_buffer_queue_full_action_logs: block
 
 fluentd_retry_wait_logs: 1s
 
@@ -53,3 +69,7 @@ fluentd_flush_at_shutdown_logs: true
 fluentd_num_threads_logs: 1
 
 fluentd_slow_flush_log_threshold_logs: 20.0
+
+fluentd_elasticsearch_type_name_logs: com.redhat.viaq.common
+
+fluentd_elasticsearch_request_timeout_logs: 600
