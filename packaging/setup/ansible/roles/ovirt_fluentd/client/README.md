@@ -1,20 +1,131 @@
 ## Fluentd/Client
 
-This role configures a Fluentd secure_forward client to send to a remote
-fluentd server.
+This role configures fluentd output plugin to send the collectd data to a remote metrics store.
+It can configure elasticsearch output plugin(Default) or secure_forward plugin.
 
 Metrics and logs have different defaults and different parameters,
 since the data behavior is different.
 
 The available variables for this role are:
+- `fluentd_output_plugin:`(default: `"elasticsearch"`)
 
-- `fluentd_fluentd_host:`  (default: `"localhost"`)
+   The output plugin that will be used to send the data to the remote metrics store.
+   Valid options are `"elasticsearch"` to send data to a remote elasticsearch server.
+   and `"fluentd"` to send data to a remote central fluentd aggregator (mux).
+
+- `ovirt_env_name:` (default: `"engine"`)
+
+  Environment name. Is used to identify data collected in a single central
+  store sent from more than one oVirt engine.
+  Maximum field length is 49 characters.
+  For more details see:
+  https://www.ovirt.org/develop/release-management/features/metrics/metrics-store-installation/#ovirt-metrics-store-setup
+
+### Relevant when using elasticsearch output plugin
+
+- `fluentd_elasticsearch_host:` (required - no default value)
+
+  Address or hostname (FQDN) of the Elasticsearch server host.
+
+- `ovirt_env_uuid_metrics:` (required - no default value)
+
+  UUID of the project/namespace used to store metrics records.
+  This is used to construct the index name in Elasticsearch.
+  For example, if you have ovirt_env_name: myenvname,
+  then in logging OpenShift you will have a project named ovirt-metrics-myenvname.
+  You need to get the UUID of this project like this:
+  oc get project ovirt-metrics-myenvname -o jsonpath='{.metadata.uid}'
+
+- `ovirt_env_uuid_logs:` (required - no default value)
+
+  UUID of the project/namespace used to store log records.
+  This is used to construct the index name in Elasticsearch.
+  For example, if you have ovirt_env_name: myenvname,
+  then in logging OpenShift you will have a project named ovirt-logs-myenvname.
+  You need to get the UUID of this project like this:
+  oc get project ovirt-logs-myenvname -o jsonpath='{.metadata.uid}'
+
+- `fluentd_elasticsearch_ca_cert_path:` (required - no default value)
+
+  The path to the file containing the CA certificate of the CA that issued
+  the Elasticsearch SSL server cert.
+  Get it from the logging OpenShift machine like this:
+  oc get secret logging-fluentd --template='{{index .data "ca"}}' | base64 -d > fluentd-ca
+  and use the local_fluentd_elasticsearch_ca_cert_path parameter in your ansible inventory
+  or config file to pass in the file to use.
+
+- `fluentd_elasticsearch_client_cert_path:` (required - no default value)
+
+  The path to the file containing the SSL client certificate to use
+  with certificate authentication to Elasticsearch.
+  Get it from the logging OpenShift machine like this:
+  oc get secret logging-fluentd --template='{{index .data "cert"}}' | base64 -d > fluentd-cert
+  and use the local_fluentd_elasticsearch_client_cert_path parameter in your ansible inventory
+  or config file to pass in the file to use.
+
+- `fluentd_elasticsearch_client_key_path:` (required - no default value)
+
+  The path to the file containing the SSL client key to use
+  with certificate authentication to Elasticsearch.
+  Get it from the logging OpenShift machine like this:
+  oc get secret logging-fluentd --template='{{index .data "key"}}' | base64 -d > fluentd-key
+  and use the local_fluentd_elasticsearch_client_key_path parameter in your ansible inventory
+  or config file to pass in the file to use.
+
+- `fluentd_elasticsearch_port:` (default: `"9200"`)
+
+  Port number of the Elasticsearch server.
+
+- `fluentd_elasticsearch_ssl_verify:` (default: `"true"`)
+
+  NOTE: SSL and client cert authentication are always used, regardless of this setting.
+  If true, verify that the hostname specified in the Elasticsearch SSL server cert
+  matches the fluentd_elasticsearch_host.
+  Set to false if the Elasticsearch SSL server cert does not have the correct hostname.
+
+- `fluentd_elasticsearch_target_index_key:` (default: `"ovirt_index_name"`)
+
+  Name of the field that has the name of the Elasticsearch index to use for this record.
+
+- `fluentd_elasticsearch_remove_keys:` (default: `"ovirt_index_name"`)
+
+  Name or comma delimited list of fields to remove from the record before sending to Elasticsearch.
+
+- `fluentd_elasticsearch_type_name_metrics:` (default: `"com.redhat.viaq.common"`)
+
+  Name of Elasticsearch type for metrics records.
+
+- `fluentd_elasticsearch_request_timeout_metrics:` (default: `"600"`)
+
+  Number of seconds to wait for a response after submitting the bulk index request to Elasticsearch for metrics records.
+
+- `fluentd_elasticsearch_type_name_logs:` (default: `"com.redhat.viaq.common"`)
+
+  Name of Elasticsearch type for log records.
+
+- `fluentd_elasticsearch_request_timeout_logs:` (default: `"600"`)
+
+  Number of seconds to wait for a response after submitting the bulk index request to Elasticsearch for log records.
+
+### Relevant when using Secure forward output plugin
+
+- `fluentd_fluentd_host:` (required - no default value)
 
   Address of the fluentd server host.
 
 - `fluentd_keepalive:` (default: `"300"`)
 
   The duration for keepalive. If this parameter is not specified, keepalive is disabled.
+
+- `fluentd_shared_key:` (required - no default value)
+
+  Shared secret on the central fluentd machine
+
+- `local_fluentd_ca_cert_path:` (required - no default value)
+
+  Path to the cert of the CA used to sign central fluentd cert
+  To use the engine internal CA, use:
+  local_fluentd_ca_cert_path: /etc/pki/ovirt-engine/ca.pem
 
 The following configurations specify how the buffer plugins should buffer events.
 Events are gathered to chunks by the output plugins.
