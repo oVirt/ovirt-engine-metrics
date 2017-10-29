@@ -69,6 +69,20 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Sun Oct 29 2017 Shirly Radco <sradco@redhat.com> - 1.1.1
+Fixed issues:
+- Bug 1469104 - fluentd: stop collecting hosts stats from vdsm
+- Bug 1477866 - collectd: update swap plugin parameters
+- Bug 1471833 - Allow passing extra opts to ansible
+- Bug 1477083 - fluentd: Added cluster name
+- Bug 1475707 - refactor metrics ansible playbook
+- Bug 1468895 - add manage services playbook
+- Bug 1471833 - remove configure_ovirt_hosts_for_metrics.sh
+- Bug 1492188, 1493002 - fluentd: set buffer configurations
+- Bug 1475795 - fluentd: add role to set system configurations
+- metrics: remove firewall role
+- documentation: add readme to metrics roles
+
 * Wed Jul 26 2017 Shirly Radco <sradco@redhat.com> - 1.1.0
 Fixed issues:
 - Bug 1462500 - validate ovirt_env_name
