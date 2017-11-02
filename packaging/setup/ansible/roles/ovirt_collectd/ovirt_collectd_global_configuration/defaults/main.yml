@@ -1,0 +1,3 @@
+---
+# collectd collection interval
+collectd_interval: 10

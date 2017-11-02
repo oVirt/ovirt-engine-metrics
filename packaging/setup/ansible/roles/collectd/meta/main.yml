@@ -6,6 +6,7 @@ dependencies:
   - { role: ovirt_collectd/ovirt_engine_packages, when: inventory_hostname in groups.engine }
   - ovirt_collectd/collectd_setup
   - ovirt_collectd/write_http
+  - ovirt_collectd/ovirt_collectd_global_configuration
   - { role: ovirt_collectd/ovirt_host, when: inventory_hostname in groups.hosts }
   - { role: ovirt_collectd/ovirt_engine, when: inventory_hostname in groups.engine }
   - { role: ovirt_collectd/collectd_postgresql, when: inventory_hostname in groups.engine }
