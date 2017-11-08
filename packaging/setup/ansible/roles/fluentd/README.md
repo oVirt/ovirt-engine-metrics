@@ -36,6 +36,10 @@ The available variables for this role are:
 
   File mode for Fluentd configuration files.
 
+- `fluentd_config_dir_mode:` (default: `"0750"`)
+
+  File mode for Fluentd configuration directories.
+
 - `fluentd_use_ssl:` (default: `"false"`)
 
   Set to true if Fluentd should use SSL.
@@ -51,6 +55,35 @@ The available variables for this role are:
 - `fluentd_ca_cert:`
 
   Content of an x509 certificate that will be used to identify the server to clients.
+
+# Relevant only to elasticsearch output plugin
+
+- `fluentd_elasticsearch_ca_cert_path:` (default: `'{{ fluentd_config_dir }}/elasticsearch_ca_cert.pem'`)
+
+  Where to find the Fluentd CA certificate used to communicate with Elasticsearch
+
+- `fluentd_elasticsearch_client_cert_path:` (default: `'{{ fluentd_config_dir }}/elasticsearch_client_cert.pem'`)
+
+  Where to find the Fluentd client certificate used to communicate with Elasticsearch
+
+- `fluentd_elasticsearch_client_key_path:` (default: `'{{ fluentd_config_dir }}/elasticsearch_client_key.pem'`)
+
+  Where to find the Fluentd client certificate used to communicate with Elasticsearch
+
+- `fluentd_elasticsearch_ca_cert:`
+
+  Content of an x509 Fluentd Elasticsearch CA certificate that will be used to identify the
+  server to clients.
+
+- `fluentd_elasticsearch_client_cert:`
+
+  Content of an x509 Fluentd Elasticsearch client certificate that will be used to
+  authenicate to Elasticsearch.
+
+- `fluentd_elasticsearch_client_key:`
+
+  Content of an x509 Fluentd Elasticsearch client key that will be used to
+  authenicate to Elasticsearch.
 
 
 In order to set these variable add the required variables to the config.yml
