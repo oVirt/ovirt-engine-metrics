@@ -64,4 +64,11 @@ LoadPlugin uptime
   Process "collectd"
   ProcessMatch "ovirt-engine" "ovirt-engine\.xml"
   ProcessMatch "ovirt-engine-dwhd" "ovirt-engine-dwhd"
+  ProcessMatch pg_writer "postgres:.writer.process"
+  ProcessMatch pg_wal_writer "postgres:.wal.writer.process"
+  ProcessMatch pg_checkpointer_process "postgres:.checkpointer.process"
+  ProcessMatch pg_autovacuum "postgres:.*autovacuum"
+  ProcessMatch pg_stats_collector "postgres:.stats.collector.process"
+  ProcessMatch pg_engine "postgres: engine engine"
+  ProcessMatch pg_ovirt_engine_history "postgres:.ovirt_engine_history"
 </Plugin>
