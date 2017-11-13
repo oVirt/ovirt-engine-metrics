@@ -42,9 +42,9 @@ In order to set the required action there are the following variables
 
   File mode for Fluentd configuration directories.
 
-- `configure_host_logs processing:` (default: `"false"`)
-  Host log collection is turned off by default.
-  If you wish to start collection update this parameter to `true`.
+- `configure_host_logs processing:` (default: `"true"`)
+  Host log collection is turned on by default.
+  If you do not wish to collect the vdsm.log, update this parameter to `false`.
 
 
 In order to set these variable add the required variables to the config.yml

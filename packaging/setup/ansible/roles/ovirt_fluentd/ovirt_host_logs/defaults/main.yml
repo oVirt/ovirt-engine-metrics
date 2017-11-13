@@ -12,4 +12,4 @@ fluentd_pos_files_mode: 0640
 fluentd_pos_files_dir_mode: 0750
 
 # The status of host log collection
-configure_host_logs_processing: false
+configure_host_logs_processing: true
