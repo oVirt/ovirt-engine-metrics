@@ -69,7 +69,22 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
-* Sun Oct 29 2017 Shirly Radco <sradco@redhat.com> - 1.1.1
+* Tue Nov 14 2017 Shirly Radco <sradco@redhat.com> - 1.1.1 beta2
+Fixed issues:
+- Bug 1478695 - collectd: add global configurtion role
+- Bug 1490258 - fluentd:fix bug in engine.log parsing
+- Bug 1506458 - fluentd: add support for fluent-plugin-elasticsearch
+- Bug 1506458 - Update fluentd role README file
+- Bug 1475900 - fluentd: collect vdsm.log
+- Bug 1508484 - collectd: add collection of ovirt-engine-dwh process
+- Bug 1458700 - collectd: collect postgresql to processes plugin
+- Bug 1471949 - collectd: update collectd conf structure
+- Bug 1508480 - collectd: collect statistics about mom process
+- Bug 1508480 - collectd: update process name from mom to momd
+- Bug 1508481 - collectd: collect statistics about supervdsm process
+- Bug 1475900 - Update collection to collect vdsm.log by default
+
+* Sun Oct 29 2017 Shirly Radco <sradco@redhat.com> - 1.1.1 beta1
 Fixed issues:
 - Bug 1469104 - fluentd: stop collecting hosts stats from vdsm
 - Bug 1477866 - collectd: update swap plugin parameters
