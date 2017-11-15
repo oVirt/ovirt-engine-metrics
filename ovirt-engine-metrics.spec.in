@@ -69,6 +69,14 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Wed Nov 15 2017 Shirly Radco <sradco@redhat.com> - 1.0.8
+Fixed issues:
+- Bug 1490258 - fluentd:fix bug in engine.log parsing
+- Bug 1506174 - documentation: add readme to metrics roles
+- Bug 1506458 - fluentd: add support for fluent-plugin-elasticsearch
+- Bug 1475900 - fluentd: collect vdsm.log
+- Bug 1475900 - Update collection to collect vdsm.log by default
+
 * Tue Oct 17 2017 Shirly Radco <sradco@redhat.com> - 1.0.7.1
 Fixed issues:
 - Bug 1493002, 1492188 - fluentd: set buffer configurations
