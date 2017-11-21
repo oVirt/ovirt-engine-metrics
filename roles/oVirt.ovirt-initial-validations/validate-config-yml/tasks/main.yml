@@ -6,10 +6,19 @@
   run_once: true
   delegate_to: localhost
 
-- name: Include oVirt metrics config.yml vars
+- name: Include oVirt metrics config.yml file
   include_vars:
     file: "{{ ovirt_metrics_config_yml_file }}"
   when: stat_result.stat.exists == True
+  run_once: true
+  delegate_to: localhost
+
+- name: Include oVirt metrics config.yml.d vars directory
+  include_vars:
+    dir: "{{ ovirt_metrics_config_yml_dir }}"
+    ignore_files: 'README.md'
+  run_once: true
+  delegate_to: localhost
 
 - name: "If output plugin is elasticsearch, validate host address is set"
   debug:
@@ -18,6 +27,8 @@
   when:
     - fluentd_elasticsearch_host == "elasticsearch-server.example.com" or fluentd_elasticsearch_host == "" or fluentd_elasticsearch_host is undefined
     - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
+  run_once: true
+  delegate_to: localhost
 
 - name: "If output plugin is fluentd, validate host address is set"
   debug:
@@ -26,8 +37,12 @@
   when:
     - fluentd_fluentd_host is undefined
     - fluentd_output_plugin|default("elasticsearch") == "fluentd"
+  run_once: true
+  delegate_to: localhost
 
 - meta: end_play
   when: ((fluentd_elasticsearch_host == "elasticsearch-server.example.com" or fluentd_elasticsearch_host == "" or fluentd_elasticsearch_host is undefined)
         and fluentd_output_plugin|default("elasticsearch") == "elasticsearch") or
         (fluentd_fluentd_host is undefined and fluentd_output_plugin|default("elasticsearch") == "fluentd")
+  run_once: true
+  delegate_to: localhost

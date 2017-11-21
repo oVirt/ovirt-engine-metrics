@@ -1,2 +1,6 @@
 ---
-ovirt_metrics_config_yml_file: /etc/ovirt-engine-metrics/config.yml
+ovirt_metrics_pkg_sysconf_dir: /etc/ovirt-engine-metrics
+
+ovirt_metrics_config_yml_dir: "{{ ovirt_metrics_pkg_sysconf_dir }}/config.yml.d"
+
+ovirt_metrics_config_yml_file: "{{ ovirt_metrics_pkg_sysconf_dir }}/config.yml"

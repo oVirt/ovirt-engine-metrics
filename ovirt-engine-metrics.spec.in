@@ -64,6 +64,7 @@ rm -rf %{buildroot}
 %{metrics_data}
 %{metrics_roles_data}
 %{metrics_etc}
+%{metrics_etc}/config.yml.d
 %doc README.md
 
 %changelog

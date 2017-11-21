@@ -55,8 +55,6 @@ mkdir -p "${LOG_DIR}"
 timestamp="$(date +"%Y%m%d%H%M%S")"
 LOG_FILE="${LOG_DIR}/standalone-${timestamp}-ovirt-metrics-deployment.log"
 
-CONFIG_FILE="${PKG_SYSCONF_DIR}/config.yml"
-
 SCOPE=all
 
 PLAYBOOK=configure-ovirt-metrics.yml
@@ -121,14 +119,9 @@ setup_db_creds
 
 export ANSIBLE_LOG_PATH="${LOG_FILE}"
 
-if [ -r "${CONFIG_FILE}" ]; then
-	ansible-playbook \
-		playbooks/"${PLAYBOOK}" \
-		-e @"${CONFIG_FILE}" \
-		-e ansible_ssh_private_key_file="${ENGINE_PKI}/keys/engine_id_rsa" \
-		-e pg_db_name="${ENGINE_DB_DATABASE}" \
-		-l "${SCOPE}" \
-		"${extra_opts[@]}"
-else
-	die "${CONFIG_FILE} is missing. Copy and amend /etc/ovirt-engine-metrics/config.yml.example"
-fi
+ansible-playbook \
+	playbooks/"${PLAYBOOK}" \
+	-e ansible_ssh_private_key_file="${ENGINE_PKI}/keys/engine_id_rsa" \
+	-e pg_db_name="${ENGINE_DB_DATABASE}" \
+	-l "${SCOPE}" \
+	"${extra_opts[@]}"
