@@ -8,6 +8,8 @@ Usage: $0
         SCOPE is one of 'hosts', 'engine', 'all'
   --tags=TAGS
         TAGS is one of 'configure' (default), 'manage_services'
+  --log=FILE
+        Write the log also to FILE. Defaults to a file inside ${LOG_DIR}.
 __EOF__
 	exit 1
 }
@@ -18,6 +20,17 @@ cd "$(dirname "$script_path")"
 MY_BIN_DIR="$(dirname ${PWD})/bin"
 . "${MY_BIN_DIR}"/config.sh
 . "${ENGINE_DATA_BIN_DIR}"/engine-prolog.sh
+
+# Older engines didn't expose ENGINE_LOG, set a default
+[ -z "${ENGINE_LOG}" ] && ENGINE_LOG=/var/log/ovirt-engine
+
+LOG_DIR="${ENGINE_LOG}/ansible"
+
+# Should already exist in oVirt 4.2, but create if needed anyway
+mkdir -p "${LOG_DIR}"
+
+timestamp="$(date +"%Y%m%d%H%M%S")"
+LOG_FILE="${LOG_DIR}/standalone-${timestamp}-ovirt-metrics-deployment.log"
 
 CONFIG_FILE="${PKG_SYSCONF_DIR}/config.yml"
 
@@ -66,6 +79,9 @@ while [ -n "$1" ]; do
 		--tags=*)
 			TAGS="${v}"
 		;;
+		--log=*)
+			LOG_FILE="${v}"
+		;;
 		--help)
 			usage
 		;;
@@ -79,6 +95,8 @@ done
 # We could check if $SCOPE is 'engine' or 'all', but then it will
 # not work if user passes some other valid ansible pattern.
 setup_db_creds
+
+export ANSIBLE_LOG_PATH="${LOG_FILE}"
 
 if [ -r "${CONFIG_FILE}" ]; then
 	ansible-playbook \
