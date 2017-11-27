@@ -104,7 +104,6 @@ if [ -r "${CONFIG_FILE}" ]; then
 		-e @"${CONFIG_FILE}" \
 		-e ansible_ssh_private_key_file="${ENGINE_PKI}/keys/engine_id_rsa" \
 		-e pg_db_name="${ENGINE_DB_DATABASE}" \
-		-e ovirt_engine_fqdn="${ENGINE_FQDN}" \
 		-l "${SCOPE}" \
 		-t "${TAGS}" \
 		"${extra_opts[@]}"
