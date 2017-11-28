@@ -1,0 +1,36 @@
+---
+- name: Get ovirt_engine_db_name
+  delegate_to: localhost
+  shell: ". {{ engine_prolog_path }}; echo $ENGINE_DB_DATABASE"
+  register: ovirt_engine_db_name_result
+
+- name: Save ovirt_engine_db_name as fact
+  set_fact:
+    ovirt_engine_db_name: "{{ ovirt_engine_db_name_result.stdout }}"
+
+- name: Get ovirt_engine_db_user
+  delegate_to: localhost
+  shell: ". {{ engine_prolog_path }}; echo $ENGINE_DB_USER"
+  register: ovirt_engine_db_user_result
+
+- name: Save ovirt_engine_db_user as fact
+  set_fact:
+    ovirt_engine_db_user: "{{ ovirt_engine_db_user_result.stdout }}"
+
+- name: Get ovirt_engine_history_db_name
+  delegate_to: localhost
+  shell: ". {{ engine_prolog_path }}; echo $DWH_DB_DATABASE"
+  register: ovirt_engine_history_db_name_result
+
+- name: Save ovirt_engine_db_name as fact
+  set_fact:
+    ovirt_engine_history_db_name: "{{ ovirt_engine_history_db_name_result.stdout }}"
+
+- name: Get ovirt_engine_history_db_user
+  delegate_to: localhost
+  shell: ". {{ engine_prolog_path }}; echo $DWH_DB_USER"
+  register: ovirt_engine_history_db_user_result
+
+- name: Save ovirt_engine_history_db_user as fact
+  set_fact:
+    ovirt_engine_history_db_user: "{{ ovirt_engine_history_db_user_result.stdout }}"

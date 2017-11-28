@@ -4,6 +4,7 @@ dependencies:
   - ovirt_collectd/ovirt_collectd_package
   - { role: ovirt_collectd/ovirt_host_packages, when: inventory_hostname in groups.hosts }
   - { role: ovirt_collectd/ovirt_engine_packages, when: inventory_hostname in groups.engine }
+  - ovirt_collectd/read_local_engine_defaults
   - ovirt_collectd/collectd_setup
   - ovirt_collectd/write_http
   - ovirt_collectd/ovirt_collectd_global_configuration

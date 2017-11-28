@@ -1,0 +1,18 @@
+---
+# oVirt engine database name
+ovirt_engine_db_name: engine
+
+# oVirt engine database user
+ovirt_engine_db_user: engine
+
+#oVirt engine dwh database name
+ovirt_engine_history_db_name: ovirt_engine_history
+
+# oVirt engine dwh database user
+ovirt_engine_history_db_user: engine_history
+
+#oVirt engine DATAROOT dir
+engine_dataroot_dir: /usr/share
+
+# Path to engine-prolog.sh
+engine_prolog_path: "{{ engine_dataroot_dir }}/ovirt-engine/bin/engine-prolog.sh"
