@@ -10,8 +10,9 @@ The available variables for this role are:
 - `fluentd_output_plugin:`(default: `"elasticsearch"`)
 
    The output plugin that will be used to send the data to the remote metrics store.
-   Valid options are `"elasticsearch"` to send data to a remote elasticsearch server.
-   and `"fluentd"` to send data to a remote central fluentd aggregator (mux).
+   Valid options are `"elasticsearch"` to send data to a remote elasticsearch server,
+   `"fluentd"` to send data to a remote central fluentd aggregator (mux) and
+   `"file"` to send data to local files.
 
 - `ovirt_env_name:` (default: `"engine"`)
 
@@ -129,6 +130,20 @@ The available variables for this role are:
 
 The following configurations specify how the buffer plugins should buffer events.
 Events are gathered to chunks by the output plugins.
+
+### Relevant when using file output plugin
+
+- `fluentd_file_output_dir:` (default: `"/var/log/ovirt-fluentd"`)
+
+  Directory of the output files when file output plugin is used.
+
+- `fluentd_metrics_file_output:` (default: `"ovirt-metrics-{{ ovirt_env_name }}"`)
+
+  The file name for metrics data.
+
+- `fluentd_logs_file_output:` (default: `"ovirt-logs-{{ ovirt_env_name }}"`)
+
+  The file name for logs data.
 
 ### Metrics buffer configurations
 

@@ -9,6 +9,8 @@ fluentd_output_plugin_elasticsearch: elasticsearch
 
 fluentd_output_plugin_fluentd: fluentd
 
+fluentd_output_plugin_file: file
+
 # Address of the elasticsearch server host.
 fluentd_elasticsearch_host: ""
 
@@ -17,6 +19,14 @@ fluentd_elasticsearch_target_index_key: ovirt_index_name
 fluentd_elasticsearch_remove_keys: ovirt_index_name
 
 fluentd_elasticsearch_ssl_verify: true
+
+# Directory of the output files when file output plugin is used
+
+fluentd_file_output_dir: /var/log/ovirt-fluentd
+
+fluentd_metrics_file_output: "{{ fluentd_file_output_dir }}/ovirt-metrics-{{ ovirt_env_name }}"
+
+fluentd_logs_file_output: "{{ fluentd_file_output_dir }}/ovirt-logs-{{ ovirt_env_name }}"
 
 # Metrics buffer configurations
 
