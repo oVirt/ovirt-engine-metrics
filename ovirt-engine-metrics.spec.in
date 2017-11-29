@@ -69,6 +69,11 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Wed Nov 29 2017 Shirly Radco <sradco@redhat.com> - 1.1.1 rc1
+Fixed issues:
+- Bug 1513418 - fluentd: add  cluster name to host logs
+- Bug 1488014 - ansible: log the ansible metrics run to a log file
+
 * Tue Nov 14 2017 Shirly Radco <sradco@redhat.com> - 1.1.1 beta2
 Fixed issues:
 - Bug 1478695 - collectd: add global configurtion role
