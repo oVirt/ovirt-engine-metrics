@@ -1,7 +1,0 @@
----
-- name: Install collectd package
-  yum:
-    name: '{{ collectd_package_name }}'
-    state: latest
-  when: manage_packages|default(false)
-  notify: restart collectd

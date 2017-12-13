@@ -20,12 +20,13 @@
 BUILD_VALIDATION=1
 
 PACKAGE_NAME=ovirt-engine-metrics
+METRICS_ANSIBLE_ROLE_NAME=oVirt.metrics
 PREFIX=/usr/local
 SYSCONF_DIR=$(PREFIX)/etc
 DATAROOT_DIR=$(PREFIX)/share
 PKG_DATA_DIR=$(DATAROOT_DIR)/$(PACKAGE_NAME)
+PKG_ANSIBLE_ROLES_DATA_DIR=$(DATAROOT_DIR)/ansible/roles/$(METRICS_ANSIBLE_ROLE_NAME)
 PKG_DATA_BIN_DIR=$(PKG_DATA_DIR)/bin
-PKG_DATA_SETUP_DIR=$(PKG_DATA_DIR)/setup
 ENGINE_DATA_DIR=$(DATAROOT_DIR)/ovirt-engine
 ENGINE_DATA_BIN_DIR=$(ENGINE_DATA_DIR)/bin
 ENGINE_DATA_SETUP_DIR=$(ENGINE_DATA_DIR)/setup
@@ -53,6 +54,7 @@ TARBALL=$(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz
 	-e "s|@DATAROOT_DIR@|$(DATAROOT_DIR)|g" \
 	-e "s|@PKG_SYSCONF_DIR@|$(PKG_SYSCONF_DIR)|g" \
 	-e "s|@PKG_DATA_DIR@|$(PKG_DATA_DIR)|g" \
+	-e "s|@PKG_ANSIBLE_ROLES_DATA_DIR@|$(PKG_ANSIBLE_ROLES_DATA_DIR)|g" \
 	-e "s|@PKG_DATA_BIN_DIR@|$(PKG_DATA_BIN_DIR)|g" \
 	-e "s|@ENGINE_DATA_DIR@|$(ENGINE_DATA_DIR)|g" \
 	-e "s|@ENGINE_DATA_BIN_DIR@|$(ENGINE_DATA_BIN_DIR)|g" \
@@ -70,7 +72,7 @@ TARBALL=$(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz
 
 GENERATED = \
 	ovirt-engine-metrics.spec \
-	packaging/setup/bin/config.sh \
+	bin/config.sh \
 	$(NULL)
 
 all:	\
@@ -86,6 +88,7 @@ clean:
 install: \
 	all \
 	install-packaging-files \
+	install-artifacts \
 	$(NULL)
 
 .PHONY: ovirt-engine-metrics.spec.in
@@ -134,9 +137,19 @@ validations:	generated-files
 		build/shell-check.sh; \
 	fi
 
+install-artifacts:
+	install -m 0644 "configure_ovirt_machines_for_metrics.sh" "$(DESTDIR)$(PKG_DATA_DIR)"
+	install -m 0644 "ansible.cfg" "$(DESTDIR)$(PKG_DATA_DIR)"
+	install -m 0644 "README.md" "$(DESTDIR)$(PKG_DATA_DIR)"
+
 install-packaging-files: \
 		$(GENERATED) \
 		$(NULL)
-	$(MAKE) copy-recursive SOURCEDIR=packaging/etc TARGETDIR="$(DESTDIR)$(PKG_SYSCONF_DIR)" EXCLUDE_GEN="$(GENERATED)"
-	$(MAKE) copy-recursive SOURCEDIR=packaging/setup TARGETDIR="$(DESTDIR)$(PKG_DATA_SETUP_DIR)" EXCLUDE_GEN="$(GENERATED)"
+	$(MAKE) copy-recursive SOURCEDIR=etc TARGETDIR="$(DESTDIR)$(PKG_SYSCONF_DIR)" EXCLUDE_GEN="$(GENERATED)"
+	for d in bin inventory playbooks tools; do \
+		$(MAKE) copy-recursive SOURCEDIR="$${d}" TARGETDIR="$(DESTDIR)$(PKG_DATA_DIR)/$${d}" EXCLUDE_GEN="$(GENERATED)"; \
+	done
+	for d in roles vars tasks; do \
+		$(MAKE) copy-recursive SOURCEDIR="$${d}" TARGETDIR="$(DESTDIR)$(PKG_ANSIBLE_ROLES_DATA_DIR)/$${d}" EXCLUDE_GEN="$(GENERATED)"; \
+	done
 

@@ -1,0 +1,4 @@
+---
+dependencies:
+  - oVirt.ovirt-initial-validations/validate-config-yml
+  - oVirt.ovirt-initial-validations/validate-ovirt-env-name

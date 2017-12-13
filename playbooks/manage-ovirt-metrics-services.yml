@@ -1,0 +1,7 @@
+---
+- name: Manage metrics related services
+  hosts: all
+
+  roles:
+    - oVirt.metrics/roles/oVirt.initial-validations
+    - oVirt.metrics/roles/oVirt.manage-services

@@ -1,0 +1,2 @@
+---
+ovirt_metrics_config_yml_file: /etc/ovirt-engine-metrics/config.yml

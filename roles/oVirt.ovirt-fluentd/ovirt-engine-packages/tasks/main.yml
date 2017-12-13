@@ -1,0 +1,9 @@
+---
+- name: Install fluentd engine plugins
+  yum:
+    name: '{{ item }}'
+    state: latest
+  with_items:
+    - '{{ fluentd_engine_plugin_packages }}'
+  when: manage_packages|default(true)
+  notify: restart fluentd

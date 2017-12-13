@@ -16,6 +16,7 @@
 %global         package_version @PACKAGE_VERSION@
 
 %global metrics_data %{_datadir}/@PACKAGE_NAME@
+%global metrics_roles_data %{_datadir}/ansible/roles/oVirt.metrics
 %global metrics_etc %{_sysconfdir}/@PACKAGE_NAME@
 
 %global make_common_opts \\\
@@ -35,10 +36,7 @@ Group:          Virtualization/Management
 BuildArch:      noarch
 Url:            http://www.ovirt.org
 
-Requires:       ovirt-engine
-Requires:	ovirt-engine-setup-plugin-ovirt-engine-common >= 4.1
-Requires:	ovirt-engine-setup-plugin-ovirt-engine >= 4.1
-Requires:	ansible >= 2.2.0
+Requires:	ansible >= 2.4.0
 
 # In oVirt 4.1.0, content of this package was in a different one, which was
 # built from the engine sources.
@@ -47,7 +45,7 @@ Provides:	ovirt-engine-hosts-ansible-inventory
 
 %description
 ovirt-engine-metrics allows configuring an oVirt installation to send metrics
-data to a remote fluentd/elasticsearch store.
+data to a remote metrics store.
 
 %prep
 %setup -c -q
@@ -63,8 +61,8 @@ rm -rf %{buildroot}
 
 %files
 %license LICENSE
-%{metrics_data}/setup/bin
-%{metrics_data}/setup/ansible
+%{metrics_data}
+%{metrics_roles_data}
 %{metrics_etc}
 %doc README.md
 

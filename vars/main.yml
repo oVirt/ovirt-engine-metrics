@@ -1,0 +1,6 @@
+---
+# oVirt environment name.
+ovirt_env_name: engine
+
+# When flag is true, role configures only hosts
+ovirt_metrics_host_deploy: true

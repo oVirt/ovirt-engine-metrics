@@ -1,0 +1,15 @@
+---
+dependencies:
+  - oVirt.ovirt-collectd/ovirt-check-fluentd-status
+  - oVirt.ovirt-collectd/ovirt-collectd-package
+  - { role: oVirt.ovirt-collectd/ovirt-host-packages, when: ovirt_metrics_host_deploy is defined or inventory_hostname in groups.hosts }
+  - { role: oVirt.ovirt-collectd/ovirt-engine-packages, when: ovirt_metrics_host_deploy is undefined and inventory_hostname in groups.engine }
+  - oVirt.ovirt-collectd/read-local-engine-defaults
+  - oVirt.ovirt-collectd/collectd-setup
+  - oVirt.ovirt-collectd/write-http
+  - oVirt.ovirt-collectd/ovirt-collectd-global-configuration
+  - { role: oVirt.ovirt-collectd/ovirt-host, when: ovirt_metrics_host_deploy is defined or inventory_hostname in groups.hosts }
+  - { role: oVirt.ovirt-collectd/ovirt-engine, when: ovirt_metrics_host_deploy is undefined and inventory_hostname in groups.engine }
+  - { role: oVirt.ovirt-collectd/collectd-postgresql, when: ovirt_metrics_host_deploy is undefined and inventory_hostname in groups.engine }
+  - { role: oVirt.ovirt-collectd/read-statsd, when: ovirt_metrics_host_deploy is defined or inventory_hostname in groups.hosts }
+  - oVirt.ovirt-collectd/restart-collectd-if-needed
