@@ -138,9 +138,13 @@ validations:	generated-files
 	fi
 
 install-artifacts:
-	install -m 0644 "configure_ovirt_machines_for_metrics.sh" "$(DESTDIR)$(PKG_DATA_DIR)"
+	install -m 0755 "configure_ovirt_machines_for_metrics.sh" "$(DESTDIR)$(PKG_DATA_DIR)"
 	install -m 0644 "ansible.cfg" "$(DESTDIR)$(PKG_DATA_DIR)"
 	install -m 0644 "README.md" "$(DESTDIR)$(PKG_DATA_DIR)"
+	# Create a link in the old location, for compatibility.
+	# TODO make sure all users know about the new location and remove
+	install -d "$(DESTDIR)$(PKG_DATA_DIR)/setup/ansible"
+	ln -sf ../../configure_ovirt_machines_for_metrics.sh "$(DESTDIR)$(PKG_DATA_DIR)/setup/ansible"
 
 install-packaging-files: \
 		$(GENERATED) \
