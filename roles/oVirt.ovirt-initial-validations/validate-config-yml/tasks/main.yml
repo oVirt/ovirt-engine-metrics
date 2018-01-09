@@ -16,7 +16,7 @@
     msg: "oVirt Metrics store is not configured. This host will not be configured to send metrics"
   run_once: true
   when:
-    - fluentd_elasticsearch_host == "elasticsearch-server.example.com" or fluentd_elasticsearch_host == ""
+    - fluentd_elasticsearch_host == "elasticsearch-server.example.com" or fluentd_elasticsearch_host == "" or fluentd_elasticsearch_host is undefined
     - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
 
 - name: "If output plugin is fluentd, validate host address is set"
@@ -28,6 +28,6 @@
     - fluentd_output_plugin|default("elasticsearch") == "fluentd"
 
 - meta: end_play
-  when: ((fluentd_elasticsearch_host == "elasticsearch-server.example.com" or fluentd_elasticsearch_host == "")
+  when: ((fluentd_elasticsearch_host == "elasticsearch-server.example.com" or fluentd_elasticsearch_host == "" or fluentd_elasticsearch_host is undefined)
         and fluentd_output_plugin|default("elasticsearch") == "elasticsearch") or
         (fluentd_fluentd_host is undefined and fluentd_output_plugin|default("elasticsearch") == "fluentd")
