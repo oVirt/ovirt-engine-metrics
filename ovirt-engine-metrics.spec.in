@@ -67,6 +67,17 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Wed Jan 10 2018 Shirly Radco <sradco@redhat.com> - 1.1.2 rc1
+Fixed issues:
+- Bug 1511549 - collectd: add role that reads engine variables
+- Bug 1514927 - fluentd: add role that reads engine variables
+- Bug 1523068 - fluentd: add file output to fluentd client role
+- Bug 1514927 - ansible: Updated ovirt metrics repo structure
+- Bug 1529295 - collectd: Add root fs disk space for the engine
+- Bug 1514927 - Provide a compatibility link to configure_ovirt_machines_for_metrics.sh
+- Bug 1532196 - fluentd: add engine_fqdn to host logs
+- Bug 1514927 - fluentd: fix condition for fluentd_elasticsearch_host
+
 * Wed Nov 29 2017 Shirly Radco <sradco@redhat.com> - 1.1.1 rc1
 Fixed issues:
 - Bug 1513418 - fluentd: add  cluster name to host logs
