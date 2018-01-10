@@ -100,7 +100,7 @@ while [ -n "$1" ]; do
 		--log=*)
 			LOG_FILE="${v}"
 		;;
-		--help)
+		--help|-h)
 			usage
 		;;
 		*)
