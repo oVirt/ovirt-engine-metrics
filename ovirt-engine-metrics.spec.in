@@ -67,6 +67,11 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Wed Jan 17 2018 Shirly Radco <sradco@redhat.com> - 1.1.2.1
+Fixed issues:
+- Bug 1534240 - fluentd: filter out vdsm hosts metrics
+- Bug 1506178 - Fix short help (-h) parameter
+
 * Wed Jan 10 2018 Shirly Radco <sradco@redhat.com> - 1.1.2 rc1
 Fixed issues:
 - Bug 1511549 - collectd: add role that reads engine variables
