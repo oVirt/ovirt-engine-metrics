@@ -7,21 +7,26 @@ Usage: $0
   --playbook=PLAYBOOK
         PLAYBOOK, the name of the playbook to run, is one of:
         ${PLAYBOOK}, manage-ovirt-metrics-services.yml.
-        Default, ${PLAYBOOK}.
+        Default is ${PLAYBOOK}.
   --scope=SCOPE
         SCOPE is one of 'hosts', 'engine', 'all'.
+        Default is 'all'.
   --log=FILE
-        Write the log also to FILE. Defaults to a file inside ${LOG_DIR}.
+        Write the log also to FILE.
+        Default is to a file inside ${LOG_DIR}.
 
   Available params for manage-ovirt-metrics-services.yml playbook:
   -e service_state=SERVICE_STATE
         SERVICE_STATE is one of 'started', 'restarted', 'stopped', 'reloaded'.
+        Default is 'restarted'.
   -e service_name=SERVICE_NAME
         SERVICE_NAME is a list of the services that will be managed by the role.
-        Default, ["collectd", "fluentd"].
+        Default is ["collectd", "fluentd"].
   -e service_enabled=SERVICE_ENABLED
         SERVICE_ENABLED is used to configure if the processes will be enabled.
-        Default, is 'yes'.
+        Default is 'yes'.
+
+  Other ansible playbook parameters are passed to the ansible-playbook.
 __EOF__
 	exit 1
 }
