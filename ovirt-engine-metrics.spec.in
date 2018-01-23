@@ -67,6 +67,10 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Jan 23 2018 Shirly Radco <sradco@redhat.com> - 1.1.2.2
+Fixed issues:
+- Bug 1506178 - Fix configure metrics script help message
+
 * Wed Jan 17 2018 Shirly Radco <sradco@redhat.com> - 1.1.2.1
 Fixed issues:
 - Bug 1534240 - fluentd: filter out vdsm hosts metrics
