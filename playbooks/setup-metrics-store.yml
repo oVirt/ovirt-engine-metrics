@@ -1,0 +1,7 @@
+---
+- name: Setup metrics store
+  hosts: engine
+
+  roles:
+    - oVirt.metrics/roles/oVirt.initial-validations
+    - { role: oVirt.metrics/roles/oVirt.metrics-store-setup, when: viaq_metrics_store == true }

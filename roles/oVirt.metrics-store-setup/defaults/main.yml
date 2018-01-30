@@ -1,0 +1,3 @@
+---
+# Using openshift based EFK metrics store
+viaq_metrics_store: true

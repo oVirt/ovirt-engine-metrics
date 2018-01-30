@@ -1,0 +1,4 @@
+---
+dependencies:
+  - oVirt.ovirt-metrics-store-setup/viaq-post-install
+  - oVirt.ovirt-metrics-store-setup/set-metrics-store-parameters

@@ -1,0 +1,27 @@
+---
+- name: Copy certificates to engine machine
+  copy:
+    src: '/tmp/{{ item }}'
+    dest: '{{ ovirt_metrics_pkg_sysconf_dir }}/{{ item }}'
+  with_items:
+    - ovirt-metrics-{{ ovirt_env_name}}-uuid
+    - ovirt-logs-{{ ovirt_env_name}}-uuid
+    - fluentd-ca
+    - fluentd-cert
+    - fluentd-key
+
+- name: Read metrics index uuid
+  set_fact:
+    metrics_index_uuid: "{{ lookup('file', ovirt_metrics_pkg_sysconf_dir+'/ovirt-metrics-'+ovirt_env_name+'-uuid') }}"
+
+- name: Read logs index uuid
+  set_fact:
+    logs_index_uuid: "{{ lookup('file',  ovirt_metrics_pkg_sysconf_dir+'/ovirt-logs-'+ovirt_env_name+'-uuid') }}"
+
+- name: Install Viaq metrics store config file
+  template:
+    src: viaq_post_install_params.conf
+    dest: '{{ ovirt_metrics_config_yml_dir }}/10-viaq_config.conf'
+    owner: '{{ ovirt_metrics_config_yml_d_owner }}'
+    group: '{{ ovirt_metrics_config_yml_d_group }}'
+    mode: '{{ ovirt_metrics_config_yml_d_mode }}'
