@@ -55,6 +55,7 @@
 - name: Read fluentd elasticsearch client key
   set_fact:
     fluentd_elasticsearch_client_key: "{{ lookup('file', local_fluentd_elasticsearch_client_key_path) }}"
+  no_log: true
   when:
     - fluentd_output_plugin == fluentd_output_plugin_elasticsearch
     - local_fluentd_elasticsearch_client_key_path_exists.stat.exists
