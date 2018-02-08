@@ -7,6 +7,13 @@ LoadPlugin entropy
 LoadPlugin interface
 LoadPlugin uptime
 
+LoadPlugin virt
+<Plugin virt>
+    ExtraStats "disk disk_err pcpu vcpupin cpu_util domain_state"
+    HostnameFormat hostname
+    PluginInstanceFormat name
+</Plugin>
+
 LoadPlugin cpu
 <Plugin cpu>
   ReportByState true

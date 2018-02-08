@@ -4,3 +4,4 @@
 collectd_host_plugin_packages:
   - collectd-disk
   - collectd-write_http
+  - collectd-virt
