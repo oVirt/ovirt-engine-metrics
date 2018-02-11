@@ -1,0 +1,37 @@
+---
+- name: Generate vars.yml file
+  template:
+    src: vars.yaml.template
+    dest: '{{ vars_yaml_file_path }}'
+    mode: 0644
+  delegate_to: "{{ fluentd_elasticsearch_host }}"
+
+- name: Copy OCP 3.6 inventory file
+  copy:
+    src: ansible-inventory-ocp-36-aio
+    dest: '{{ ansible_inventory_file_path }}'
+    mode: 0644
+  when:
+    - openshift_deployment_type == "openshift-enterprise"
+    - openshift_enterprise_release == 3.6
+  delegate_to: "{{ fluentd_elasticsearch_host }}"
+
+- name: Copy OpenShift origin 3.6 inventory file
+  copy:
+    src: ansible-inventory-origin-36-aio
+    dest: '{{ ansible_inventory_file_path }}'
+    mode: 0644
+  when:
+    - openshift_deployment_type == "origin"
+    - openshift_origin_release == 3.6
+  delegate_to: "{{ fluentd_elasticsearch_host }}"
+
+- name: Copy OpenShift origin 3.7 inventory file
+  copy:
+    src: ansible-inventory-origin-37-aio
+    dest: '{{ ansible_inventory_file_path }}'
+    mode: 0644
+  when:
+    - openshift_deployment_type == "origin"
+    - openshift_origin_release == 3.7
+  delegate_to: "{{ fluentd_elasticsearch_host }}"

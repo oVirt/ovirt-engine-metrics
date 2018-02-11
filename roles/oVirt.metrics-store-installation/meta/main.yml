@@ -1,0 +1,3 @@
+---
+dependencies:
+  - oVirt.ovirt-metrics-store-installation/get-installation-files

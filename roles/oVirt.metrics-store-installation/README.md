@@ -1,6 +1,6 @@
-## oVirt.metrics-store-setup
+## oVirt.metrics-store-installation
 
-This role runs dependent post metrics store setup roles, Roles list is located in the meta directory.
+This role runs dependent metrics store installation roles, Roles list is located in the meta directory.
 
 It is run as part of the `Configure Metrics`.
 
