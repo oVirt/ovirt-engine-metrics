@@ -8,15 +8,15 @@
 
 - name: Include oVirt metrics config.yml file
   include_vars:
-    file: "{{ ovirt_metrics_config_yml_file }}"
+    file: '{{ ovirt_metrics_config_yml_file }}'
   when: stat_result.stat.exists == True
   run_once: true
   delegate_to: localhost
 
 - name: Include oVirt metrics config.yml.d vars directory
   include_vars:
-    dir: "{{ ovirt_metrics_config_yml_dir }}"
-    ignore_files: 'README.md'
+    dir: '{{ ovirt_metrics_config_yml_dir }}'
+    ignore_files: ['README.md']
   run_once: true
   delegate_to: localhost
 
