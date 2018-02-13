@@ -2,8 +2,10 @@
 - name: Get ovirt_engine_fqdn
   delegate_to: localhost
   shell: ". {{ engine_prolog_path }}; echo $ENGINE_FQDN"
+  run_once: true
   register: ovirt_engine_fqdn_result
 
 - name: Save ovirt_engine_fqdn as fact
   set_fact:
     ovirt_engine_fqdn: "{{ ovirt_engine_fqdn_result.stdout }}"
+  run_once: true
