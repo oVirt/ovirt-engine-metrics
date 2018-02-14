@@ -4,6 +4,6 @@
 
   roles:
     - oVirt.metrics/roles/oVirt.initial-validations
-    - { role: oVirt.metrics/roles/oVirt.metrics-store-setup, when: viaq_metrics_store |default(true) }
+    - { role: oVirt.metrics/roles/oVirt.metrics-store-setup, when: (viaq_metrics_store |default(true) and fluentd_output_plugin|default("elasticsearch") == "elasticsearch") }
     - oVirt.metrics/roles/oVirt.fluentd
     - oVirt.metrics/roles/oVirt.collectd
