@@ -81,3 +81,26 @@
   shell: oc login --username=system:admin
   delegate_to: "{{ fluentd_elasticsearch_host }}"
   run_once: true
+
+- name: Generate curator configmap
+  template:
+    src: ovirt_metrics_curator_configmap.template
+    dest: '{{ curator_configmap_file_path }}'
+    mode: 0644
+  delegate_to: "{{ fluentd_elasticsearch_host }}"
+  run_once: true
+
+- name: Delete the current curator configmap file
+  shell: oc delete configmap logging-curator ; sleep 1
+  delegate_to: "{{ fluentd_elasticsearch_host }}"
+  run_once: true
+
+- name: Create the new curator configmap file
+  shell: oc create configmap logging-curator --from-file=config.yaml='{{ curator_configmap_file_path }}' ; sleep 1
+  delegate_to: "{{ fluentd_elasticsearch_host }}"
+  run_once: true
+
+- name: Redeploy the curator
+  shell: oc deploy --latest logging-curator
+  delegate_to: "{{ fluentd_elasticsearch_host }}"
+  run_once: true
