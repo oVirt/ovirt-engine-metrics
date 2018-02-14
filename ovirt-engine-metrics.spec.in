@@ -68,6 +68,16 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Thu Feb 15 2018 Shirly Radco <sradco@redhat.com> - 1.1.3
+Fixed issues:
+- Bug 1530919 - ansible: add config.yml.d directory
+- Bug 1507294 - ansible: set metrics store certificates params
+- Bug 1507294 - fluentd: handle undefined indexes uuids
+- Bug 1540261 - ansible: avoid logging private key
+- Bug 1507294 - ansible: update ovirt-metrics-store-setup role
+- Bug 1542973 - ansible: add role to copy required files
+- Bug 1520126 - ansible: Added tasks to configure curator
+
 * Tue Jan 23 2018 Shirly Radco <sradco@redhat.com> - 1.1.2.2
 Fixed issues:
 - Bug 1506178 - Fix configure metrics script help message
