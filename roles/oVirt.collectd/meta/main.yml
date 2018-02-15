@@ -1,5 +1,6 @@
 ---
 dependencies:
+  - oVirt.ovirt-include-vars-files
   - oVirt.ovirt-collectd/ovirt-check-fluentd-status
   - oVirt.ovirt-collectd/ovirt-collectd-package
   - { role: oVirt.ovirt-collectd/ovirt-host-packages, when: ovirt_metrics_host_deploy is defined or inventory_hostname in groups.hosts }

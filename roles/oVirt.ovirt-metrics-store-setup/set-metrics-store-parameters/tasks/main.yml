@@ -1,18 +1,4 @@
 ---
-- name: Copy certificates to engine machine
-  fetch:
-    src: '/tmp/{{ item }}'
-    dest: '{{ ovirt_metrics_pkg_sysconf_dir }}/{{ item }}'
-    flat: yes
-  with_items:
-    - ovirt-metrics-{{ ovirt_env_name}}-uuid
-    - ovirt-logs-{{ ovirt_env_name}}-uuid
-    - fluentd-ca
-    - fluentd-cert
-    - fluentd-key
-  run_once: true
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
-
 - name: Read metrics index uuid
   delegate_to: localhost
   run_once: true
@@ -40,4 +26,3 @@
     dir: '{{ ovirt_metrics_config_yml_dir }}'
     ignore_files: ['README.md']
   run_once: true
-  delegate_to: localhost

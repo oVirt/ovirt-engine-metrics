@@ -1,4 +1,5 @@
 ---
 dependencies:
-  - oVirt.ovirt-metrics-store-setup/viaq-post-install
-  - oVirt.ovirt-metrics-store-setup/set-metrics-store-parameters
+  - oVirt.ovirt-include-vars-files
+  - { role: oVirt.ovirt-metrics-store-setup/viaq-post-install, when: (viaq_metrics_store |default(true) and fluentd_output_plugin|default("elasticsearch") == "elasticsearch") }
+  - { role: oVirt.ovirt-metrics-store-setup/set-metrics-store-parameters, when: (viaq_metrics_store |default(true) and fluentd_output_plugin|default("elasticsearch") == "elasticsearch") }

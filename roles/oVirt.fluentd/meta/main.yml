@@ -1,5 +1,6 @@
 ---
 dependencies:
+  - oVirt.ovirt-include-vars-files
   - oVirt.ovirt-fluentd/read-local-pki-files
   - oVirt.ovirt-fluentd/read-local-engine-defaults
   - oVirt.ovirt-fluentd/ovirt-fluentd-package

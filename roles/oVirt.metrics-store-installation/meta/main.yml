@@ -1,3 +1,4 @@
 ---
 dependencies:
+  - oVirt.ovirt-include-vars-files
   - oVirt.ovirt-metrics-store-installation/get-installation-files

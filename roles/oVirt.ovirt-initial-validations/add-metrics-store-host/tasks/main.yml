@@ -1,0 +1,9 @@
+---
+- name: Add metrics store host to the ansible-playbook in-memory inventory
+  add_host:
+    name: "{{ fluentd_elasticsearch_host }}"
+    groups: metrics_store
+  when:
+    - viaq_metrics_store |default(true)
+    - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
+  run_once: true

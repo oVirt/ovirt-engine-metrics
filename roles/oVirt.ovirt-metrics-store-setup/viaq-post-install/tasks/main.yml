@@ -1,7 +1,5 @@
 - name: Log into logging project
   shell: oc project logging
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
-  run_once: true
 
 - name: Remove metrics and logs index uuid files
   file:
@@ -10,97 +8,78 @@
   with_items:
     - /root/ovirt-metrics-{{ ovirt_env_name }}-uuid
     - /root/ovirt-logs-{{ ovirt_env_name }}-uuid
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
-  run_once: true
 
 - name: Getting the ovirt-metrics-{{ ovirt_env_name}} uuid
   shell: oc get project ovirt-metrics-{{ ovirt_env_name }} -o jsonpath='{.metadata.uid}' > /tmp/ovirt-metrics-{{ ovirt_env_name }}-uuid
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
-  run_once: true
 
 - name: Getting the ovirt-logs-{{ ovirt_env_name}} uuid
   shell: oc get project ovirt-logs-{{ ovirt_env_name}} -o jsonpath='{.metadata.uid}' > /tmp/ovirt-logs-{{ ovirt_env_name}}-uuid
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
-  run_once: true
 
 - name: Getting CA cert
   shell: |
     {% raw %}
     oc get secret logging-fluentd --template='{{ index .data "ca" }}' | base64 -d > /tmp/fluentd-ca
     {% endraw %}
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
-  run_once: true
 
 - name: Getting SSL client certificate
   shell: |
     {% raw %}
     oc get secret logging-fluentd --template='{{index .data "cert"}}' | base64 -d > /tmp/fluentd-cert
     {% endraw %}
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
-  run_once: true
 
 - name: GettingSSL client key
   shell: |
     {% raw %}
     oc get secret logging-fluentd --template='{{index .data "key"}}' | base64 -d > /tmp/fluentd-key
     {% endraw %}
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
-  run_once: true
+
+- name: Copy certificates to engine machine
+  fetch:
+    src: '/tmp/{{ item }}'
+    dest: '{{ ovirt_metrics_pkg_sysconf_dir }}/{{ item }}'
+    flat: yes
+  with_items:
+    - ovirt-metrics-{{ ovirt_env_name}}-uuid
+    - ovirt-logs-{{ ovirt_env_name}}-uuid
+    - fluentd-ca
+    - fluentd-cert
+    - fluentd-key
 
 - name: Create admin user
   shell: oc create user admin
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
   ignore_errors: True
-  run_once: true
 
 - name: Create an Identity with identity provider allow_all
   shell: oc create identity allow_all:admin
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
   ignore_errors: True
-  run_once: true
 
 - name: Create a user/identity mapping for the created user and identity
   shell: oc create useridentitymapping allow_all:admin admin
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
   ignore_errors: True
-  run_once: true
 
 - name: Binds the admin role to specified users for all projects in the cluster
   shell: oadm policy add-cluster-role-to-user cluster-admin admin
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
   ignore_errors: True
-  run_once: true
 
 - name: Assign the password immediately without login
   shell: oc login --username=admin --password=admin
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
   ignore_errors: True
-  run_once: true
 
 - name: Log back in as admin user
   shell: oc login --username=system:admin
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
-  run_once: true
 
 - name: Generate curator configmap
   template:
     src: ovirt_metrics_curator_configmap.template
     dest: '{{ curator_configmap_file_path }}'
     mode: 0644
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
-  run_once: true
 
 - name: Delete the current curator configmap file
   shell: oc delete configmap logging-curator ; sleep 1
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
   run_once: true
 
 - name: Create the new curator configmap file
   shell: oc create configmap logging-curator --from-file=config.yaml='{{ curator_configmap_file_path }}' ; sleep 1
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
-  run_once: true
 
 - name: Redeploy the curator
   shell: oc deploy --latest logging-curator
-  delegate_to: "{{ fluentd_elasticsearch_host }}"
-  run_once: true
