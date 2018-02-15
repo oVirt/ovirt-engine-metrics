@@ -83,3 +83,6 @@
 
 - name: Redeploy the curator
   shell: oc deploy --latest logging-curator
+
+- name: Assign an IP Address to the Elasticsearch Service
+  shell: oc patch svc logging-es -p '{"spec"{{":"}}{"externalIPs"{{":"}}["{{ ansible_default_ipv4.address }}"]}}'
