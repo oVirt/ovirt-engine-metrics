@@ -68,6 +68,13 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Feb 20 2018 Shirly Radco <sradco@redhat.com> - 1.1.3.1
+Fixed issues:
+- Add metrics store host to in-memory inventory
+- Bug 1545559 - Assign an IP Address to the Elasticsearch Service
+- Bug 1529271 - replace vdsm stats with collectd virt plugin
+- Bug 1542973 - fixed bug in initial validations
+
 * Thu Feb 15 2018 Shirly Radco <sradco@redhat.com> - 1.1.3
 Fixed issues:
 - Bug 1530919 - ansible: add config.yml.d directory
