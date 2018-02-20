@@ -51,15 +51,15 @@
     msg: "{{ viaq_metrics_store }} is not a valid value for viaq_metrics_store parameter. Please set the parameter to 'true' or 'false'"
   run_once: true
   when:
-    - viaq_metrics_store != true
-    - viaq_metrics_store != false
+    - viaq_metrics_store|default(true) != true
+    - viaq_metrics_store|default(true) != false
     - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
   delegate_to: localhost
 
 - meta: end_play
   when:
-    - viaq_metrics_store != true
-    - viaq_metrics_store != false
+    - viaq_metrics_store|default(true) != true
+    - viaq_metrics_store|default(true) != false
     - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
   run_once: true
   delegate_to: localhost
@@ -87,16 +87,16 @@
     msg: "{{ openshift_deployment_type }} is not a valid value for openshift_deployment_type parameter. Please set the parameter to 'origin' or 'openshift-enterprise'"
   run_once: true
   when:
-    - openshift_deployment_type != "origin"
-    - openshift_deployment_type != "openshift-enterprise"
+    - openshift_deployment_type|default("origin") != "origin"
+    - openshift_deployment_type|default("origin") != "openshift-enterprise"
     - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
     - viaq_metrics_store == "yes"
   delegate_to: localhost
 
 - meta: end_play
   when:
-    - openshift_deployment_type != "origin"
-    - openshift_deployment_type != "openshift-enterprise"
+    - openshift_deployment_type|default("origin") != "origin"
+    - openshift_deployment_type|default("origin") != "openshift-enterprise"
     - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
     - viaq_metrics_store == "yes"
   run_once: true
