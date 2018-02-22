@@ -5,14 +5,11 @@
   when:
     - fluentd_elasticsearch_host == "elasticsearch-server.example.com" or fluentd_elasticsearch_host == "" or fluentd_elasticsearch_host is undefined
     - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
-  delegate_to: localhost
 
 - meta: end_play
   when:
     - fluentd_elasticsearch_host == "elasticsearch-server.example.com" or fluentd_elasticsearch_host == "" or fluentd_elasticsearch_host is undefined
     - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
-  run_once: true
-  delegate_to: localhost
 
 - name: "If output plugin is fluentd, validate host address is set"
   debug:
@@ -20,85 +17,44 @@
   when:
     - fluentd_fluentd_host is undefined
     - fluentd_output_plugin|default("elasticsearch") == "fluentd"
-  run_once: true
-  delegate_to: localhost
 
 - meta: end_play
   when:
     - fluentd_fluentd_host is undefined
     - fluentd_output_plugin|default("elasticsearch") == "fluentd"
-  run_once: true
-  delegate_to: localhost
 
 - name: "Validate viaq_metrics_store parameter is set"
-  debug:
+  fail:
     msg: "viaq_metrics_store parameter is mandatory. Please set the parameter to 'true' or 'false'."
-  run_once: true
   when:
     - viaq_metrics_store is undefined
     - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
-  delegate_to: localhost
-
-- meta: end_play
-  when:
-    - viaq_metrics_store is undefined
-    - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
-  run_once: true
-  delegate_to: localhost
 
 - name: "Validate viaq_metrics_store parameter"
-  debug:
+  fail:
     msg: "{{ viaq_metrics_store }} is not a valid value for viaq_metrics_store parameter. Please set the parameter to 'true' or 'false'"
-  run_once: true
   when:
-    - viaq_metrics_store|default(true) != true
-    - viaq_metrics_store|default(true) != false
+    - viaq_metrics_store|default("") != true
+    - viaq_metrics_store|default("") != false
     - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
-  delegate_to: localhost
-
-- meta: end_play
-  when:
-    - viaq_metrics_store|default(true) != true
-    - viaq_metrics_store|default(true) != false
-    - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
-  run_once: true
-  delegate_to: localhost
 
 - name: "Validate openshift_deployment_type parameter is set"
-  debug:
+  fail:
     msg: "openshift_deployment_type is mandatory, when deploying Viaq Logging. Please set the parameter to 'origin' or 'openshift-enterprise'"
-  run_once: true
   when:
     - openshift_deployment_type is undefined
     - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
-    - viaq_metrics_store == "yes"
-  delegate_to: localhost
-
-- meta: end_play
-  when:
-    - openshift_deployment_type is undefined
-    - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
-    - viaq_metrics_store == "yes"
-  run_once: true
-  delegate_to: localhost
+    - viaq_metrics_store == true
 
 - name: "Validate openshift_deployment_type parameter"
-  debug:
+  fail:
     msg: "{{ openshift_deployment_type }} is not a valid value for openshift_deployment_type parameter. Please set the parameter to 'origin' or 'openshift-enterprise'"
-  run_once: true
   when:
-    - openshift_deployment_type|default("origin") != "origin"
-    - openshift_deployment_type|default("origin") != "openshift-enterprise"
+    - openshift_deployment_type|default("") != "origin"
+    - openshift_deployment_type|default("") != "openshift-enterprise"
     - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
-    - viaq_metrics_store == "yes"
-  delegate_to: localhost
+    - viaq_metrics_store == true
 
-- meta: end_play
-  when:
-    - openshift_deployment_type|default("origin") != "origin"
-    - openshift_deployment_type|default("origin") != "openshift-enterprise"
-    - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
-    - viaq_metrics_store == "yes"
-  run_once: true
-  delegate_to: localhost
+- set_fact:
+    passed_validation: true
 
