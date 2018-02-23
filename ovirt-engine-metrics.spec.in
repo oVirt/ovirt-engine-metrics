@@ -68,6 +68,10 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Fri Feb 23 2018 Shirly Radco <sradco@redhat.com> - 1.1.3.2
+Fixed issues:
+- Bug 1547711 - ansible: End playbook based on initial validations
+
 * Tue Feb 20 2018 Shirly Radco <sradco@redhat.com> - 1.1.3.1
 Fixed issues:
 - Add metrics store host to in-memory inventory
