@@ -1,0 +1,40 @@
+---
+- name: Ensure dashboards examples directory exists
+  file:
+    path: '{{ ovirt_metrics_dashboards_examples_dir }}'
+    state: directory
+    owner: root
+    group: root
+    mode: 0750
+  delegate_to: localhost
+  run_once: true
+
+- name: Generate searches json file
+  template:
+    src: searches.template
+    dest: '{{ ovirt_metrics_dashboards_examples_dir }}searches.json'
+    mode: 0644
+  delegate_to: localhost
+  run_once: true
+
+- name: Generate visualizations json file
+  template:
+    src: visualizations.template
+    dest: '{{ ovirt_metrics_dashboards_examples_dir }}visualizations.json'
+    mode: 0644
+  delegate_to: localhost
+  run_once: true
+
+- name: Copy dashboards json file
+  copy:
+    src: dashboards.json
+    dest: '{{ ovirt_metrics_dashboards_examples_dir }}'
+    mode: 0644
+  delegate_to: localhost
+  run_once: true
+
+- debug:
+    msg: "Example dashboards are located at {{ ovirt_metrics_dashboards_examples_dir }}"
+  delegate_to: localhost
+  run_once: true
+

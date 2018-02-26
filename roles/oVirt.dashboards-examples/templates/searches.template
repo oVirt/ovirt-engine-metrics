@@ -1,0 +1,43 @@
+#jinja2:variable_start_string:'[%' , variable_end_string:'%]'
+[
+  {
+    "_id": "Number-Of-User-Logins-To-Admin-Portal",
+    "_type": "search",
+    "_source": {
+      "title": "Number Of User Logins To Admin Portal",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "message"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"project.ovirt-logs-[%ovirt_env_name%].[%ovirt_env_uuid_logs%].*\",\"query\":{\"query_string\":{\"query\":\"EVENT_ID\\\\: AND USER_VDC_LOGIN(30)\",\"analyze_wildcard\":true}},\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
+      }
+    }
+  },
+  {
+    "_id": "Events-Logs",
+    "_type": "search",
+    "_source": {
+      "title": "Events Logs",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "message"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"project.ovirt-logs-[%ovirt_env_name%].[%ovirt_env_uuid_logs%].*\",\"query\":{\"query_string\":{\"query\":\"EVENT_ID\\\\:\",\"analyze_wildcard\":true}},\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
+      }
+    }
+  }
+]

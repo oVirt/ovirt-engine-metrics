@@ -1,0 +1,5 @@
+---
+ovirt_metrics_pkg_sysconf_dir: /etc/ovirt-engine-metrics
+
+# Path to the dashboard files directory
+ovirt_metrics_dashboards_examples_dir: "{{ ovirt_metrics_pkg_sysconf_dir }}/dashboards-examples/"
