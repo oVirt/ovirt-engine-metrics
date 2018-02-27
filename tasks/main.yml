@@ -5,8 +5,11 @@
 - name: Run fluentd sub-role
   include_role:
     name: "oVirt.metrics/roles/oVirt.fluentd"
+  when:
+    - hostvars['localhost']['failed_validation'] is undefined
 
 - name: Run collectd sub-role
   include_role:
     name: "oVirt.metrics/roles/oVirt.collectd"
-
+  when:
+    - hostvars['localhost']['failed_validation'] is undefined

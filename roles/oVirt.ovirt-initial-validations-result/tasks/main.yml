@@ -1,3 +1,0 @@
----
-- meta: end_play
-  when: hostvars['localhost']['passed_validation'] is undefined

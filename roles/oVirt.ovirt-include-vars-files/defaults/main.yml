@@ -12,7 +12,7 @@ ovirt_metrics_config_yml_d_owner: root
 ovirt_metrics_config_yml_d_group: root
 
 # File mode for config.yml.d vars files.
-ovirt_metrics_config_yml_d_mode: 0640
+ovirt_metrics_config_yml_d_mode: 0644
 
 # File mode for config.yml.d vars directories.
 ovirt_metrics_config_yml_d_dir_mode: 0750

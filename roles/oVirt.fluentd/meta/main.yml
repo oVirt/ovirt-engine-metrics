@@ -1,6 +1,5 @@
 ---
 dependencies:
-  - oVirt.ovirt-initial-validations-result
   - oVirt.ovirt-include-vars-files
   - oVirt.ovirt-fluentd/read-local-pki-files
   - oVirt.ovirt-fluentd/read-local-engine-defaults
