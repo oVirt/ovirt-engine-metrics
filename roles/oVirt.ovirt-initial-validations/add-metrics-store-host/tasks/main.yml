@@ -4,6 +4,7 @@
     name: "{{ fluentd_elasticsearch_host }}"
     groups: metrics_store
   when:
-    - viaq_metrics_store |default(true)
+    - viaq_metrics_store|default(true)|bool
     - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
+    - failed_validation is undefined
   run_once: true
