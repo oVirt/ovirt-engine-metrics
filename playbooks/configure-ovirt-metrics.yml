@@ -4,6 +4,7 @@
 
   roles:
     - role: oVirt.metrics/roles/oVirt.initial-validations
+    - role: oVirt.metrics/roles/oVirt.add-metrics-store-host
 
 - name: Post metrics store installation roles
   hosts: metrics_store

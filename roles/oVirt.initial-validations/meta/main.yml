@@ -4,4 +4,3 @@ dependencies:
   - oVirt.ovirt-initial-validations/validate-ovirt-metrics-configured
   - oVirt.ovirt-initial-validations/validate-config-yml
   - oVirt.ovirt-initial-validations/validate-ovirt-env-name
-  - oVirt.ovirt-initial-validations/add-metrics-store-host
