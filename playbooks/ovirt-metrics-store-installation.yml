@@ -3,11 +3,12 @@
   hosts: engine
 
   roles:
-    - oVirt.metrics/roles/oVirt.initial-validations
+    - role: oVirt.metrics/roles/oVirt.initial-validations
+    - role: oVirt.metrics/roles/oVirt.add-metrics-store-host
 
 
 - name: Metrics store installation roles
   hosts: metrics_store
 
   roles:
-    - { role: oVirt.metrics/roles/oVirt.metrics-store-installation, when: (viaq_metrics_store |default(true) and fluentd_output_plugin|default("elasticsearch") == "elasticsearch") }
+    - role: oVirt.metrics/roles/oVirt.metrics-store-installation

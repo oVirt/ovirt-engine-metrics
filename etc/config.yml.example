@@ -8,13 +8,5 @@
 # https://www.ovirt.org/develop/release-management/features/metrics/metrics-store-installation/#ovirt-metrics-store-setup
 ovirt_env_name: engine
 
-# Use ViaQ Logging metrics store
-viaq_metrics_store: true
-
-# This repository supports OpenShift Origin and OpenShift Container Platform.
-# If you want to install ViaQ Logging you should choose the deployment type.
-# Available options: origin, openshift-enterprise.
-openshift_deployment_type:
-
 # Address or hostname (FQDN) of the Elasticsearch server host.
 fluentd_elasticsearch_host: elasticsearch-server.example.com

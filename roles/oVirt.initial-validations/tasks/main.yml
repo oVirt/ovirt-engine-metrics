@@ -56,48 +56,6 @@
       changed_when: true
       notify:  set failed validation
 
-    - name: "Validate viaq_metrics_store parameter is set"
-      debug:
-        msg: "ERROR viaq_metrics_store parameter is mandatory. Please set the parameter to 'true' or 'false'."
-      when:
-        - viaq_metrics_store is undefined
-        - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
-      changed_when: true
-      notify: set failed validation
-
-    - name: "Validate viaq_metrics_store parameter"
-      debug:
-        msg: "ERROR {{ viaq_metrics_store }} is not a valid value for viaq_metrics_store parameter. Please set the parameter to 'true' or 'false'"
-      when:
-        - viaq_metrics_store is defined
-        - viaq_metrics_store != true
-        - viaq_metrics_store != false
-        - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
-      changed_when: true
-      notify: set failed validation
-
-    - name: "Validate openshift_deployment_type parameter is set"
-      debug:
-        msg: "ERROR openshift_deployment_type is mandatory, when deploying Viaq Logging. Please set the parameter to 'origin' or 'openshift-enterprise'"
-      when:
-        - openshift_deployment_type is undefined
-        - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
-        - viaq_metrics_store|default(false) == true
-      changed_when: true
-      notify: set failed validation
-
-    - name: "Validate openshift_deployment_type parameter"
-      debug:
-        msg: "ERROR {{ openshift_deployment_type }} is not a valid value for openshift_deployment_type parameter. Please set the parameter to 'origin' or 'openshift-enterprise'"
-      when:
-        - openshift_deployment_type is defined
-        - openshift_deployment_type|default("") != "origin"
-        - openshift_deployment_type|default("") != "openshift-enterprise"
-        - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
-        - viaq_metrics_store|default(false) == true
-      changed_when: true
-      notify: set failed validation
-
     - name: force all notified handlers to run at this point, not waiting for normal sync points
       meta: flush_handlers
 
