@@ -88,4 +88,32 @@
     - name: Assign an IP Address to the Elasticsearch Service
       shell: oc patch svc logging-es -p '{"spec"{{":"}}{"externalIPs"{{":"}}["{{ ansible_default_ipv4.address }}"]}}'
 
-  when: viaq_metrics_store |default(true)|bool and fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
+    - name: Read metrics index uuid
+      delegate_to: localhost
+      run_once: true
+      set_fact:
+        metrics_index_uuid: "{{ lookup('file', ovirt_metrics_pkg_sysconf_dir+'/ovirt-metrics-'+ovirt_env_name+'-uuid') }}"
+
+    - name: Read logs index uuid
+      delegate_to: localhost
+      run_once: true
+      set_fact:
+        logs_index_uuid: "{{ lookup('file',  ovirt_metrics_pkg_sysconf_dir+'/ovirt-logs-'+ovirt_env_name+'-uuid') }}"
+
+    - name: Install Viaq metrics store config file
+      delegate_to: localhost
+      run_once: true
+      template:
+        src: viaq_post_install_params.conf
+        dest: '{{ ovirt_metrics_config_yml_dir }}/10-viaq_config.yml'
+        owner: '{{ ovirt_metrics_config_yml_d_owner }}'
+        group: '{{ ovirt_metrics_config_yml_d_group }}'
+        mode: '{{ ovirt_metrics_config_yml_d_mode }}'
+
+    - name: Include oVirt metrics config.yml.d vars directory
+      include_vars:
+        dir: '{{ ovirt_metrics_config_yml_dir }}'
+        ignore_files: ['README.md']
+      run_once: true
+
+  when: viaq_metrics_store|default(true)|bool and fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
