@@ -4,14 +4,12 @@ dependencies:
   - oVirt.ovirt-fluentd/read-local-pki-files
   - oVirt.ovirt-fluentd/read-local-engine-defaults
   - oVirt.ovirt-fluentd/ovirt-fluentd-package
-  - { role: oVirt.ovirt-fluentd/ovirt-host-packages, when: ovirt_metrics_host_deploy is defined or inventory_hostname in groups.hosts }
-  - { role: oVirt.ovirt-fluentd/ovirt-engine-packages, when: ovirt_metrics_host_deploy is undefined and inventory_hostname in groups.engine }
   - oVirt.ovirt-fluentd/fluentd-setup
   - oVirt.ovirt-fluentd/set-fluentd-system-configurations
   - oVirt.ovirt-fluentd/client
   - oVirt.ovirt-fluentd/http-input
-  - { role: oVirt.ovirt-fluentd/ovirt-host, when: ovirt_metrics_host_deploy is defined or inventory_hostname in groups.hosts }
-  - { role: oVirt.ovirt-fluentd/ovirt-engine, when: ovirt_metrics_host_deploy is undefined and inventory_hostname in groups.engine }
-  - { role: oVirt.ovirt-fluentd/ovirt-host-logs, when: ovirt_metrics_host_deploy is defined or inventory_hostname in groups.hosts }
-  - { role: oVirt.ovirt-fluentd/ovirt-engine-logs, when: ovirt_metrics_host_deploy is undefined and inventory_hostname in groups.engine }
+  - oVirt.ovirt-fluentd/ovirt-host
+  - oVirt.ovirt-fluentd/ovirt-engine
+  - oVirt.ovirt-fluentd/ovirt-host-logs
+  - oVirt.ovirt-fluentd/ovirt-engine-logs
   - oVirt.ovirt-fluentd/ovirt-post-processing-common

@@ -1,6 +1,3 @@
 ---
 dependencies:
   - oVirt.ovirt-include-vars-files
-  - oVirt.ovirt-initial-validations/validate-ovirt-metrics-configured
-  - oVirt.ovirt-initial-validations/validate-config-yml
-  - oVirt.ovirt-initial-validations/validate-ovirt-env-name

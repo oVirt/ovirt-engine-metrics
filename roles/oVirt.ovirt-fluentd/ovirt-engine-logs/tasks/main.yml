@@ -1,27 +1,29 @@
 ---
-- name: Ensure fluentd pos_files directory exists
-  file:
-    path: '{{ fluentd_pos_files_dir }}'
-    state: directory
-    owner: '{{ fluentd_owner }}'
-    group: '{{ fluentd_group }}'
-    mode: '{{ fluentd_pos_files_dir_mode }}'
+- block:
+    - name: Ensure fluentd pos_files directory exists
+      file:
+        path: '{{ fluentd_pos_files_dir }}'
+        state: directory
+        owner: '{{ fluentd_owner }}'
+        group: '{{ fluentd_group }}'
+        mode: '{{ fluentd_pos_files_dir_mode }}'
 
-- name: Create ovirt-engine.log.pos
-  copy:
-    content: ""
-    dest: '{{ fluentd_ovirt_engine_log_pos_file }}'
-    force: no
-    owner: '{{ fluentd_owner }}'
-    group: '{{ fluentd_group }}'
-    mode: '{{ fluentd_pos_files_mode }}'
-  notify: restart fluentd
+    - name: Create ovirt-engine.log.pos
+      copy:
+        content: ""
+        dest: '{{ fluentd_ovirt_engine_log_pos_file }}'
+        force: no
+        owner: '{{ fluentd_owner }}'
+        group: '{{ fluentd_group }}'
+        mode: '{{ fluentd_pos_files_mode }}'
+      notify: restart fluentd
 
-- name: Configure oVirt engine logs processing
-  template:
-    src: ovirt-engine-processing.conf
-    dest: '{{ fluentd_config_parts_dir }}/20-ovirt-engine-logs-processing.conf'
-    owner: '{{ fluentd_owner }}'
-    group: '{{ fluentd_group }}'
-    mode: '{{ fluentd_config_mode }}'
-  notify: restart fluentd
+    - name: Configure oVirt engine logs processing
+      template:
+        src: ovirt-engine-processing.conf
+        dest: '{{ fluentd_config_parts_dir }}/20-ovirt-engine-logs-processing.conf'
+        owner: '{{ fluentd_owner }}'
+        group: '{{ fluentd_group }}'
+        mode: '{{ fluentd_config_mode }}'
+      notify: restart fluentd
+  when: ovirt_metrics_host_deploy is undefined and inventory_hostname in groups.engine

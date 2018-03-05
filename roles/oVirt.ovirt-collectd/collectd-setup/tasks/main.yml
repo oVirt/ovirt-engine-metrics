@@ -17,3 +17,9 @@
       name: '{{ collectd_service_name }}'
       state: stopped
   when: fluentd_is_running|default(false)|bool == false
+
+- name: Place global-configuration
+  template:
+    src: global_configuration.conf.j2
+    dest: /etc/collectd.d/05-global-configuration.conf
+  notify: restart collectd

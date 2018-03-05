@@ -69,6 +69,37 @@ oVirt Metrics - collectd loaded plugins list and configurations:
   Keeps track of the system uptime, providing informations such as the average running time or
   the maximum reached uptime over a certain period of time.
 
+- `postgres`
+
+  PostgreSQL database statistics: custom_deadlocks, table_states, disk_io, disk_usage.
+
+The available variables for this role are:
+
+- `configure_collectd_postgresql:`  (default: `"true"`)
+
+  Whether to configure collectd_postgresql
+
+
+In order to set these variable add the required variables to the config.yml
+or in the command line.
+
+For example, if you want to update the `configure_collectd_postgresql`,
+you would need to run the Ovirt metrics configuration script like this:
+
+::
+
+
+    configure_ovirt_machines_for_metrics.sh -e "configure_collectd_postgresql=false"
+
+
+or add the following line to the config.yml file and run configure_ovirt_machines_for_metrics.sh
+
+::
+
+    configure_collectd_postgresql: false
+
+You don't need to update the configuration file if you wish to use default options.
+
 
 For a full documentation of each plugin, please refer to collectd man pages:
 <https://collectd.org/documentation/manpages/collectd.conf.5>

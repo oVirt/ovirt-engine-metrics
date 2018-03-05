@@ -5,3 +5,26 @@
     state: latest
   when: manage_packages|default(true)
   notify: restart fluentd
+
+- name: Install fluentd engine plugins
+  yum:
+    name: '{{ item }}'
+    state: latest
+  with_items:
+    - '{{ fluentd_engine_plugin_packages }}'
+  when:
+    - manage_packages|default(true)
+    - ovirt_metrics_host_deploy is undefined
+    - inventory_hostname in groups.engine
+  notify: restart fluentd
+
+- name: Install fluentd host plugins
+  yum:
+    name: '{{ item }}'
+    state: latest
+  with_items:
+    - '{{ fluentd_host_plugin_packages }}'
+  when:
+    - manage_packages|default(true)
+    - ovirt_metrics_host_deploy is defined or inventory_hostname in groups.hosts
+  notify: restart fluentd
