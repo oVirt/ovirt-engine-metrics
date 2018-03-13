@@ -68,6 +68,18 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Mar 13 2018 Shirly Radco <sradco@redhat.com> - 1.1.3.3
+Fixed issues:
+- Bug 1549163 - Remove use of end_play and fail module
+- Bug 1549163 - fix bug in initial validations
+- ansible: separate add-metrics-store-host role
+- ansible: group roles
+- Bug 1542973 - Updated get-installation-files role
+- Merge metrics-store-setup sub-roles
+- Merge ovirt-metrics-installation sub-roles
+- Bug 1506176 - Update manage-services readme
+- Bug 1475681 - Add add-dashboards-examples role
+
 * Fri Feb 23 2018 Shirly Radco <sradco@redhat.com> - 1.1.3.2
 Fixed issues:
 - Bug 1547711 - ansible: End playbook based on initial validations
