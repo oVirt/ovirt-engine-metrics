@@ -4,3 +4,6 @@ vars_yaml_file_path: /root/vars.yaml
 
 # Path to ansible inventory file that will be used for the Viaq logging installation
 ansible_inventory_files_path: /root/
+
+# Path to preallocated partition to be used for elasticsearch persistent storage
+ovirt_elasticsearch_mounted_storage_path: /var

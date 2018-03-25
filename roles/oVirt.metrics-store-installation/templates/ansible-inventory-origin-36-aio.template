@@ -1,14 +1,14 @@
+#jinja2:variable_start_string:'[%' , variable_end_string:'%]'
 [OSEv3:children]
 nodes
 masters
-etcd
 
 [OSEv3:vars]
 ansible_connection=local
-openshift_release=v3.7
+openshift_release=v3.6
 openshift_hosted_logging_deploy=true
 openshift_logging_install_logging=true
-short_version=3.7
+short_version=3.6
 openshift_image_tag=latest
 oreg_url=openshift/origin-${component}:latest
 openshift_deployment_type=origin
@@ -24,15 +24,10 @@ openshift_logging_mux_allow_external=True
 openshift_disable_check="package_version,docker_storage"
 openshift_logging_mux_file_buffer_storage_type=hostmount
 openshift_logging_elasticsearch_storage_type=hostmount
-openshift_logging_elasticsearch_hostmount_path=/var/lib/elasticsearch
-openshift_logging_elasticsearch_proxy_image_prefix=docker.io/openshift/
-openshift_logging_elasticsearch_proxy_image_version=v1.1.0
+openshift_logging_elasticsearch_hostmount_path=[%ovirt_elasticsearch_mounted_storage_path%]/lib/elasticsearch
 
 [nodes]
 localhost storage=True openshift_node_labels="{'region': 'infra'}" openshift_schedulable=True
 
 [masters]
-localhost storage=True openshift_node_labels="{'region': 'infra'}" openshift_schedulable=True
-
-[etcd]
 localhost storage=True openshift_node_labels="{'region': 'infra'}" openshift_schedulable=True

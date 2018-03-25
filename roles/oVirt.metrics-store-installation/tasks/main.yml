@@ -7,9 +7,9 @@
         mode: 0644
 
     - name: Copy inventory files to metrics store machine
-      copy:
-        src: '{{ item }}'
-        dest: '{{ ansible_inventory_files_path }}'
+      template:
+        src: '{{ item }}.template'
+        dest: '{{ ansible_inventory_files_path }}/{{ item }}'
         mode: 0644
       with_items:
         - ansible-inventory-ocp-36-aio
