@@ -8,6 +8,14 @@
   changed_when: true
   notify: set failed validation
 
+- name: "Validate ovirt-env-name parameter is set"
+  debug:
+    msg: "oVirt Metrics store is not configured. This host will not be configured to send metrics"
+  when:
+    - ovirt_env_name is undefined
+  changed_when: true
+  notify: set failed validation
+
 - name: "If output plugin is fluentd, validate host address is set"
   debug:
     msg: "oVirt Metrics store is not configured. This host will not be configured to send metrics"
