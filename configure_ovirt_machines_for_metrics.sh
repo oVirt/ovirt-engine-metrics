@@ -9,7 +9,7 @@ Usage: $0
         ${PLAYBOOK}, manage-ovirt-metrics-services.yml, ovirt-metrics-store-installation.yml.
         Default is ${PLAYBOOK}.
   --scope=SCOPE
-        SCOPE is one of 'hosts', 'engine', 'all'.
+        SCOPE is one of 'engine', 'all'.
         Default is 'all'.
   --log=FILE
         Write the log also to FILE.
@@ -123,5 +123,5 @@ ansible-playbook \
 	playbooks/"${PLAYBOOK}" \
 	-e ansible_ssh_private_key_file="${ENGINE_PKI}/keys/engine_id_rsa" \
 	-e pg_db_name="${ENGINE_DB_DATABASE}" \
-	-l "${SCOPE}" \
+	-l "metrics_store,${SCOPE}" \
 	"${extra_opts[@]}"
