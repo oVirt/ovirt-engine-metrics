@@ -68,6 +68,13 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Wed Mar 28 2018 Shirly Radco <sradco@redhat.com> - 1.1.3.4
+Fixed issues:
+- Bug 1559042 - remove OpenShift memory and disk check flags
+- Bug 1560922 - Added the metrics_store machine to the --scope
+- Validate ovirt-env-name parameter is set
+- Bug 1560240 - updated openshift_logging_elasticsearch_hostmount_path
+
 * Tue Mar 13 2018 Shirly Radco <sradco@redhat.com> - 1.1.3.3
 Fixed issues:
 - Bug 1549163 - Remove use of end_play and fail module
