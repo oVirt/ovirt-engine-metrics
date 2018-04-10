@@ -68,6 +68,11 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Apr 28 2018 Shirly Radco <sradco@redhat.com> - 1.1.4
+Fixed issues:
+- Bug 1561927 - fix timezone for logs parsing
+- Bug 1563681 - Added ansible-inventory 3.9
+
 * Wed Mar 28 2018 Shirly Radco <sradco@redhat.com> - 1.1.3.4
 Fixed issues:
 - Bug 1559042 - remove OpenShift memory and disk check flags
