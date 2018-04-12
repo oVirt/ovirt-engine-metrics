@@ -87,6 +87,7 @@
 
     - name: Assign an IP Address to the Elasticsearch Service
       shell: oc patch svc logging-es -p '{"spec"{{":"}}{"externalIPs"{{":"}}["{{ ansible_default_ipv4.address }}"]}}'
+      ignore_errors: True
 
     - name: Read metrics index uuid
       delegate_to: localhost
