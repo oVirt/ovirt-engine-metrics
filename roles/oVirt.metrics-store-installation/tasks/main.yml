@@ -1,15 +1,9 @@
 ---
 - block:
-    - name: Generate vars.yml file
-      template:
-        src: vars.yaml.template
-        dest: '{{ vars_yaml_file_path }}'
-        mode: 0644
-
-    - name: Copy inventory files to metrics store machine
+    - name: Copy ansible inventory and vars files to metrics store machine
       template:
         src: '{{ item }}.template'
-        dest: '{{ ansible_inventory_files_path }}/{{ item }}'
+        dest: '{{ openshift_ansible_files_path }}/{{ item }}'
         mode: 0644
       with_items:
         - ansible-inventory-ocp-36-aio
@@ -17,4 +11,5 @@
         - ansible-inventory-origin-36-aio
         - ansible-inventory-origin-37-aio
         - ansible-inventory-origin-39-aio
+        - vars.yaml
   when: viaq_metrics_store |default(true)|bool and fluentd_output_plugin|default("elasticsearch") == "elasticsearch"

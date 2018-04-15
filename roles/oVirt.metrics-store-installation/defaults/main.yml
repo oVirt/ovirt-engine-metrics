@@ -1,9 +1,6 @@
 ---
-# Path to var.yml file that will be used for the Viaq logging installation
-vars_yaml_file_path: /root/vars.yaml
+# Path to OpenShift Logging ansible inventory and vars files
+openshift_ansible_files_path: /root/
 
-# Path to ansible inventory file that will be used for the Viaq logging installation
-ansible_inventory_files_path: /root/
-
-# Path to preallocated partition to be used for elasticsearch persistent storage
-ovirt_elasticsearch_mounted_storage_path: /var
+# Path to Elasticsearch persistent storage preallocated partition
+ovirt_elasticsearch_mounted_storage_path: /var/lib/
