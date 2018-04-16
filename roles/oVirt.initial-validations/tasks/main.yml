@@ -39,7 +39,7 @@
     - name: Check environment name does not start with a number
       debug:
         msg: "ERROR '{{ ovirt_env_name }}' can not begin with a number. Please update ovirt_env_name in the config.yml file"
-      when: ovirt_env_name | match('^[0-9]')
+      when: ovirt_env_name is match('^[0-9]')
       changed_when: true
       notify:  set failed validation
 
@@ -60,7 +60,7 @@
     - name: Check environment name includes only alphanum and dashes
       debug:
         msg: "ERROR '{{ ovirt_env_name }}' can include only alpahnumerics and hyphens ('-'). Please update ovirt_env_name in the config.yml file"
-      when: ovirt_env_name | match('.*[^a-zA-Z0-9-].*')
+      when: ovirt_env_name is match('.*[^a-zA-Z0-9-].*')
       changed_when: true
       notify:  set failed validation
 
