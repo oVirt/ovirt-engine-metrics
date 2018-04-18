@@ -68,7 +68,14 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
-* Tue Apr 28 2018 Shirly Radco <sradco@redhat.com> - 1.1.4
+* Wed Apr 18 2018 Shirly Radco <sradco@redhat.com> - 1.1.4.1
+Fixed issues:
+- Bug 1566523 - Ignore failure when externalIP is already set 
+- collectd: update write_http and general configs
+- Bug 1566519 - Update tests used as filters due to deprecation
+- Bug 1560240 - Updated ovirt_elasticsearch_mounted_storage_path
+
+* Tue Apr 10 2018 Shirly Radco <sradco@redhat.com> - 1.1.4
 Fixed issues:
 - Bug 1561927 - fix timezone for logs parsing
 - Bug 1563681 - Added ansible-inventory 3.9
