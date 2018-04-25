@@ -68,9 +68,15 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Wed Apr 25 2018 Shirly Radco <sradco@redhat.com> - 1.1.4.2
+Fixed issues:
+- Bug 1475681 - Update dashboards - add vms widgets
+- Bug 1475681 - update dashboards to use ovirt.class
+- Bug 1475681 - Update kibana widgets names and axeses names
+
 * Wed Apr 18 2018 Shirly Radco <sradco@redhat.com> - 1.1.4.1
 Fixed issues:
-- Bug 1566523 - Ignore failure when externalIP is already set 
+- Bug 1566523 - Ignore failure when externalIP is already set
 - collectd: update write_http and general configs
 - Bug 1566519 - Update tests used as filters due to deprecation
 - Bug 1560240 - Updated ovirt_elasticsearch_mounted_storage_path
