@@ -31,13 +31,13 @@ fluentd_buffer_queue_limit_metrics: 8
 
 fluentd_buffer_queue_full_action_metrics: drop_oldest_chunk
 
-fluentd_retry_wait_metrics: 1s
+fluentd_retry_wait_metrics: 60s
 
-fluentd_retry_limit_metrics: 17
+fluentd_retry_limit_metrics: 8
 
 fluentd_disable_retry_limit_metrics: false
 
-fluentd_max_retry_wait_metrics: 300s
+fluentd_max_retry_wait_metrics: 3600
 
 fluentd_flush_at_shutdown_metrics: true
 
@@ -59,13 +59,13 @@ fluentd_buffer_queue_limit_logs: 8
 
 fluentd_buffer_queue_full_action_logs: block
 
-fluentd_retry_wait_logs: 1s
+fluentd_retry_wait_logs: 60s
 
 fluentd_retry_limit_logs: 17
 
 fluentd_disable_retry_limit_logs: true
 
-fluentd_max_retry_wait_logs: 300s
+fluentd_max_retry_wait_logs: 3600
 
 fluentd_flush_at_shutdown_logs: true
 
