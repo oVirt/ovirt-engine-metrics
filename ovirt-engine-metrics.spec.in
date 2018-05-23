@@ -68,6 +68,11 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Wed May 23 2018 Shirly Radco <sradco@redhat.com> - 1.1.5
+Fixed issues:
+- Bug 1573784 - Update fluentd forward plugin settings
+- Bug 1572508 - Update fluentd buffer output settings
+
 * Wed Apr 25 2018 Shirly Radco <sradco@redhat.com> - 1.1.4.2
 Fixed issues:
 - Bug 1475681 - Update dashboards - add vms widgets
