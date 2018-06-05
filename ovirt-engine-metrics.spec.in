@@ -68,6 +68,10 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Jun 05 2018 Shirly Radco <sradco@redhat.com> - 1.1.5.1
+Fixed issues:
+- Bug 1585963 - Add EOL to collectd 05-global-configuration.conf file
+
 * Wed May 23 2018 Shirly Radco <sradco@redhat.com> - 1.1.5
 Fixed issues:
 - Bug 1573784 - Update fluentd forward plugin settings
