@@ -20,7 +20,7 @@ openshift_logging_use_mux=True
 openshift_logging_mux_allow_external=True
 openshift_logging_mux_file_buffer_storage_type=hostmount
 openshift_logging_elasticsearch_storage_type=hostmount
-openshift_logging_elasticsearch_hostmount_path=[%ovirt_elasticsearch_mounted_storage_path%]elasticsearch
+openshift_logging_elasticsearch_hostmount_path=[%ovirt_elasticsearch_mounted_storage_path%]/elasticsearch
 
 [nodes]
 localhost storage=True openshift_node_labels="{'region': 'infra'}" openshift_schedulable=True

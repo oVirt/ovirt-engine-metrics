@@ -12,4 +12,4 @@ ovirt_env_name: engine
 fluentd_elasticsearch_host: elasticsearch-server.example.com
 
 # Path to preallocated partition to be used for elasticsearch persistent storage
-# ovirt_elasticsearch_mounted_storage_path: /var/lib/
+# ovirt_elasticsearch_mounted_storage_path: /var/lib

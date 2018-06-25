@@ -1,6 +1,6 @@
 ---
 # Path to OpenShift Logging ansible inventory and vars files
-openshift_ansible_files_path: /root/
+openshift_ansible_files_path: /root
 
 # Path to Elasticsearch persistent storage preallocated partition
-ovirt_elasticsearch_mounted_storage_path: /var/lib/
+ovirt_elasticsearch_mounted_storage_path: /var/lib
