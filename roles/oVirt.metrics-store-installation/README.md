@@ -6,11 +6,11 @@ to the metrics store machine.
 
 The available variables for this role are:
 
-- `openshift_ansible_files_path:`(default: `/root/`)
+- `openshift_ansible_files_path:`(default: `/root`)
 
   Path to OpenShift Logging ansible inventory and vars files.
 
-- `ovirt_elasticsearch_mounted_storage_path:`(default:`/var/lib/`)
+- `ovirt_elasticsearch_mounted_storage_path:`(default:`/var/lib`)
 
   Path to Elasticsearch persistent storage preallocated partition
 
@@ -23,13 +23,13 @@ you would need to run the oVirt metrics configuration script like this:
 ::
 
 
-    configure_ovirt_machines_for_metrics.sh -e "openshift_ansible_files_path=/tmp/"
+    configure_ovirt_machines_for_metrics.sh -e "openshift_ansible_files_path=/tmp"
 
 
 or add the following line to the config.yml file and run configure_ovirt_machines_for_metrics.sh
 
 ::
 
-    openshift_ansible_files_path: /tmp/
+    openshift_ansible_files_path: /tmp
 
 You don't need to update the configuration file if you wish to use default options.
