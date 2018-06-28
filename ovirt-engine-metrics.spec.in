@@ -68,6 +68,11 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Thu Jun 28 2018 Shirly Radco <sradco@redhat.com> - 1.1.6
+Fixed issues:
+- Bug 1585666 - metrics: update fluentd metrics buffer
+- Bug 1576391 - Remove trailing / from paths in config
+
 * Tue Jun 05 2018 Shirly Radco <sradco@redhat.com> - 1.1.5.1
 Fixed issues:
 - Bug 1585963 - Add EOL to collectd 05-global-configuration.conf file
