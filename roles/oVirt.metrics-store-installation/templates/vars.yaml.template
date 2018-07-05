@@ -44,18 +44,4 @@ openshift_logging_es_hostname: es.{{ openshift_master_default_subdomain }}
 
 # the public hostname for common logging ingestion - the fluentd secure_forward listener
 openshift_logging_mux_hostname: mux.{{ openshift_master_default_subdomain }}
-
-# ES tuning parameters
-openshift_logging_es_memory_limit: 4Gi
-
-# mux tuning parameters
-#openshift_logging_mux_file_buffer_limit: 2Gi
-openshift_logging_mux_cpu_limit: 500m
-#openshift_logging_mux_memory_limit: 2Gi
-#openshift_logging_mux_buffer_queue_limit: 1024
-openshift_logging_mux_buffer_size_limit: 16m
-#openshift_logging_mux_replicas: 1
-
-# fluentd tuning parameters
-#openshift_logging_fluentd_file_buffer_limit: 1Gi
 {%- endraw %}
