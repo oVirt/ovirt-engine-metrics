@@ -1,4 +1,10 @@
 ---
+# The OpenShift distribution to install
+openshift_distribution: origin
+
+# The OpenShift version to install
+openshift_version: 310
+
 # Path to OpenShift Logging ansible inventory and vars files
 openshift_ansible_files_path: /root
 
