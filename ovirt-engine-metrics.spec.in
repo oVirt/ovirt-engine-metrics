@@ -68,6 +68,11 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Jul 10 2018 Shirly Radco <sradco@redhat.com> - 1.1.6.1
+Fixed issues:
+- Bug 1593646 - Add ansible-inventory files for OpenShift 3.10
+- Remove unneeded mux and memory limit related parameters
+
 * Thu Jun 28 2018 Shirly Radco <sradco@redhat.com> - 1.1.6
 Fixed issues:
 - Bug 1585666 - metrics: update fluentd metrics buffer
