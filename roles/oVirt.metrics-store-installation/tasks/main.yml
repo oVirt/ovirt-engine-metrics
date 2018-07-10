@@ -8,8 +8,10 @@
       with_items:
         - ansible-inventory-ocp-36-aio
         - ansible-inventory-ocp-39-aio
+        - ansible-inventory-ocp-310-aio
         - ansible-inventory-origin-36-aio
         - ansible-inventory-origin-37-aio
         - ansible-inventory-origin-39-aio
+        - ansible-inventory-origin-310-aio
         - vars.yaml
   when: viaq_metrics_store |default(true)|bool and fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
