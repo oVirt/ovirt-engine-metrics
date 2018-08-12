@@ -68,6 +68,11 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Sun Aug 10 2018 Shirly Radco <sradco@redhat.com> - 1.1.7
+Fixed issues:
+- Bug 1607127 - Update latest ansible-inventory files naming
+- Bug 1607127 - Update default openshift version to 3.9
+
 * Tue Jul 10 2018 Shirly Radco <sradco@redhat.com> - 1.1.6.1
 Fixed issues:
 - Bug 1593646 - Add ansible-inventory files for OpenShift 3.10
