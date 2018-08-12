@@ -10,7 +10,7 @@ The available variables for this role are:
   The OpenShift distribution to install.
   Valid options are `origin` and `ocp`.
 
-- `openshift_version:`(default: `310`)
+- `openshift_version:`(default: `39`)
   The OpenShift version to install.
   Valid options are `39` and `310`.
 
