@@ -110,8 +110,8 @@ You will need to set the following variables:
   A list of the the services that will be managed by the role.
 
 
-In order to set these variable add the required variables to the config.yml
-or in the command line.
+In order to set these variable add the required variables to a file in
+/etc/ovirt-engine-metrics/config.yml.d/ or in the command line.
 
 License
 -------

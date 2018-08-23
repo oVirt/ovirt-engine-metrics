@@ -1,5 +1,9 @@
 # This is an example file for oVirt metrics configuration.
-# To use this file, copy it to /etc/ovirt-engine-metrics/config.yml and edit.
+#
+# To run the oVirt metrics configuration playbook, copy this file
+# to /etc/ovirt-engine-metrics/config.yml.d/ directory,
+# rename it to have yml suffix and edit it with your environment details.
+
 
 # Environment name. Can be used to identify data collected in a single central
 # store sent from more than one oVirt engine.

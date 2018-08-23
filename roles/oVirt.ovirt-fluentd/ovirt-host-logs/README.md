@@ -47,8 +47,8 @@ In order to set the required action there are the following variables
   If you do not wish to collect the vdsm.log, update this parameter to `false`.
 
 
-In order to set these variable add the required variables to the config.yml
-or in the command line.
+In order to set these variable add the required variables to a file in
+/etc/ovirt-engine-metrics/config.yml.d/ or in the command line.
 
 For example, if you want to update `fluentd_pos_files_dir`,
 you would need to run the Ovirt metrics configuration script like this:
@@ -59,7 +59,8 @@ you would need to run the Ovirt metrics configuration script like this:
     configure_ovirt_machines_for_metrics.sh -e "fluentd_pos_files_dir=/path/to/dir"
 
 
-or add the following line to the config.yml file and run configure_ovirt_machines_for_metrics.sh
+or add the following line to a file you create in /etc/ovirt-engine-metrics/config.yml.d/
+and run configure_ovirt_machines_for_metrics.sh
 
 ::
 
