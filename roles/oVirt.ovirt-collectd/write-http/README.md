@@ -20,8 +20,8 @@ The available variables for this role are:
   The full URL that collectd will write to. Usually should not be changed.
 
 
-In order to set these variable add the required variables to the config.yml
-or in the command line.
+In order to set these variable add the required variables to a file in
+/etc/ovirt-engine-metrics/config.yml.d/ or in the command line.
 
 For example, if you want to update the `collectd_write_http_port` to 8888,
 you would need to run the Ovirt metrics configuration script like this:
@@ -32,7 +32,8 @@ you would need to run the Ovirt metrics configuration script like this:
     configure_ovirt_machines_for_metrics.sh -e "collectd_write_http_port=8888"
 
 
-or add the following line to the config.yml file and run configure_ovirt_machines_for_metrics.sh
+or add the following line to a file you create in /etc/ovirt-engine-metrics/config.yml.d/
+and run configure_ovirt_machines_for_metrics.sh
 
 ::
 

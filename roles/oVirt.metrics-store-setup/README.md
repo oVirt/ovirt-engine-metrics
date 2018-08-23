@@ -18,8 +18,8 @@ The available variables for this role are:
 
    oVirt metrics indexes older than the number of days stated here will be deleted.
 
-In order to set these variable add the required variables to the config.yml
-or in the command line.
+In order to set these variable add the required variables to a file in
+/etc/ovirt-engine-metrics/config.yml.d/ or in the command line.
 
 For example, if you want to update the `ovirt_metrics_curator_delete_days`,
 you would need to run the oVirt metrics configuration script like this:
@@ -30,7 +30,8 @@ you would need to run the oVirt metrics configuration script like this:
     configure_ovirt_machines_for_metrics.sh -e "ovirt_metrics_curator_delete_days=2"
 
 
-or add the following line to the config.yml file and run configure_ovirt_machines_for_metrics.sh
+or add the following line to a file you create in /etc/ovirt-engine-metrics/config.yml.d/
+and run configure_ovirt_machines_for_metrics.sh
 
 ::
 

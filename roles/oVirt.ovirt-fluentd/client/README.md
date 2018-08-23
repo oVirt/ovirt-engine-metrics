@@ -257,8 +257,8 @@ Events are gathered to chunks by the output plugins.
   Note that parameter type is float, not time.
 
 
-In order to set these variable add the required variables to the config.yml
-or in the command line.
+In order to set these variable add the required variables to a file in
+/etc/ovirt-engine-metrics/config.yml.d/ or in the command line.
 
 For example, if you want to update the `fluentd_keepalive` to 500,
 you would need to run the Ovirt metrics configuration script like this:
@@ -269,7 +269,8 @@ you would need to run the Ovirt metrics configuration script like this:
     configure_ovirt_machines_for_metrics.sh -e "fluentd_keepalive=500"
 
 
-or add the following line to the config.yml file and run configure_ovirt_machines_for_metrics.sh
+or add the following line to a file you create in /etc/ovirt-engine-metrics/config.yml.d/
+and run configure_ovirt_machines_for_metrics.sh
 
 ::
 
