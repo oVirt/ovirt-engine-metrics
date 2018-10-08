@@ -68,6 +68,16 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Mon Oct 08 2018 Shirly Radco <sradco@redhat.com> - 1.2.0
+Fixed issues:
+- Bug 1620595 - Update READMEs update variables
+- Bug 1607127 - Update default openshift version to 3.9
+- Bug 1607127 - Update latest ansible-inventory files naming
+- Bug 1593646 - Add ansible-inventory files for OpenShift 3.10
+- Remove unneeded mux and memory limit related parameters
+- Bug 1576391 - Remove trailing / from paths in config
+- Bug 1585666 - metrics: update fluentd metrics buffer
+
 * Tue Jun 05 2018 Shirly Radco <sradco@redhat.com> - 1.1.5.1
 Fixed issues:
 - Bug 1585963 - Add EOL to collectd 05-global-configuration.conf file
