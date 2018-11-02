@@ -10,9 +10,9 @@ The available variables for this role are:
   The OpenShift distribution to install.
   Valid options are `origin` and `ocp`.
 
-- `openshift_version:`(default: `39`)
+- `openshift_version:`(default: `311`)
   The OpenShift version to install.
-  Valid options are `39` and `310`.
+  Valid options are `39`, `310` and `311`.
 
 - `openshift_ansible_files_path:`(default: `/root`)
 

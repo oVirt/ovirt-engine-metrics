@@ -3,7 +3,7 @@
 openshift_distribution: origin
 
 # The OpenShift version to install
-openshift_version: 39
+openshift_version: 311
 
 # Path to OpenShift Logging ansible inventory and vars files
 openshift_ansible_files_path: /root
