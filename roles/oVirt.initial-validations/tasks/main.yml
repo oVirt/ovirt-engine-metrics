@@ -1,4 +1,18 @@
 ---
+#  notify: set failed validation
+
+- name: Check if Fluentd package is available
+  yum:
+    list: fluentd
+  register: fluentd_pkg
+
+- name: "Validate Fluentd packages is available"
+  debug:
+    msg: "Fluentd package is unavailable. Metrics role will not be able to continue"
+  when: fluentd_pkg.results|length == 0
+  changed_when: true
+  notify: set failed validation
+
 - name: "If output plugin is elasticsearch, validate host address is set"
   debug:
     msg: "oVirt Metrics store is not configured. This host will not be configured to send metrics"
