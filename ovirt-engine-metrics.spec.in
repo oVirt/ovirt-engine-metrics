@@ -68,6 +68,11 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Wed Nov 28 2018 Shirly Radco <sradco@redhat.com> - 1.1.8
+Fixed issues:
+- Bug 1620595 - Update READMEs update variables
+- Bug 1645515 - Update default openshift version to 3.11
+
 * Sun Aug 12 2018 Shirly Radco <sradco@redhat.com> - 1.1.7
 Fixed issues:
 - Bug 1607127 - Update latest ansible-inventory files naming
