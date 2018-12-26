@@ -1,4 +1,4 @@
-## oVirt.ovirt-fluentd/Read-local-pki-files
+## oVirt.Read-local-pki-files
 
 This role reads fluentd pki files from a local file.
 

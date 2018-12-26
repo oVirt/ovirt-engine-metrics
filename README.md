@@ -1,14 +1,14 @@
 oVirt Engine Metrics
 ====================
 
-The `oVirt.metrics` role enables you to set up oVirt Metrics store, deploy fluentd and collectd on the engine and hypervisors
+The `oVirt.metrics` role enables you to set up oVirt Metrics store, deploy rsyslog/fluentd and collectd on the engine and hypervisors
 and manage the services.
 
 Role Variables
 --------------
 
 ### Configure metrics
-This role configures collectd and fluentd services on the oVirt engine and hypervisors,
+This role configures collectd and rsyslog or fluentd services on the oVirt engine and hypervisors,
 to be able to send metrics and logs to a remote metrics store.
 
 In order to run this role you will need to run:
@@ -25,54 +25,9 @@ You will need to set the following variables:
   For more details see:
   https://www.ovirt.org/develop/release-management/features/metrics/metrics-store-installation/#ovirt-metrics-store-setup
 
-- `fluentd_elasticsearch_host:` (required - no default value)
+- `elasticsearch_host:` (required - no default value)
 
   Address or hostname (FQDN) of the Elasticsearch server host.
-
-- `ovirt_env_uuid_metrics:` (required - no default value)
-
-  UUID of the project/namespace used to store metrics records.
-  This is used to construct the index name in Elasticsearch.
-  For example, if you have ovirt_env_name: myenvname,
-  then in logging OpenShift you will have a project named ovirt-metrics-myenvname.
-  You need to get the UUID of this project like this:
-  oc get project ovirt-metrics-myenvname -o jsonpath='{.metadata.uid}'
-
-- `ovirt_env_uuid_logs:` (required - no default value)
-
-  UUID of the project/namespace used to store log records.
-  This is used to construct the index name in Elasticsearch.
-  For example, if you have ovirt_env_name: myenvname,
-  then in logging OpenShift you will have a project named ovirt-logs-myenvname.
-  You need to get the UUID of this project like this:
-  oc get project ovirt-logs-myenvname -o jsonpath='{.metadata.uid}'
-
-- `fluentd_elasticsearch_ca_cert_path:` (required - no default value)
-
-  The path to the file containing the CA certificate of the CA that issued
-  the Elasticsearch SSL server cert.
-  Get it from the logging OpenShift machine like this:
-  oc get secret logging-fluentd --template='{{index .data "ca"}}' | base64 -d > fluentd-ca
-  and use the local_fluentd_elasticsearch_ca_cert_path parameter in your ansible inventory
-  or config file to pass in the file to use.
-
-- `fluentd_elasticsearch_client_cert_path:` (required - no default value)
-
-  The path to the file containing the SSL client certificate to use
-  with certificate authentication to Elasticsearch.
-  Get it from the logging OpenShift machine like this:
-  oc get secret logging-fluentd --template='{{index .data "cert"}}' | base64 -d > fluentd-cert
-  and use the local_fluentd_elasticsearch_client_cert_path parameter in your ansible inventory
-  or config file to pass in the file to use.
-
-- `fluentd_elasticsearch_client_key_path:` (required - no default value)
-
-  The path to the file containing the SSL client key to use
-  with certificate authentication to Elasticsearch.
-  Get it from the logging OpenShift machine like this:
-  oc get secret logging-fluentd --template='{{index .data "key"}}' | base64 -d > fluentd-key
-  and use the local_fluentd_elasticsearch_client_key_path parameter in your ansible inventory
-  or config file to pass in the file to use.
 
 - `manage_services:` (default: `"true"`)
 

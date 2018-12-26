@@ -1,6 +1,6 @@
 ## oVirt.manage-services
 
-This role manages collectd and fluentd services on the oVirt machines
+This role manages collectd , rsyslog and fluentd services on the oVirt machines
 It can start (default) / restart / reload / stop the services.
 It can enable / disable the services.
 
@@ -21,7 +21,7 @@ In order to set the required action there are the following variables
 
   Set this to the required action. Optional values are: started, restarted, stopped reloaded.
 
-- `service_name:` (default: `["collectd", "fluentd"]`)
+- `service_name:` (default: `["collectd", "rsyslog", "fluentd"]`)
 
   A list of the the services that will be managed by the role.
 
@@ -29,7 +29,7 @@ In order to set the required action there are the following variables
 In order to set these variables add the required variables to the config.yml
 or in the command line.
 
-For example, if you want to stop collectd and fluentd services,
+For example, if you want to stop collectd, rsyslog and fluentd services,
 you would need to run the oVirt metrics configuration script like this:
 
 ::

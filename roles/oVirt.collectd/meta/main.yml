@@ -3,10 +3,9 @@ dependencies:
   - oVirt.ovirt-include-vars-files
   - oVirt.ovirt-collectd/ovirt-check-fluentd-status
   - oVirt.ovirt-collectd/ovirt-collectd-package
-  - oVirt.ovirt-collectd/read-local-engine-defaults
+  - oVirt.read-local-engine-defaults
   - oVirt.ovirt-collectd/collectd-setup
-  - oVirt.ovirt-collectd/write-http
   - oVirt.ovirt-collectd/ovirt-host
   - oVirt.ovirt-collectd/ovirt-engine
-  - oVirt.ovirt-collectd/read-statsd
+  - oVirt.ovirt-collectd/collectd-output
   - oVirt.ovirt-collectd/restart-collectd-if-needed

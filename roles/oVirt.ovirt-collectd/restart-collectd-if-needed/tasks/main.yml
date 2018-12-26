@@ -2,7 +2,9 @@
 - name: restart collectd if fluentd is up
   debug:
     msg="trigger collectd restart, since fluentd is up"
-  when: fluentd_is_running|default(false)|bool == true
+  when:
+    - fluentd_is_running|default(false)|bool == true
+    - logging_collector|d('fluentd') == 'fluentd'
   changed_when: fluentd_is_running|default(false)|bool == true
   notify: restart collectd
 
@@ -12,7 +14,9 @@
 - name: pause for collectd to start
   pause:
     seconds: 5
-  when: fluentd_is_running|default(false)|bool == true
+  when:
+    - fluentd_is_running|default(false)|bool == true
+    - logging_collector|d('fluentd') == 'fluentd'
 
 - name: Check if collectd is running
   command: systemctl is-active '{{ collectd_service_name }}'

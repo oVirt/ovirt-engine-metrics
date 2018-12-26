@@ -1,26 +1,58 @@
 ---
-- name: Initial validations
+- name: Add metrics store host to inventory
   hosts: engine
+  tags:
+    - post-install
 
-  roles:
-    - role: oVirt.metrics/roles/oVirt.initial-validations
-    - role: oVirt.metrics/roles/oVirt.add-metrics-store-host
+  tasks:
+    - name: Add metrics store host to inventory
+      include_role:
+        name: "oVirt.metrics/roles/oVirt.add-metrics-store-host"
 
 - name: Post metrics store installation roles
   hosts: metrics_store
+  tags:
+    - post-install
 
-  roles:
-    - role: oVirt.metrics/roles/oVirt.metrics-store-setup
-      when: hostvars['localhost']['failed_validation'] is undefined
-    - role: oVirt.metrics/roles/oVirt.dashboards-examples
-      when: hostvars['localhost']['failed_validation'] is undefined
+  tasks:
+    - block:
+        - name: Run metrics store post installation setup
+          include_role:
+            name: "oVirt.metrics/roles/oVirt.metrics-store-setup"
+
+        - name: Run dashboards examples sub-role
+          include_role:
+            name: "oVirt.metrics/roles/oVirt.dashboards-examples"
+      when:
+        - failed_validation is undefined
 
 - name: Configure Metrics
   hosts: engine:hosts
+  tags:
+    - configuration
 
-  roles:
-    - role: oVirt.metrics/roles/oVirt.initial-validations
-    - role: oVirt.metrics/roles/oVirt.fluentd
-      when: failed_validation is undefined
-    - role: oVirt.metrics/roles/oVirt.collectd
+  tasks:
+    - name: Run initial validations sub-role
+      include_role:
+        name: "oVirt.metrics/roles/oVirt.initial-validations"
+
+    - block:
+        - name: Run Fluentd sub-role
+          include_role:
+            name: "oVirt.metrics/roles/oVirt.fluentd"
+          when:
+            - logging_collector|d('fluentd') == 'fluentd'
+            - run_fluentd_role|d(true)
+
+        - name: Run logging sub-role
+          include_role:
+            name: "oVirt.metrics/roles/oVirt.logging"
+          when:
+            - logging_collector|d('fluentd') == 'rsyslog'
+            - run_logging_role|d(true)
+
+        - name: Run Collectd sub-role
+          include_role:
+            name: "oVirt.metrics/roles/oVirt.collectd"
+          when: run_collectd_role|d(true)
       when: failed_validation is undefined

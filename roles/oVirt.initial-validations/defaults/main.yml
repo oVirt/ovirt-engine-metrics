@@ -1,3 +1,20 @@
 ---
 # Fluentd output plugin that will be used.
 fluentd_output_plugin: elasticsearch
+
+fluentd_base_packages:
+  - fluentd
+  - rubygem-fluent-plugin-collectd-nest
+  - rubygem-fluent-plugin-rewrite-tag-filter
+  - rubygem-fluent-plugin-secure-forward
+  - rubygem-fluent-plugin-viaq_data_model
+  - rubygem-fluent-plugin-elasticsearch
+
+rsyslog_base_packages:
+  - rsyslog
+  - rsyslog-mmnormalize
+  - rsyslog-elasticsearch
+  - rsyslog-mmjsonparse
+  - libfastjson
+  - liblognorm
+  - libestr

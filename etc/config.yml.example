@@ -13,7 +13,7 @@
 ovirt_env_name: engine
 
 # Address or hostname (FQDN) of the Elasticsearch server host.
-fluentd_elasticsearch_host: elasticsearch-server.example.com
+elasticsearch_host:
 
 # Path to preallocated partition to be used for elasticsearch persistent storage
 # ovirt_elasticsearch_mounted_storage_path: /var/lib

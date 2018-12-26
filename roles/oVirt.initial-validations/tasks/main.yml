@@ -1,41 +1,134 @@
 ---
 #  notify: set failed validation
 
-- name: Check if Fluentd package is available
-  yum:
-    list: fluentd
-  register: fluentd_pkg
+# Best effort to use existing user configuration file
+- name: Update fluentd_elasticsearch_host
+  set_fact:
+    fluentd_elasticsearch_host: ""
+  when: (fluentd_elasticsearch_host == "elasticsearch-server.example.com") or (fluentd_elasticsearch_host is undefined)
 
-- name: "Validate Fluentd packages is available"
-  debug:
-    msg: "Fluentd package is unavailable. Metrics role will not be able to continue"
-  when: fluentd_pkg.results|length == 0
-  changed_when: true
-  notify: set failed validation
-
-- name: "If output plugin is elasticsearch, validate host address is set"
-  debug:
-    msg: "oVirt Metrics store is not configured. This host will not be configured to send metrics"
+- name: Set elasticsearch_host if undefined and fluentd_elasticsearch_host is defined
+  set_fact:
+    elasticsearch_host: "{{ fluentd_elasticsearch_host }}"
   when:
-    - fluentd_elasticsearch_host == "elasticsearch-server.example.com" or fluentd_elasticsearch_host == "" or fluentd_elasticsearch_host is undefined
-    - fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
+    - elasticsearch_host is undefined
+
+- name: Set logging_output_type if undefined and fluentd_elasticsearch_host is defined
+  set_fact:
+    logging_output_type: "{{ fluentd_output_plugin|default(elasticsearch) }}"
+  when:
+    logging_output_type is undefined
+
+# Check collectors base packages availability
+- name: Check Rsyslog packages are available
+  yum:
+    name: "{{ rsyslog_base_packages }}"
+  register: rsyslog_packages_availability
+  ignore_errors: true
+
+- name: Set logging_collector as rsyslog
+  set_fact:
+    logging_collector: "rsyslog"
+  when:
+    - rsyslog_packages_availability.rc == 0
+    - logging_collector is undefined
+
+- name: Check Fluentd packages are available
+  yum:
+    name: "{{ fluentd_base_packages }}"
+  register: fluentd_packages_availability
+  ignore_errors: true
+
+- name: Set logging_collector as fluentd
+  set_fact:
+    logging_collector: "fluentd"
+  when:
+    - rsyslog_packages_availability.rc > 0
+    - fluentd_packages_availability.rc == 0
+    - logging_collector is undefined
+
+- name: Validate Fluentd or Rsyslog base packages are available
+  debug:
+    msg: "ERROR Logs collector base packages are not available. Metrics role will not be able to continue"
+  when:
+    - rsyslog_packages_availability.rc > 0
+    - fluentd_packages_availability.rc > 0
   changed_when: true
   notify: set failed validation
 
-- name: "Validate ovirt-env-name parameter is set"
+- name: Validate logging_collector
   debug:
-    msg: "oVirt Metrics store is not configured. This host will not be configured to send metrics"
+    msg: "ERROR log collector is missing required base packages. Metrics role will not be able to continue"
+  when:
+    - logging_collector is undefined
+  changed_when: true
+  notify: set failed validation
+
+# TODO add api to add warning message for the user to update its configuration file
+- block:
+    - name: Validate logging_collector
+      debug:
+        msg: "ERROR Specified log collector is missing required base packages. Metrics role will not be able to continue"
+      when:
+        - ( logging_collector == 'rsyslog' and rsyslog_packages_availability.rc > 0 ) or ( logging_collector == 'fluentd' and fluentd_packages_availability.rc > 0 )
+      changed_when: true
+      notify: set failed validation
+
+    # Rsyslog validations
+    - name: Update user configuration required
+      debug:
+        msg: "WARNING Please update the 'fluentd_elasticsearch_host' to 'elasticsearch_host' in your configuration file. Please see latest documentation"
+      when:
+        - logging_collector == "rsyslog"
+        - fluentd_elasticsearch_host != ""
+
+    - name: If logging collector is rsyslog, validate that the output is elasticsearch
+      debug:
+        msg: "ERROR The defined output target is not supported in Rsyslog, please check documentation and update you configuration."
+      when:
+        - logging_collector == "rsyslog"
+        - (logging_output_type|default("elasticsearch") == "fluentd") or (logging_output_type|default("elasticsearch") == "file")
+      changed_when: true
+      notify: set failed validation
+
+    - name: If output plugin is elasticsearch, validate host address is set
+      debug:
+        msg: "INFO oVirt Metrics store is not configured. This host will not be configured to send metrics"
+      when:
+        - logging_collector == "rsyslog"
+        - elasticsearch_host == ""
+        - logging_output_type|default("elasticsearch") == "elasticsearch"
+      changed_when: true
+      notify: set failed validation
+
+    # Fluentd validations
+    - name: If output plugin is elasticsearch, validate host address is set
+      debug:
+        msg: "INFO oVirt Metrics store is not configured. This host will not be configured to send metrics"
+      when:
+        - logging_collector == "fluentd"
+        - fluentd_elasticsearch_host == ""
+        - logging_output_type|default("elasticsearch") == "elasticsearch"
+      changed_when: true
+      notify: set failed validation
+
+    - name: If output plugin is fluentd, validate host address is set
+      debug:
+        msg: "INFO oVirt Metrics store is not configured. This host will not be configured to send metrics"
+      when:
+        - logging_collector == "fluentd"
+        - fluentd_fluentd_host is undefined
+        - logging_output_type|default("elasticsearch") == "fluentd"
+      changed_when: true
+      notify: set failed validation
+  when: logging_collector is defined
+
+# Validate ovirt-env-name
+- name: Validate ovirt-env-name parameter is set
+  debug:
+    msg: "INFO oVirt Metrics store is not configured. This host will not be configured to send metrics"
   when:
     - ovirt_env_name is undefined
-  changed_when: true
-  notify: set failed validation
-
-- name: "If output plugin is fluentd, validate host address is set"
-  debug:
-    msg: "oVirt Metrics store is not configured. This host will not be configured to send metrics"
-  when:
-    - fluentd_fluentd_host is undefined
-    - fluentd_output_plugin|default("elasticsearch") == "fluentd"
   changed_when: true
   notify: set failed validation
 

@@ -1,0 +1,34 @@
+---
+- name: Remove write_http-config
+  file:
+    state: absent
+    path: /etc/collectd.d/30-write_http.conf
+  when: logging_collector|d('fluentd') == 'rsyslog'
+  notify: restart collectd
+
+- name: Remove write_rsyslog-config
+  file:
+    state: absent
+    path: /etc/collectd.d/30-write_rsyslog.conf
+  when: logging_collector|d('fluentd') == 'fluentd'
+  notify: restart collectd
+
+- name: Place write_http-config
+  template:
+    src: write-http.conf.j2
+    dest: /etc/collectd.d/30-write_http.conf
+  when: logging_collector|d('fluentd') == 'fluentd'
+  notify: restart collectd
+
+- name: Set ovirt_vds_vds_id fact
+  set_fact:
+    ovirt_vds_vds_id: '00000000-0000-0000-0000-000000000000'
+  when: not ovirt_vds_vds_id is defined
+
+
+- name: Place write_rsyslog-config
+  template:
+    src: write-rsyslog.conf.j2
+    dest: /etc/collectd.d/30-write_rsyslog.conf
+  when: logging_collector|d('fluentd') == 'rsyslog'
+  notify: restart collectd

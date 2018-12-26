@@ -8,10 +8,8 @@
 
 - name: Install collectd plugins on engine
   yum:
-    name: '{{ item }}'
+    name: '{{ collectd_engine_plugin_packages }}'
     state: latest
-  with_items:
-    - '{{ collectd_engine_plugin_packages }}'
   when:
     - manage_packages|default(true)
     - ovirt_metrics_host_deploy is undefined
@@ -20,12 +18,21 @@
 
 - name: Install collectd plugins on hosts
   yum:
-    name: '{{ item }}'
+    name: '{{ collectd_host_plugin_packages }}'
     state: latest
-  with_items:
-    - '{{ collectd_host_plugin_packages }}'
   when:
     - manage_packages|default(true)
     - ovirt_metrics_host_deploy is defined or inventory_hostname in groups.hosts
   notify: restart collectd
 
+- name: Check if 90-default-plugins-* files if exist
+  find:
+    paths: /etc/collectd.d/
+    patterns: 90-default-plugins-*
+  register: files_to_delete
+
+- name: Ansible remove 90-default-plugins-* files
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ files_to_delete.files }}"

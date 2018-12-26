@@ -1,0 +1,46 @@
+---
+host_deploy_cluster_name: default
+
+ovirt_engine_fqdn: ""
+
+logging_purge_confs: true
+
+# Default output plugin
+
+logging_output_type: elasticsearch
+
+# User that will own logging config files.
+logging_owner: root
+
+# Group that will own logging config files.
+logging_group: root
+
+# File mode for logging configuration files.
+logging_config_mode: 0640
+
+logging_role_path: /usr/share/ansible/roles/oVirt.metrics/roles/oVirt.linux-system-roles-logging
+
+# Relevant only to elasticsearch output plugin
+# Path to the Fluentd configuration directory.
+fluentd_certs_config_dir: /etc/ovirt-engine-metrics
+
+# Where to find the Fluentd CA certificate used to communicate with Elasticsearch
+fluentd_elasticsearch_ca_cert_path: '{{ fluentd_certs_config_dir }}/elasticsearch_ca_cert.pem'
+
+# Where to find the Fluentd client certificate used to communicate with Elasticsearch
+fluentd_elasticsearch_client_cert_path: '{{ fluentd_certs_config_dir }}/elasticsearch_client_cert.pem'
+
+# Where to find the Fluentd client certificate used to communicate with Elasticsearch
+fluentd_elasticsearch_client_key_path: '{{ fluentd_certs_config_dir }}/elasticsearch_client_key.pem'
+
+# Content of an x509 Fluentd Elasticsearch CA certificate that will be used to identify the
+# server to clients.
+fluentd_elasticsearch_ca_cert:
+
+# Content of an x509 Fluentd Elasticsearch client certificate that will be used to
+# authenicate to Elasticsearch.
+fluentd_elasticsearch_client_cert:
+
+# Content of an x509 Fluentd Elasticsearch client key that will be used to
+# authenicate to Elasticsearch.
+fluentd_elasticsearch_client_key:

@@ -117,4 +117,4 @@
         ignore_files: ['README.md']
       run_once: true
 
-  when: viaq_metrics_store|default(true)|bool and fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
+  when: viaq_metrics_store|default(true)|bool and logging_output_type|default("elasticsearch") == "elasticsearch"

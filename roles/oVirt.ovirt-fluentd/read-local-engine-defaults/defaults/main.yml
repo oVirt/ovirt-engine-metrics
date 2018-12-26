@@ -1,9 +1,0 @@
----
-# oVir engine FQDN
-ovirt_engine_fqdn:
-
-#oVirt engine DATAROOT dir
-engine_dataroot_dir: /usr/share
-
-# Path to engine-prolog.sh
-engine_prolog_path: "{{ engine_dataroot_dir }}/ovirt-engine/bin/engine-prolog.sh"

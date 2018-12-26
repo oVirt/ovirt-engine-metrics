@@ -1,5 +1,4 @@
 ---
-
 # The host that collectd will write to using http
 collectd_write_http_host: localhost
 
@@ -16,3 +15,10 @@ collectd_write_http_timeout: 3000
 
 # Sets the send buffer size to Bytes
 collectd_write_http_buffersize: 65536
+
+# The host that collectd will write to using tcp
+collectd_write_rsyslog_host: localhost
+
+# The port that collectd will write to rsyslog. This is the default
+# port on which rsyslog listens for tcp data. Change to write elsewhere.
+collectd_write_rsyslog_port: 44514

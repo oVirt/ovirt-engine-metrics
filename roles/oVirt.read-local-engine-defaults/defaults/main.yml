@@ -1,4 +1,7 @@
 ---
+# oVir engine FQDN
+ovirt_engine_fqdn:
+
 # oVirt engine database name
 ovirt_engine_db_name: engine
 

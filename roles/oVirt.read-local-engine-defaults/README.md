@@ -1,8 +1,12 @@
-## oVirt.ovirt-collectd/Read-local-engine-defaults
+## oVirt.read-local-engine-defaults
 
-This role reads ovirt engine default variables required for the collectd role.
+This role reads ovirt engine default variables.
 
 The variables collected in this role are:
+
+- `ovirt_engine_fqdn:`
+
+   oVirt engine FQDN
 
 - `ovirt_engine_db_name:` (default: `"engine"`)
 

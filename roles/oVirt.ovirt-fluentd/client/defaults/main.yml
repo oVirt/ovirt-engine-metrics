@@ -2,7 +2,9 @@
 fluentd_keepalive: 300
 
 # Address of the elasticsearch server host.
-fluentd_elasticsearch_host: ""
+elasticsearch_host: ""
+
+fluentd_elasticsearch_host: "{{ elasticsearch_host }}"
 
 fluentd_elasticsearch_target_index_key: ovirt_index_name
 
