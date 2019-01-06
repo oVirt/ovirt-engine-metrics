@@ -1,7 +1,6 @@
 ---
 dependencies:
   - oVirt.ovirt-include-vars-files
-  - oVirt.ovirt-collectd/ovirt-check-fluentd-status
   - oVirt.ovirt-collectd/ovirt-collectd-package
   - oVirt.read-local-engine-defaults
   - oVirt.ovirt-collectd/collectd-setup

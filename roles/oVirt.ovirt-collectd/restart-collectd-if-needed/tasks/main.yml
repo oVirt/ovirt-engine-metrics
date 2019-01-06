@@ -1,25 +1,92 @@
 ---
-- name: restart collectd if fluentd is up
-  debug:
-    msg="trigger collectd restart, since fluentd is up"
-  when:
-    - fluentd_is_running|default(false)|bool == true
-    - logging_collector|d('fluentd') == 'fluentd'
-  changed_when: fluentd_is_running|default(false)|bool == true
-  notify: restart collectd
-
+# In oVirt specific use case we send collectd statistics data to fluentd or rsyslog.
+# If fluentd/rsyslog is not running collectd will log errors messages when trying to connect to fluentd/rsyslog.
+# If fluentd/rsyslog is not running we stop collectd.
 - name: force all notified handlers to run at this point, not waiting for normal sync points
   meta: flush_handlers
 
-- name: pause for collectd to start
-  pause:
-    seconds: 5
-  when:
-    - fluentd_is_running|default(false)|bool == true
-    - logging_collector|d('fluentd') == 'fluentd'
+- block:
+
+    - name: pause for fluentd to start
+      pause:
+        seconds: 5
+
+    - name: Check if fluentd is running
+      command: systemctl is-active fluentd
+      register: service_fluentd_status
+      ignore_errors: yes
+      changed_when: false
+      failed_when: false
+
+    - name: set fluentd_is_running fact
+      set_fact:
+        fluentd_is_running: >-
+          {{ service_fluentd_status.rc == 0 }}
+
+    - name: Is fluentd running
+      debug:
+        msg="{{ fluentd_is_running }}"
+
+    - name: restart collectd if fluentd is up
+      debug:
+        msg="trigger collectd restart, since fluentd is up"
+      when:
+        - fluentd_is_running|default(false)|bool == true
+      changed_when: fluentd_is_running|default(false)|bool == true
+      notify: restart collectd
+
+    - name: force all notified handlers to run at this point, not waiting for normal sync points
+      meta: flush_handlers
+
+    - name: pause for collectd to start
+      pause:
+        seconds: 5
+      when:
+        - fluentd_is_running|default(false)|bool == true
+  when: logging_collector|d('fluentd') == 'fluentd'
+
+- block:
+
+    - name: pause for rsyslog to start
+      pause:
+        seconds: 5
+
+    - name: Check if rsyslog is running
+      command: systemctl is-active rsyslog
+      register: service_rsyslog_status
+      ignore_errors: yes
+      changed_when: false
+      failed_when: false
+
+    - name: set rsyslog_is_running fact
+      set_fact:
+        rsyslog_is_running: >-
+          {{ service_rsyslog_status.rc == 0 }}
+
+    - name: Is rsyslog running
+      debug:
+        msg="{{ rsyslog_is_running }}"
+
+    - name: restart collectd if rsyslog is up
+      debug:
+        msg="trigger collectd restart, since rsyslog is up"
+      when:
+        - rsyslog_is_running|default(false)|bool == true
+      changed_when: rsyslog_is_running|default(false)|bool == true
+      notify: restart collectd
+
+    - name: force all notified handlers to run at this point, not waiting for normal sync points
+      meta: flush_handlers
+
+    - name: pause for collectd to start
+      pause:
+        seconds: 5
+      when:
+        - rsyslog_is_running|default(false)|bool == true
+  when: logging_collector|d('fluentd') == 'rsyslog'
 
 - name: Check if collectd is running
-  command: systemctl is-active '{{ collectd_service_name }}'
+  command: systemctl is-active collectd
   register: service_collectd_status
   ignore_errors: yes
   changed_when: false
