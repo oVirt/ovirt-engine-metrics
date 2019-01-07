@@ -43,6 +43,12 @@
         seconds: 5
       when:
         - fluentd_is_running|default(false)|bool == true
+
+    - name: Stop collectd service if fluentd is not running
+      service:
+        name: collectd
+        state: stopped
+      when: fluentd_is_running|default(false)|bool == false
   when: logging_collector|d('fluentd') == 'fluentd'
 
 - block:
@@ -83,6 +89,12 @@
         seconds: 5
       when:
         - rsyslog_is_running|default(false)|bool == true
+
+    - name: Stop collectd service if rsyslog is not running
+      service:
+        name: collectd
+        state: stopped
+      when: rsyslog_is_running|default(false)|bool == false
   when: logging_collector|d('fluentd') == 'rsyslog'
 
 - name: Check if collectd is running

@@ -3,4 +3,3 @@
   service:
     name: '{{ collectd_service_name }}'
     state: restarted
-  when: fluentd_is_running|default(false)|bool == true
