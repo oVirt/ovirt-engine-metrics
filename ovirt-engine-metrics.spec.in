@@ -68,6 +68,17 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Jan 08 2019 Shirly Radco <sradco@redhat.com> - 1.2.0
+Fixed issues:
+- Bug 1629437 - Add linux-system-roles logging role
+- Bug 1629437 - Makefile: Add linux-system-roles-logging
+- Bug 1629437 - Replace Fluentd with Rsyslog role
+- Bug 1629437 - Update collectd write_rsyslog HostTags
+- Bug 1629437 - Upadte logging_outputes variable
+- Bug 1629437 - restart collectd if rsyslog is running
+- Bug 1629437 - update collectd restart handler
+- Bug 1629437 - Update logging role facts
+
 * Thu Nov 22 2018 Shirly Radco <sradco@redhat.com> - 1.2.0
 Fixed issues:
 - Bug 1645515 - Update default openshift version to 3.11
