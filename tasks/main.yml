@@ -18,4 +18,5 @@
     - name: Run Collectd sub-role
       include_role:
         name: "oVirt.metrics/roles/oVirt.collectd"
+      when: collect_ovirt_collectd_metrics|d(true)|bool
   when: failed_validation is undefined

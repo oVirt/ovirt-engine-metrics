@@ -29,7 +29,7 @@
 - name: Configure Metrics
   hosts: engine:hosts
   tags:
-    - configuration
+    - configure
 
   tasks:
     - name: Run initial validations sub-role
@@ -54,5 +54,5 @@
         - name: Run Collectd sub-role
           include_role:
             name: "oVirt.metrics/roles/oVirt.collectd"
-          when: run_collectd_role|d(true)
+          when: collect_ovirt_collectd_metrics|d(true)|bool
       when: failed_validation is undefined

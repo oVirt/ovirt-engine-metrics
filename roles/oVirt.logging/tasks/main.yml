@@ -7,9 +7,8 @@
 
 - name: Set ovirt_vds_cluster_name fact
   set_fact:
-    ovirt_vds_cluster_name: "{{ host_deploy_cluster_name }}"
+    ovirt_vds_cluster_name: '{{ host_deploy_cluster_name|d("default") }}'
   when:
-    - host_deploy_cluster_name is defined
     - ovirt_vds_cluster_name is undefined
 
 - name: Check if vdsm log file exist
@@ -24,14 +23,25 @@
   register: engine_log_exists
   run_once: true
 
+- name: Set collect_ovirt_vdsm_log fact
+  set_fact:
+    collect_ovirt_vdsm_log: '{{ true if vdsm_log_exists.stat.exists else false }}'
+  when: collect_ovirt_vdsm_log|d(true)
+
+- name: Set collect_ovirt_engine_log fact
+  set_fact:
+    collect_ovirt_engine_log: '{{ true if engine_log_exists.stat.exists else false }}'
+  when: collect_ovirt_engine_log|d(true)
+
+- name: Set collect_ovirt_collectd_metrics fact
+  set_fact:
+    collect_ovirt_collectd_metrics: true
+  when: collect_ovirt_collectd_metrics|d(true)
+
 - name: Set logging facts
   set_fact:
-    logging_role_path: "{{ logging_role_path }}"
-    ovirt_output_name_prefix: "{{ ovirt_output_name_prefix|d('ovirt') }}"
-    collect_ovirt_vdsm_log: "{{ true if vdsm_log_exists.stat.exists else false }}"
-    collect_ovirt_engine_log: "{{ true if engine_log_exists.stat.exists else false }}"
-    use_omelasticsearch_cert: true
-    rsyslog_max_message_size: "64k"
+    logging_role_path: '{{ logging_role_path }}'
+    rsyslog_max_message_size: '{{ rsyslog_max_message_size|d("64k") }}'
 
 - block:
     - name: Install fluentd elasticsearch CA certificate
@@ -73,37 +83,37 @@
               - name: 'ovirt'
             server_host: '{{ elasticsearch_host }}'
             server_port: '{{ elasticsearch_port|d(9200) }}'
-            index_prefix: "project.ovirt-logs"
-            bulkmode: "on"
-            writeoperation: "create"
-            bulkid: "id_template"
-            dynbulkid: "on"
-            retryfailures: "on"
-            retryruleset: "try_es"
-            usehttps: "on"
-#            allowUnsignedCerts: "on"
-            ca_cert: "{{ fluentd_elasticsearch_ca_cert_path }}"
-            cert: "{{ fluentd_elasticsearch_client_cert_path }}"
-            key: "{{ fluentd_elasticsearch_client_key_path }}"
+            index_prefix: '{{ logs_index_prefix|d("project.ovirt-logs") }}'
+            bulkmode: '{{ rsyslog_elasticsearch_bulkmode_logs|d("on") }}'
+            writeoperation: '{{ rsyslog_elasticsearch_writeoperation_logs|d("create") }}'
+            bulkid: '{{ rsyslog_elasticsearch_bulkid_logs|d("id_template") }}'
+            dynbulkid: '{{ rsyslog_elasticsearch_dynbulkid_logs|d("on") }}'
+            retryfailures: '{{ rsyslog_elasticsearch_retryfailures_logs|d("on") }}'
+            retryruleset: '{{ rsyslog_elasticsearch_retryruleset_logs|d("try_es") }}'
+            usehttps: '{{ rsyslog_elasticsearch_usehttps_logs|d("on") }}'
+#            allowUnsignedCerts: '{{ logs_allowUnsignedCerts|d("on") }}'
+            ca_cert: '{{ fluentd_elasticsearch_ca_cert_path }}'
+            cert: '{{ fluentd_elasticsearch_client_cert_path }}'
+            key: '{{ fluentd_elasticsearch_client_key_path }}'
           - name: ovirt-metrics-elasticsearch
             type: elasticsearch
             logs_collections:
               - name: 'ovirt'
             server_host: '{{ elasticsearch_host }}'
             server_port: '{{ elasticsearch_port|d(9200) }}'
-            index_prefix: "project.ovirt-metrics"
-            bulkmode: "on"
-            writeoperation: "create"
-            bulkid: "id_template"
-            dynbulkid: "on"
-            retryfailures: "off"
-            retryruleset: "try_es"
-            usehttps: "on"
-#            allowUnsignedCerts: "on"
-            ca_cert: "{{ fluentd_elasticsearch_ca_cert_path }}"
-            cert: "{{ fluentd_elasticsearch_client_cert_path }}"
-            key: "{{ fluentd_elasticsearch_client_key_path }}"
-  when: logging_output_type|default("elasticsearch") == "elasticsearch"
+            index_prefix: '{{ rsyslog_elasticsearch_index_prefix_metrics|d("project.ovirt-metrics") }}'
+            bulkmode: '{{ rsyslog_elasticsearch_bulkmode_metrics|d("on") }}'
+            writeoperation: '{{ rsyslog_elasticsearch_writeoperation_metrics|d("create") }}'
+            bulkid: '{{ rsyslog_elasticsearch_bulkid_metrics|d("id_template") }}'
+            dynbulkid: '{{ rsyslog_elasticsearch_dynbulkid_metrics|d("on") }}'
+            retryfailures: '{{ rsyslog_elasticsearch_retryfailures_metrics|d("off") }}'
+            retryruleset: '{{ rsyslog_elasticsearch_retryruleset_metrics|d("try_es") }}'
+            usehttps: '{{ rsyslog_elasticsearch_usehttps_metrics|d("on") }}'
+#            allowUnsignedCerts: '{{ metrics_allowUnsignedCerts|d("on") }}'
+            ca_cert: '{{ fluentd_elasticsearch_ca_cert_path }}'
+            cert: '{{ fluentd_elasticsearch_client_cert_path }}'
+            key: '{{ fluentd_elasticsearch_client_key_path }}'
+  when: logging_output_type|default('elasticsearch') == 'elasticsearch'
 
 - name: Run rsyslog sub-role
   include_role:

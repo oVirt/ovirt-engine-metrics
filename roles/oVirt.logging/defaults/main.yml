@@ -1,9 +1,5 @@
 ---
-host_deploy_cluster_name: default
-
-ovirt_engine_fqdn: ""
-
-logging_purge_confs: true
+ovirt_engine_fqdn:
 
 # Default output plugin
 
@@ -44,3 +40,6 @@ fluentd_elasticsearch_client_cert:
 # Content of an x509 Fluentd Elasticsearch client key that will be used to
 # authenicate to Elasticsearch.
 fluentd_elasticsearch_client_key:
+
+# The maximum supported message size (both for sending and receiving).
+rsyslog_max_message_size: "64k"
