@@ -18,3 +18,4 @@ rsyslog_base_packages:
   - libfastjson
   - liblognorm
   - libestr
+  - collectd-write_rsyslog

@@ -25,6 +25,15 @@
     - ovirt_metrics_host_deploy is defined or inventory_hostname in groups.hosts
   notify: restart collectd
 
+- name: Install collectd write_rsyslog plugin
+  yum:
+    name: '{{ collectd_write_rsyslog_package }}'
+    state: latest
+  when:
+    - manage_packages|default(true)
+    - logging_collector == "rsyslog"
+  notify: restart collectd
+
 - name: Check if 90-default-plugins-* files if exist
   find:
     paths: /etc/collectd.d/
