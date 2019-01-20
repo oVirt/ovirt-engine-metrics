@@ -18,7 +18,7 @@ logging_role_path: /usr/share/ansible/roles/oVirt.metrics/roles/oVirt.linux-syst
 
 # Relevant only to elasticsearch output plugin
 # Path to the Fluentd configuration directory.
-fluentd_certs_config_dir: /etc/ovirt-engine-metrics
+fluentd_certs_config_dir: /etc
 
 # Where to find the Fluentd CA certificate used to communicate with Elasticsearch
 fluentd_elasticsearch_ca_cert_path: '{{ fluentd_certs_config_dir }}/elasticsearch_ca_cert.pem'

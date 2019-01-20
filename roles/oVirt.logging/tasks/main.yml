@@ -15,33 +15,28 @@
   stat:
     path: /var/log/vdsm/vdsm.log
   register: vdsm_log_exists
-  run_once: true
 
 - name: Check if engine log file exist
   stat:
     path: /var/log/ovirt-engine/engine.log
   register: engine_log_exists
-  run_once: true
 
 - name: Set collect_ovirt_vdsm_log fact
   set_fact:
     collect_ovirt_vdsm_log: '{{ true if vdsm_log_exists.stat.exists else false }}'
-  when: collect_ovirt_vdsm_log|d(true)
+  when: collect_ovirt_vdsm_log is undefined
 
 - name: Set collect_ovirt_engine_log fact
   set_fact:
     collect_ovirt_engine_log: '{{ true if engine_log_exists.stat.exists else false }}'
-  when: collect_ovirt_engine_log|d(true)
-
-- name: Set collect_ovirt_collectd_metrics fact
-  set_fact:
-    collect_ovirt_collectd_metrics: true
-  when: collect_ovirt_collectd_metrics|d(true)
+  when: collect_ovirt_engine_log is undefined
 
 - name: Set logging facts
   set_fact:
     logging_role_path: '{{ logging_role_path }}'
     rsyslog_max_message_size: '{{ rsyslog_max_message_size|d("64k") }}'
+    collect_ovirt_collectd_metrics: '{{ collect_ovirt_collectd_metrics|d(true) }}'
+    use_omelasticsearch_cert: '{{ use_omelasticsearch_cert|d(true) }}'
 
 - block:
     - name: Install fluentd elasticsearch CA certificate
