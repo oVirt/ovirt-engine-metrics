@@ -1,15 +1,10 @@
+---
 - name: Stop and disable fluentd service, if logging collector is Rsyslog
   service:
     name: fluentd
     state: stopped
     enabled: false
   ignore_errors: true
-
-- name: Set ovirt_vds_cluster_name fact
-  set_fact:
-    ovirt_vds_cluster_name: '{{ host_deploy_cluster_name|d("default") }}'
-  when:
-    - ovirt_vds_cluster_name is undefined
 
 - name: Check if vdsm log file exist
   stat:
@@ -37,6 +32,7 @@
     rsyslog_max_message_size: '{{ rsyslog_max_message_size|d("64k") }}'
     collect_ovirt_collectd_metrics: '{{ collect_ovirt_collectd_metrics|d(true) }}'
     use_omelasticsearch_cert: '{{ use_omelasticsearch_cert|d(true) }}'
+    ovirt_vds_cluster_name: '{{ host_deploy_cluster_name|d("default") }}'
 
 - block:
     - name: Install fluentd elasticsearch CA certificate
