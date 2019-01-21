@@ -1,10 +1,11 @@
-LoadPlugin write_rsyslog
+LoadPlugin write_syslog
 
-<Plugin write_rsyslog>
+<Plugin write_syslog>
    <Node "collectd">
-     Host "{{ collectd_write_rsyslog_host }}"
-     Port "{{ collectd_write_rsyslog_port }}"
+     Host "{{ collectd_write_syslog_host }}"
+     Port "{{ collectd_write_syslog_port }}"
      Prefix "collectd"
+     MessageFormat "Json"
      AlwaysAppendDS false
      HostTags "\"ovirt\": {\"engine_fqdn\":\"{{ ovirt_engine_fqdn }}\", \"cluster_name\":\"{{ ovirt_vds_cluster_name }}\", \"ipaddr4\":\"{{ ansible_default_ipv4.address }}\"}"
    </Node>

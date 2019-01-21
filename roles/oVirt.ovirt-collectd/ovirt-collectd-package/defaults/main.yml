@@ -16,7 +16,7 @@ collectd_host_plugin_packages:
   - collectd-write_http
   - collectd-virt
 
-# When logging collector is Rsyslog, the write_rsyslog plugin is used to
+# When logging collector is Rsyslog, the write_syslog plugin is used to
 # send the metrics to Rsyslog.
-collectd_write_rsyslog_package:
-  - collectd-write_rsyslog
+collectd_write_syslog_package:
+  - collectd-write_syslog
