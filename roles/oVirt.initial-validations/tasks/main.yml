@@ -49,7 +49,7 @@
 
 - name: Validate Fluentd or Rsyslog base packages are available
   debug:
-    msg: "ERROR Logs collector base packages are not available. Metrics role will not be able to continue"
+    msg: "Logs collector base packages are not available. Metrics role will not be able to continue"
   when:
     - rsyslog_packages_availability.rc > 0
     - fluentd_packages_availability.rc > 0
@@ -58,7 +58,7 @@
 
 - name: Validate logging_collector
   debug:
-    msg: "ERROR log collector is missing required base packages. Metrics role will not be able to continue"
+    msg: "Log collector is missing required base packages. Metrics role will not be able to continue"
   when:
     - logging_collector is undefined
   changed_when: true
@@ -68,7 +68,7 @@
 - block:
     - name: Validate logging_collector
       debug:
-        msg: "ERROR Specified log collector is missing required base packages. Metrics role will not be able to continue"
+        msg: "Specified log collector is missing required base packages. Metrics role will not be able to continue"
       when:
         - ( logging_collector == 'rsyslog' and rsyslog_packages_availability.rc > 0 ) or ( logging_collector == 'fluentd' and fluentd_packages_availability.rc > 0 )
       changed_when: true
@@ -77,14 +77,14 @@
     # Rsyslog validations
     - name: Update user configuration required
       debug:
-        msg: "WARNING Please update the 'fluentd_elasticsearch_host' to 'elasticsearch_host' in your configuration file. Please see latest documentation"
+        msg: "Please update the 'fluentd_elasticsearch_host' to 'elasticsearch_host' in your configuration file. Please see latest documentation"
       when:
         - logging_collector == "rsyslog"
         - fluentd_elasticsearch_host != ""
 
     - name: If logging collector is rsyslog, validate that the output is elasticsearch
       debug:
-        msg: "ERROR The defined output target is not supported in Rsyslog, please check documentation and update you configuration."
+        msg: "The defined output target is not supported in Rsyslog, please check documentation and update you configuration."
       when:
         - logging_collector == "rsyslog"
         - (logging_output_type|default("elasticsearch") == "fluentd") or (logging_output_type|default("elasticsearch") == "file")
@@ -93,7 +93,7 @@
 
     - name: If output plugin is elasticsearch, validate host address is set
       debug:
-        msg: "INFO oVirt Metrics store is not configured. This host will not be configured to send metrics"
+        msg: "oVirt Metrics store is not configured. This host will not be configured to send metrics"
       when:
         - logging_collector == "rsyslog"
         - elasticsearch_host == ""
@@ -104,7 +104,7 @@
     # Fluentd validations
     - name: If output plugin is elasticsearch, validate host address is set
       debug:
-        msg: "INFO oVirt Metrics store is not configured. This host will not be configured to send metrics"
+        msg: "oVirt Metrics store is not configured. This host will not be configured to send metrics"
       when:
         - logging_collector == "fluentd"
         - fluentd_elasticsearch_host == ""
@@ -114,7 +114,7 @@
 
     - name: If output plugin is fluentd, validate host address is set
       debug:
-        msg: "INFO oVirt Metrics store is not configured. This host will not be configured to send metrics"
+        msg: "oVirt Metrics store is not configured. This host will not be configured to send metrics"
       when:
         - logging_collector == "fluentd"
         - fluentd_fluentd_host is undefined
@@ -126,7 +126,7 @@
 # Validate ovirt-env-name
 - name: Validate ovirt-env-name parameter is set
   debug:
-    msg: "INFO oVirt Metrics store is not configured. This host will not be configured to send metrics"
+    msg: "oVirt Metrics store is not configured. This host will not be configured to send metrics"
   when:
     - ovirt_env_name is undefined
   changed_when: true
@@ -138,35 +138,35 @@
 - block:
     - name: Check environment name length
       debug:
-        msg: "ERROR '{{ ovirt_env_name }}' length must be up to 49 characters. Please update ovirt_env_name variable"
+        msg: "'{{ ovirt_env_name }}' length must be up to 49 characters. Please update ovirt_env_name variable"
       when:  ovirt_env_name | length > 49
       changed_when: true
       notify:  set failed validation
 
     - name: Check environment name does not start with a number
       debug:
-        msg: "ERROR '{{ ovirt_env_name }}' can not begin with a number. Please update ovirt_env_name variable"
+        msg: "'{{ ovirt_env_name }}' can not begin with a number. Please update ovirt_env_name variable"
       when: ovirt_env_name is match('^[0-9]')
       changed_when: true
       notify:  set failed validation
 
     - name: Check environment name does not start a with dash
       debug:
-        msg: "ERROR '{{ ovirt_env_name }}' can not begin with a hyphen ('-'). Please update ovirt_env_name variable"
+        msg: "'{{ ovirt_env_name }}' can not begin with a hyphen ('-'). Please update ovirt_env_name variable"
       when: ovirt_env_name.startswith('-')
       changed_when: true
       notify:  set failed validation
 
     - name: Check environment name does not end a with dash
       debug:
-        msg: "ERROR '{{ ovirt_env_name }}' can not end with a hyphen ('-'). Please update ovirt_env_name variable"
+        msg: "'{{ ovirt_env_name }}' can not end with a hyphen ('-'). Please update ovirt_env_name variable"
       when: ovirt_env_name.endswith('-')
       changed_when: true
       notify:  set failed validation
 
     - name: Check environment name includes only alphanum and dashes
       debug:
-        msg: "ERROR '{{ ovirt_env_name }}' can include only alpahnumerics and hyphens ('-'). Please update ovirt_env_name variable"
+        msg: "'{{ ovirt_env_name }}' can include only alpahnumerics and hyphens ('-'). Please update ovirt_env_name variable"
       when: ovirt_env_name is match('.*[^a-zA-Z0-9-].*')
       changed_when: true
       notify:  set failed validation
