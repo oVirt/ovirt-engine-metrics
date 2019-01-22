@@ -68,6 +68,15 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Jan 22 2019 Shirly Radco <sradco@redhat.com> - 1.2.0.2
+Fixed issues:
+- Bug 1666886 - Update logging role tasks
+- Bug 1666886 - Updated ovirt_vds_cluster_name fact
+- Update write_rsyslog to write_syslog
+- Fixed condition to use logging_output_type
+- Update OpenShift ansible inventory 3.11
+- Updated initial validations messages
+
 * Thu Jan 10 2019 Shirly Radco <sradco@redhat.com> - 1.2.0.1
 Fixed issues:
 - Bug 1629437 - Add write_rsyslog plugin installation and verification
