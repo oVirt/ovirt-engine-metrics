@@ -15,4 +15,4 @@
         dest: '{{ openshift_ansible_files_path }}/ansible-inventory-{{ openshift_distribution }}-latest-aio'
         state: link
 
-  when: viaq_metrics_store |default(true)|bool and fluentd_output_plugin|default("elasticsearch") == "elasticsearch"
+  when: viaq_metrics_store |default(true)|bool and logging_output_type|default("elasticsearch") == "elasticsearch"
