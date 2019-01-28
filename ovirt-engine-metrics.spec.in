@@ -68,6 +68,10 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Mon Jan 28 2019 Shirly Radco <sradco@redhat.com> - 1.1.8.1
+Fixed issues:
+- Bug 1631808 - Add validation for fluentd availability
+
 * Wed Nov 28 2018 Shirly Radco <sradco@redhat.com> - 1.1.8
 Fixed issues:
 - Bug 1620595 - Update READMEs update variables
