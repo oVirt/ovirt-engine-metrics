@@ -1,0 +1,88 @@
+[workstation]
+localhost ansible_connection=local
+
+[all:vars]
+ansible_ssh_private_key_file = "{{ bastion_ssh_private_key_file_path|d('/root') }}/bastion_id_rsa"
+compatibility_version=4.2
+public_hosted_zone="{{ public_hosted_zone }}"
+openshift_ovirt_all_in_one=true
+openshift_ovirt_dns_zone="{{ public_hosted_zone }}"
+openshift_web_console_install=true
+openshift_master_overwrite_named_certificates=true
+openshift_master_cluster_hostname="openshift-master.{{ public_hosted_zone }}"
+openshift_master_cluster_public_hostname="openshift.{{ public_hosted_zone }}"
+#openshift_disable_check=memory_availability,disk_availability,docker_image_availability
+# the public subdomain to use for all of the external facing logging services
+# by default it is the same as the public hostname
+openshift_master_default_subdomain="{{ public_hosted_zone }}"
+{% raw -%}
+openshift_public_hostname="{{openshift_master_cluster_public_hostname}}"
+canonical_registry=index.docker.io
+openshift_service_catalog_image_version="{{ openshift_image_tag }}"
+
+[OSEv3:vars]
+# General variables
+debug_level=1
+containerized=False
+ansible_ssh_user=root
+os_firewall_use_firewalld=true
+openshift_enable_excluders=false
+openshift_install_examples=false
+openshift_debug_level="{{ debug_level }}"
+openshift_node_debug_level="{{ node_debug_level | default(debug_level,true) }}"
+osn_storage_plugin_deps=[]
+openshift_master_bootstrap_auto_approve=true
+openshift_master_bootstrap_auto_approver_node_selector={"node-role.kubernetes.io/master":"true"}
+osm_controller_args={"experimental-cluster-signing-duration": ["20m"]}
+osm_default_node_selector="node-role.kubernetes.io/compute=true"
+openshift_enable_service_catalog=False
+
+# Docker
+#container_runtime_docker_storage_setup_device=/dev/vdb
+container_runtime_docker_storage_type=overlay2
+openshift_docker_use_system_container=False
+{% endraw -%}
+
+# Logging
+{% if openshift_logging|d(false)|bool == true %}
+openshift_master_identity_providers=[{'mappingMethod': 'lookup', 'challenge': 'true', 'login': 'true', 'kind': 'AllowAllPasswordIdentityProvider', 'name': 'allow_all'}]
+# Metrics static host storage - In the future we should use ovirt flex/csi storage provisioner
+openshift_logging_es_nodeselector={'node-role.kubernetes.io/infra': 'true'}
+openshift_logging_es_cluster_size={{ openshift_logging_es_cluster_size|d(1) }}
+openshift_logging_es_number_of_replicas={{ openshift_logging_es_number_of_replicas|d(0) }}
+openshift_logging_install_logging=true
+openshift_logging_es_allow_external=true
+openshift_logging_use_mux=true
+openshift_logging_mux_allow_external=true
+openshift_logging_mux_file_buffer_storage_type=hostmount
+openshift_logging_elasticsearch_storage_type=hostmount
+openshift_logging_elasticsearch_hostmount_path='{{ ovirt_elasticsearch_mounted_storage_path|d("/var/lib") }}/elasticsearch'
+{% raw -%}
+# the public URL for OpenShift UI access
+openshift_logging_master_public_url="https://{{ openshift_public_hostname }}:8443"
+# the public hostname for Kibana browser access
+openshift_logging_kibana_hostname="kibana.{{ public_hosted_zone }}"
+# the public hostname for Elasticsearch direct API access
+openshift_logging_es_hostname="es.{{ public_hosted_zone }}"
+openshift_logging_mux_hostname="mux.{{ public_hosted_zone }}"
+openshift_logging_es_memory_limit='{{ ovirt_openshift_logging_es_memory_limit|d("16Gi") }}'
+openshift_logging_es_cpu_request={{ ovirt_openshift_logging_es_cpu_request|d(1) }}
+openshift_logging_use_ops=false
+openshift_logging_mux_namespaces=[]
+openshift_cluster_monitoring_operator_install=false
+openshift_metrics_install_metrics=false
+{% endraw -%}
+{% endif %}
+{% raw %}
+[OSEv3:children]
+nodes
+masters
+etcd
+
+[masters]
+;master0.example.com openshift_node_group_name="node-config-all-in-one" openshift_schedulable=true
+[etcd]
+;master0.example.com
+[nodes]
+;master0.example.com openshift_hostname=master0.example.com openshift_node_group_name="node-config-all-in-one"
+{% endraw %}

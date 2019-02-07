@@ -1,0 +1,70 @@
+---
+- name: Create OpenShift Inventory
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_files:
+    - vars.yaml
+
+  tasks:
+
+    - include_tasks: '{{ openshift_ansible_role_path }}/roles/openshift_ovirt/tasks/create_all_in_one_inventory_from_vms.yaml'
+      when: openshift_ovirt_all_in_one
+
+    - include_tasks: '{{ openshift_ansible_role_path }}/roles/openshift_ovirt/tasks/create_inventory_from_vms.yaml'
+      when: not openshift_ovirt_all_in_one
+
+{% if create_host_entry|d(false)|bool == true %}
+- import_playbook: 'create_host_entry.yaml'
+{% endif %}
+- import_playbook: '{{ openshift_ansible_role_path }}/playbooks/prerequisites.yml'
+  tags: openshift_ansible_roles
+- import_playbook: '{{ openshift_ansible_role_path }}/playbooks/openshift-node/network_manager.yml'
+  tags: openshift_ansible_roles
+- import_playbook: '{{ openshift_ansible_role_path }}/playbooks/deploy_cluster.yml'
+  tags: openshift_ansible_roles
+{% if openshift_logging|d(false)|bool == true and openshift_logging_elasticsearch_storage_type|d('hostmount') == 'hostmount' %}
+  vars:
+    openshift_logging_install_logging: false
+
+- name: Add permissions for using hostmount and run logging deployment
+  hosts: masters
+  gather_facts: false
+
+  vars_files:
+    - vars.yaml
+
+  tasks:
+
+    - name: Update elasticsearch mounted storage directory group and permissions.
+      file:
+        path: '{{ ovirt_elasticsearch_mounted_storage_path|d("/var/lib") }}/elasticsearch'
+        group: 65534
+        mode: 0770
+
+    - name: Fixup SELinux permissions for elasticsearch
+      shell: |
+               semanage fcontext -a -t svirt_sandbox_file_t '{{ ovirt_elasticsearch_mounted_storage_path|d("/var/lib") }}/elasticsearch(/.*)?'
+               restorecon -R -v '{{ ovirt_elasticsearch_mounted_storage_path|d("/var/lib") }}/elasticsearch'
+
+    - name: Add permissions to the directory
+      shell: oc adm policy add-scc-to-user hostmount-anyuid system:serviceaccount:{{ logging_namespace }}:aggregated-logging-elasticsearch
+{% endif %}
+{% if openshift_logging|d(false)|bool == true %}
+
+- import_playbook: '{{ openshift_ansible_role_path }}/playbooks/openshift-logging/config.yml'
+  vars:
+    openshift_logging_install_logging: true
+{% endif %}
+
+- name: Remove engine key from installer machine
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+
+    - name: Remove engine key from bastion machine
+      file:
+        path: engine_id_rsa
+        state: absent

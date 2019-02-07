@@ -1,19 +1,19 @@
-# This is an example file for oVirt metrics configuration.
+# This is an example file for the Metrics Store host configuration.
 #
 # To run the oVirt metrics configuration playbook, copy this file
-# to /etc/ovirt-engine-metrics/config.yml.d/ directory,
-# rename it to have yml suffix and edit it with your environment details.
-
+# to '/etc/ovirt-engine-metrics/config.yml.d/', rename it 'config.yml',
+# and update the parameters. All parameters are mandatory.
 
 # Environment name. Can be used to identify data collected in a single central
 # store sent from more than one oVirt engine.
 # Maximum field length is 49 characters.
 # For more details see:
 # https://www.ovirt.org/develop/release-management/features/metrics/metrics-store-installation/#ovirt-metrics-store-setup
+# If you are installing RHV Metrics Store, 'ovirt_env_name' must match 'ovirt_env_name' in metrics-store-config.yml.
+# Default is 'engine'.
 ovirt_env_name: engine
 
-# Address or hostname (FQDN) of the Elasticsearch server host.
+# Address or hostname (FQDN) of the Elasticsearch server host
+# Example:
+#elasticsearch_host: master0.{{ public_hosted_zone }}
 elasticsearch_host:
-
-# Path to preallocated partition to be used for elasticsearch persistent storage
-# ovirt_elasticsearch_mounted_storage_path: /var/lib

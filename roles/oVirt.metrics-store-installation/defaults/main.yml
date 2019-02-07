@@ -1,12 +1,11 @@
 ---
-# The OpenShift distribution to install
-openshift_distribution: origin
-
-# The OpenShift version to install
-openshift_version: 311
-
-# Path to OpenShift Logging ansible inventory and vars files
-openshift_ansible_files_path: /root
-
+origin_on_ovirt_role_path: /usr/share/ansible/roles/oVirt.metrics/roles/oVirt.origin-on-ovirt
+openshift_ovirt_bastion_machine_name: metrics-store-installer
+openshift_logging: true
+ovirt_metrics_store: true
+logging_namespace: openshift-logging
 # Path to Elasticsearch persistent storage preallocated partition
 ovirt_elasticsearch_mounted_storage_path: /var/lib
+openshift_logging_elasticsearch_storage_type: hostmount
+openshift_logging_es_cluster_size: 1
+openshift_logging_es_number_of_replicas: 0

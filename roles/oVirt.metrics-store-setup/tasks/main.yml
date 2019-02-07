@@ -1,6 +1,6 @@
 - block:
     - name: Log into logging project
-      shell: oc project logging
+      shell: 'oc project {{ logging_namespace|d("openshift-logging") }}'
 
     - name: Remove metrics and logs index uuid files
       file:
@@ -63,7 +63,7 @@
       ignore_errors: True
 
     - name: Assign the password immediately without login
-      shell: oc login --username=admin --password=admin
+      shell: oc login --username=admin --password={{ ovirt_metrics_admin_password }}
       ignore_errors: True
 
     - name: Log back in as admin user
@@ -81,9 +81,6 @@
 
     - name: Create the new curator configmap file
       shell: oc create configmap logging-curator --from-file=config.yaml='{{ curator_configmap_file_path }}' ; sleep 1
-
-    - name: Redeploy the curator
-      shell: oc deploy --latest logging-curator
 
     - name: Assign an IP Address to the Elasticsearch Service
       shell: oc patch svc logging-es -p '{"spec"{{":"}}{"externalIPs"{{":"}}["{{ ansible_default_ipv4.address }}"]}}'

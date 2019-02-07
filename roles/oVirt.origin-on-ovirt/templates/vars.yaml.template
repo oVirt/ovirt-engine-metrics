@@ -1,0 +1,184 @@
+---
+engine_url: {{ engine_url }}
+engine_user: {{ engine_user }}
+engine_password: {{ engine_password }}
+engine_cafile: {{ engine_cafile|d() }}
+engine_insecure: {{ engine_insecure|d(false) }}
+engine_ssh_key: {{ ssh_key }}
+root_password: {{ root_password }}
+qcow_url: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2c
+
+{% if openshift_distribution != 'origin' %}
+rhsub_user: {{ rhsub_user }}
+rhsub_pass: {{ rhsub_pass }}
+{% if openshift_ovirt_all_in_one|d(true)|bool == true %}
+rhsub_pool: {{ rhsub_pool| first }}
+{% else %}
+rhsub_pool: {{ openshift_rhsub_pool }}
+{% endif %}
+{% if oreg_url is defined %}
+oreg_url: {{ oreg_url }}
+{% endif %}
+oreg_auth_user: {{ oreg_auth_user|d() }}
+oreg_auth_password: {{ oreg_auth_password|d() }}
+{% endif %}
+
+openshift_ovirt_dns_zone: {{ public_hosted_zone }}
+{% if openshift_distribution == 'origin' %}
+openshift_deployment_type: origin
+template_name: {{ ovirt_template_name|d('centos76') }}
+{% else %}
+openshift_deployment_type: openshift-enterprise
+ansible_distribution: RedHat
+template_name: {{ ovirt_template_name|d('rhelguest76') }}
+{% endif %}
+
+template_cluster: {{ ovirt_cluster_name|d('Default') }}
+template_memory: {{ ovirt_template_memory }}
+template_cpu: {{ ovirt_template_cpu }}
+template_disk_storage: {{ ovirt_template_disk_storage }}
+template_timeout: {{ ovirt_template_timeout }}
+template_disk_size: {{ ovirt_template_disk_size }}
+template_nics: {{ ovirt_template_nics }}
+
+
+vms:
+  - name: '{{ openshift_ovirt_bastion_machine_name|d("openshift-ovirt-bastion") }}'
+    cluster: '{{ ovirt_cluster_name|d("Default") }}'
+    profile:
+{% if openshift_distribution == 'origin' %}
+      template: {{ ovirt_template_name|d('centos76') }}
+{% else %}
+      template: {{ ovirt_template_name|d('rhelguest76') }}
+{% endif %}
+      cores: {{ openshift_ovirt_bastion_machine_cpu|d(4) }}
+      memory: {{ openshift_ovirt_bastion_machine_memory|d('8GiB') }}
+      state: running
+      cloud_init:
+        authorized_ssh_keys: {{ ssh_key }}
+        root_password: {{ root_password }}
+
+openshift_ovirt_vm_manifest:
+  - name: master
+    count: {{ number_of_openshift_master_vms  | d(1) }}
+    profile: master_vm
+  - name: node
+    count: {{ number_of_openshift_node_vms | d(0) }}
+    profile: node_vm
+  - name: compute
+    count: {{ number_of_openshift_compute_vms | d(0) }}
+    profile: node_vm
+  - name: lb
+    count: {{ number_of_openshift_lb_vms | d(0) }}
+    profile: node_vm
+openshift_ovirt_cluster: {{ ovirt_cluster_name|d('Default') }}
+openshift_ovirt_data_store: {{ openshift_ovirt_storage_domain_name|d('hosted_storage') }}
+openshift_ansible_role_path: /usr/share/ansible/openshift-ansible
+
+{% if ovirt_metrics_store|d(false)|bool == true %}
+openshift_logging_mux_namespaces:
+  - ovirt-metrics-{{ ovirt_env_name }}
+  - ovirt-logs-{{ ovirt_env_name }}
+{% endif %}
+
+image_path: /var/tmp
+debug_vm_create: true
+wait_for_ip: true
+vm_infra_create_single_timeout: 600
+vm_infra_wait_for_ip_retries: 30
+vm_infra_wait_for_ip_delay: 20
+vm_infra_create_poll_interval: 30
+
+openshift_ovirt_vm_profile:
+  master_vm:
+    cluster: {{ ovirt_cluster_name|d('Default') }}
+{% if openshift_distribution == 'origin' %}
+    template: {{ ovirt_template_name|d('centos76') }}
+{% else %}
+    template: {{ ovirt_template_name|d('rhelguest76') }}
+{% endif %}
+    memory: {{ openshift_vm_memory | d('30GiB') }}
+    cores: {{ openshift_vm_cores | d(4) }}
+    high_availability: true
+    disks:
+      - size: 10GiB
+        storage_domain: {{ openshift_ovirt_storage_domain_name|d('hosted_storage') }}
+        name: docker_disk
+        interface: virtio
+{% if openshift_logging|d(false)|bool == true %}
+      - size: {{ elasticsearch_disk_size|d('500GiB') }}
+        storage_domain: {{ openshift_ovirt_storage_domain_name|d('hosted_storage') }}
+        name: elasticsearch_disk
+        interface: virtio
+{% endif %}
+    state: running
+    cloud_init:
+      authorized_ssh_keys: {{ ssh_key }}
+      root_password: {{ root_password }}{% raw %}
+      custom_script: "{{ cloud_init_script_master }}"
+{% endraw %}
+  node_vm:
+    cluster: {{ ovirt_cluster_name|d('Default') }}
+{% if openshift_distribution == 'origin' %}
+    template: {{ ovirt_template_name|d('centos76') }}
+{% else %}
+    template: {{ ovirt_template_name|d('rhelguest76') }}
+{% endif %}
+    memory: {{ openshift_vm_memory | d('30GiB') }}
+    cores: {{ openshift_vm_cores | d(4) }}
+    high_availability: true
+    disks:
+      - size: 10GiB
+        storage_domain: {{ openshift_ovirt_storage_domain_name|d('hosted_storage') }}
+        name: docker_disk
+        interface: virtio
+{% if openshift_logging|d(false)|bool == true %}
+      - size: {{ elasticsearch_disk_size|d('500GiB') }}
+        storage_domain: {{ openshift_ovirt_storage_domain_name|d('hosted_storage') }}
+        name: elasticsearch_disk
+        interface: virtio
+{% endif %}
+    state: running
+    cloud_init:
+      authorized_ssh_keys: {{ ssh_key }}
+      root_password: {{ root_password }}{% raw %}
+      custom_script: "{{ cloud_init_script_master }}"
+{% endraw %}
+
+cloud_init_script_master: |
+{% if openshift_distribution == 'origin' %}
+  yum_repos:
+    centos-ovirt42:
+      baseurl: http://mirror.centos.org/centos/7/virt/x86_64/ovirt-4.2
+      enabled: true
+      gpgcheck: false
+  packages:
+    - epel-release
+    - centos-release-openshift-origin311
+{% endif %}
+  runcmd:
+    - sed -i 's/# ignored_nics =.*/ignored_nics = docker0, tun0 /' etc/ovirt-guest-agent.conf
+    - systemctl enable ovirt-guest-agent
+    - systemctl start ovirt-guest-agent
+    - mkdir -p /var/lib/docker
+    - /usr/sbin/mkfs.xfs -L dockervo /dev/vdb
+{% if update_ssh_key|d(false)|bool == true %}
+    - echo "{{ bastion_id_rsa }}" >> /root/.ssh/authorized_keys
+{% endif %}
+{% if openshift_logging|d(false)|bool == true %}
+    - echo "Defaults !requiretty" > /etc/sudoers.d/999-cloud-init-requiretty
+    - mkdir -p '{{ ovirt_elasticsearch_mounted_storage_path|d("/var/lib") }}/elasticsearch'
+    - /usr/sbin/mkfs.xfs -L elasticvo /dev/vdc
+{% endif %}
+  mounts:
+    - [ '/dev/vdb', '/var/lib/docker', 'xfs', 'defaults,gquota' ]
+{% if openshift_logging|d(false)|bool == true %}
+    - [ '/dev/vdc', '{{ ovirt_elasticsearch_mounted_storage_path|d("/var/lib") }}/elasticsearch', 'xfs', 'defaults,gquota' ]
+{% endif %}
+  power_state:
+    mode: reboot
+    message: cloud init finished - boot and install openshift
+    condition: True
+
+manage_packages: {{ manage_packages|d(true) }}
+manages_base_packages: {{ manages_base_packages|d(true) }}

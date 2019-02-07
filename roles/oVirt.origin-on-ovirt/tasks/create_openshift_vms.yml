@@ -1,0 +1,8 @@
+---
+# Create OpenShift virtual machines
+
+- include_tasks: build_vm_list.yml
+
+- name: Create OpenShift VMs
+  include_role:
+    name: oVirt.vm-infra

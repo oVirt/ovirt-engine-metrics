@@ -1,0 +1,184 @@
+---
+# Create bastion machine
+
+- name: Create OpenShift installer vm
+  include_role:
+    name: oVirt.vm-infra
+
+- ovirt_auth:
+    url:      '{{ engine_url }}'
+    username: '{{ engine_user }}'
+    password: '{{ engine_password }}'
+    insecure: '{{ engine_insecure | default(false) }}'
+    ca_file:  '{{ engine_username | default("") }}'
+  register: loggedin
+
+- ovirt_vm_facts:
+    auth: "{{ ovirt_auth }}"
+    pattern: 'name={{ openshift_ovirt_bastion_machine_name|d("openshift-ovirt-bastion") }} and cluster={{ ovirt_cluster_name|d("default") }}'
+
+- name: Set fact of the bastion machine FQDN
+  set_fact:
+    bastion_machine_fqdn: "{{ ansible_facts.ovirt_vms[0].fqdn }}"
+
+- debug:
+    msg: "{{bastion_machine_fqdn}}"
+
+- name: Logout from oVirt
+  ovirt_auth:
+    state: absent
+    ovirt_auth: "{{ ovirt_auth }}"
+  when: not loggedin.skipped | default(false)
+
+- name: Generate bastion machine RSA private host key
+  command : ssh-keygen -q -t rsa -f ./bastion_id_rsa -C "" -N ""
+  args:
+    creates: ./bastion_id_rsa
+  delegate_to: '{{ bastion_machine_fqdn }}'
+
+- name: Generate bastion public ssh key
+  shell: ssh-keygen -y -f ./bastion_id_rsa > ./bastion_id_rsa.pub
+  args:
+    creates: ./bastion_id_rsa.pub
+  delegate_to: '{{ bastion_machine_fqdn }}'
+
+- name: Copy install_okd.yaml, vars.yaml and integ.ini to bastion machine
+  copy:
+    src: '{{ origin_on_ovirt_role_path|d("/usr/share/ansible/roles/oVirt.openshift-ovirt") }}/{{ item }}'
+    dest: '{{ openshift_ansible_files_path|d("/root") }}/{{ item }}'
+    mode: 0644
+  with_items:
+    - '{{ openshift_ansible_files }}'
+  delegate_to: '{{ bastion_machine_fqdn }}'
+
+- block:
+    - name: Add origin repository to bastion machine
+      yum_repository:
+        name: centos-ovirt42
+        description: Centos YUM repo
+        baseurl: http://mirror.centos.org/centos/7/virt/x86_64/ovirt-4.2
+        gpgcheck: false
+      delegate_to: '{{ bastion_machine_fqdn }}'
+
+    - name: Install origin base packages
+      yum:
+        name: '{{ packages }}'
+        state: latest
+      vars:
+        packages: "{{ ovirt_origin_bastion_base_packages }}"
+      delegate_to: '{{ bastion_machine_fqdn }}'
+      when: manages_base_packages|d(true)|bool
+
+    - name: Upgrade all packages
+      yum:
+        name: '*'
+        state: latest
+      delegate_to: '{{ bastion_machine_fqdn }}'
+      register: task_result
+      when: manages_base_packages|d(true)|bool
+
+    - name: Reboot immediately if there was a change
+      shell: "sleep 5 && reboot"
+      async: 1
+      poll: 0
+      delegate_to: '{{ bastion_machine_fqdn }}'
+      when:
+        - task_result is changed
+        - manages_base_packages|d(true)|bool
+
+    - name: Wait for the reboot to complete if there was a change
+      wait_for_connection:
+        connect_timeout: 20
+        sleep: 5
+        delay: 5
+        timeout: 300
+      delegate_to: '{{ bastion_machine_fqdn }}'
+      when:
+        - task_result is changed
+        - manages_base_packages|d(true)|bool
+
+    - name: Install packages
+      yum:
+        name: '{{ packages }}'
+        state: latest
+      vars:
+        packages: "{{ ovirt_origin_bastion_packages }}"
+      delegate_to: '{{ bastion_machine_fqdn }}'
+  when: openshift_distribution|d('origin') == 'origin' and manage_packages|d(true)|bool
+
+- block:
+    - name: Register the system using subscription manager
+      redhat_subscription:
+        state: present
+        username: '{{ rhsub_user }}'
+        password: '{{ rhsub_pass }}'
+        pool_ids: '{{ rhsub_pool }}'
+      delegate_to: '{{ bastion_machine_fqdn }}'
+
+    - name: Disable all RHSM repositories
+      rhsm_repository:
+        name: '*'
+        state: disabled
+      delegate_to: '{{ bastion_machine_fqdn }}'
+
+    - name: Enable a RHSM repository
+      rhsm_repository:
+        name: '{{ ovirt_ocp_bastion_enable_repo }}'
+      delegate_to: '{{ bastion_machine_fqdn }}'
+
+    - name: Install OpenShift Enterprise base packages
+      yum:
+        name: '{{ packages }}'
+        state: latest
+      vars:
+        packages: "{{ ovirt_ocp_bastion_base_packages }}"
+      delegate_to: '{{ bastion_machine_fqdn }}'
+      when: manages_base_packages|d(true)|bool
+
+    - name: Upgrade all packages
+      yum:
+        name: '*'
+        state: latest
+      delegate_to: '{{ bastion_machine_fqdn }}'
+      register: task_result
+      when: manages_base_packages|d(true)|bool
+
+    - name: Reboot immediately if there was a change
+      shell: "sleep 5 && reboot"
+      async: 1
+      poll: 0
+      delegate_to: '{{ bastion_machine_fqdn }}'
+      when:
+        - task_result is changed
+        - manages_base_packages|d(true)|bool
+
+    - name: Wait for the reboot to complete if there was a change
+      wait_for_connection:
+        connect_timeout: 20
+        sleep: 5
+        delay: 5
+        timeout: 300
+      delegate_to: '{{ bastion_machine_fqdn }}'
+      when:
+        - task_result is changed
+        - manages_base_packages|d(true)|bool
+
+    - name: Install packages
+      yum:
+        name: '{{ packages }}'
+        state: latest
+      vars:
+        packages: "{{ ovirt_ocp_bastion_packages }}"
+      delegate_to: '{{ bastion_machine_fqdn }}'
+
+    - name: Unregister the system using subscription manager
+      redhat_subscription:
+        state: absent
+        username: '{{ rhsub_user }}'
+        password: '{{ rhsub_pass }}'
+      delegate_to: '{{ bastion_machine_fqdn }}'
+  when: openshift_distribution|d('origin') != 'origin' and manage_packages|d(true)|bool
+
+- debug:
+    msg: '{{ bastion_machine_fqdn }} was created successfully'
+  delegate_to: '{{ bastion_machine_fqdn }}'

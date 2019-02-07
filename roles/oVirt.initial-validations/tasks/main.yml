@@ -1,68 +1,71 @@
 ---
 #  notify: set failed validation
 
-# Best effort to use existing user configuration file
-- name: Update fluentd_elasticsearch_host
-  set_fact:
-    fluentd_elasticsearch_host: ""
-  when: (fluentd_elasticsearch_host == "elasticsearch-server.example.com") or (fluentd_elasticsearch_host is undefined)
+- block:
+    # Best effort to use existing user configuration file
+    - name: Update fluentd_elasticsearch_host
+      set_fact:
+        fluentd_elasticsearch_host: ""
+      when: (fluentd_elasticsearch_host == "elasticsearch-server.example.com") or (fluentd_elasticsearch_host is undefined)
 
-- name: Set elasticsearch_host if undefined and fluentd_elasticsearch_host is defined
-  set_fact:
-    elasticsearch_host: "{{ fluentd_elasticsearch_host }}"
-  when:
-    - elasticsearch_host is undefined
+    - name: Set elasticsearch_host if undefined and fluentd_elasticsearch_host is defined
+      set_fact:
+        elasticsearch_host: "{{ fluentd_elasticsearch_host }}"
+      when:
+        - elasticsearch_host is undefined
 
-- name: Set logging_output_type if undefined and fluentd_elasticsearch_host is defined
-  set_fact:
-    logging_output_type: "{{ fluentd_output_plugin|default(elasticsearch) }}"
-  when:
-    logging_output_type is undefined
+    - name: Set logging_output_type if undefined and fluentd_elasticsearch_host is defined
+      set_fact:
+        logging_output_type: "{{ fluentd_output_plugin|default(elasticsearch) }}"
+      when:
+        logging_output_type is undefined
 
-# Check collectors base packages availability
-- name: Check Rsyslog packages are available
-  yum:
-    name: "{{ rsyslog_base_packages }}"
-  register: rsyslog_packages_availability
-  ignore_errors: true
+    # Check collectors base packages availability
+    - name: Check Rsyslog packages are available
+      yum:
+        name: "{{ rsyslog_base_packages }}"
+      register: rsyslog_packages_availability
+      ignore_errors: true
 
-- name: Set logging_collector as rsyslog
-  set_fact:
-    logging_collector: "rsyslog"
-  when:
-    - rsyslog_packages_availability.rc == 0
-    - logging_collector is undefined
+    - name: Set logging_collector as rsyslog
+      set_fact:
+        logging_collector: "rsyslog"
+      when:
+        - rsyslog_packages_availability.rc == 0
+        - logging_collector is undefined
 
-- name: Check Fluentd packages are available
-  yum:
-    name: "{{ fluentd_base_packages }}"
-  register: fluentd_packages_availability
-  ignore_errors: true
+    - name: Check Fluentd packages are available
+      yum:
+        name: "{{ fluentd_base_packages }}"
+      register: fluentd_packages_availability
+      when: rsyslog_packages_availability.rc > 0
+      ignore_errors: true
 
-- name: Set logging_collector as fluentd
-  set_fact:
-    logging_collector: "fluentd"
-  when:
-    - rsyslog_packages_availability.rc > 0
-    - fluentd_packages_availability.rc == 0
-    - logging_collector is undefined
+    - name: Set logging_collector as fluentd
+      set_fact:
+        logging_collector: "fluentd"
+      when:
+        - rsyslog_packages_availability.rc > 0
+        - fluentd_packages_availability.rc == 0
+        - logging_collector is undefined
 
-- name: Validate Fluentd or Rsyslog base packages are available
-  debug:
-    msg: "Logs collector base packages are not available. Metrics role will not be able to continue"
-  when:
-    - rsyslog_packages_availability.rc > 0
-    - fluentd_packages_availability.rc > 0
-  changed_when: true
-  notify: set failed validation
+    - name: Validate Fluentd or Rsyslog base packages are available
+      debug:
+        msg: "Logs collector base packages are not available. Metrics role will not be able to continue"
+      when:
+        - rsyslog_packages_availability.rc > 0
+        - fluentd_packages_availability.rc > 0
+      changed_when: true
+      notify: set failed validation
 
-- name: Validate logging_collector
-  debug:
-    msg: "Log collector is missing required base packages. Metrics role will not be able to continue"
-  when:
-    - logging_collector is undefined
-  changed_when: true
-  notify: set failed validation
+    - name: Validate logging_collector
+      debug:
+        msg: "Log collector is missing required base packages. Metrics role will not be able to continue"
+      when:
+        - logging_collector is undefined
+      changed_when: true
+      notify: set failed validation
+  when: check_logging_collectors|d(true)
 
 # TODO add api to add warning message for the user to update its configuration file
 - block:
@@ -121,7 +124,7 @@
         - logging_output_type|default("elasticsearch") == "fluentd"
       changed_when: true
       notify: set failed validation
-  when: logging_collector is defined
+  when: logging_collector is defined and check_logging_collectors|d(true)
 
 # Validate ovirt-env-name
 - name: Validate ovirt-env-name parameter is set

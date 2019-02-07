@@ -5,6 +5,9 @@ ovirt_engine_fqdn:
 
 logging_output_type: elasticsearch
 
+# Should the elasticsearch output include certificate to send HTTPS requests
+use_omelasticsearch_cert: true
+
 # User that will own logging config files.
 logging_owner: root
 

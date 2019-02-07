@@ -1,14 +1,10 @@
 ---
-- name: Initial validations
+- name: oVirt metrics store installation
   hosts: engine
 
   roles:
     - role: oVirt.metrics/roles/oVirt.initial-validations
-    - role: oVirt.metrics/roles/oVirt.add-metrics-store-host
-
-
-- name: Metrics store installation roles
-  hosts: metrics_store
-
-  roles:
+      vars:
+        check_logging_collectors: false
     - role: oVirt.metrics/roles/oVirt.metrics-store-installation
+      when: failed_validation is undefined

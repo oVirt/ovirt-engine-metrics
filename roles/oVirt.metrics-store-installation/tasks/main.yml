@@ -1,18 +1,20 @@
 ---
-- block:
-    - name: Copy ansible inventory and vars files to metrics store machine
-      template:
-        src: '{{ item }}.template'
-        dest: '{{ openshift_ansible_files_path }}/{{ item }}'
-        mode: 0644
-      with_items:
-        - ansible-inventory-{{ openshift_distribution }}-{{ openshift_version }}-aio
-        - vars.yaml
+- name: Copy engine_id_rsa to current location
+  copy:
+    src: /etc/pki/ovirt-engine/keys/engine_id_rsa
+    dest: engine_id_rsa
+    mode: 0600
 
-    - name: Create symbolic link for ansible-inventory-ocp latest file
-      file:
-        src: '{{ openshift_ansible_files_path }}/ansible-inventory-{{ openshift_distribution }}-{{ openshift_version }}-aio'
-        dest: '{{ openshift_ansible_files_path }}/ansible-inventory-{{ openshift_distribution }}-latest-aio'
-        state: link
+- name: Generate engine ssh key
+  shell: ssh-keygen -y -f ./engine_id_rsa > ./engine_id_rsa.pub
 
-  when: viaq_metrics_store |default(true)|bool and logging_output_type|default("elasticsearch") == "elasticsearch"
+- name: Install metrics store machines
+  include_role:
+    name: '{{ origin_on_ovirt_role_path }}'
+  vars:
+    ssh_key: "{{ lookup('file', './engine_id_rsa.pub') }}"
+
+- name: Delete engine_id_rsa.pub
+  file:
+    path: engine_id_rsa.pub
+    state: absent
