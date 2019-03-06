@@ -6,8 +6,6 @@
 
   vars_files:
     - playbook_vars.yml
-    # Contains encrypted `engine_password` varibale using ansible-vault
-    - passwords.yml
 
   roles:
     - oVirt.origin-on-ovirt

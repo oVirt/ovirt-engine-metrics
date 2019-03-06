@@ -25,7 +25,7 @@ required for the installation and copies it to the vm.
 # ANSIBLE_JINJA2_EXTENSIONS="jinja2.ext.do" ./configure_ovirt_machines_for_metrics.sh --playbook=ovirt-metrics-store-installation.yml
 ```
 
-**Note:** This playbook ends with failure on https://github.com/oVirt/ovirt-ansible-vm-infra/issues/65
+**Note:** If this playbook ends with failure on https://github.com/oVirt/ovirt-ansible-vm-infra/issues/65
 But all vms are created succesfully. Need to see how to fix the failure.
 You can continue with deploying OpenShift from the metrics store installer virtual machine.
 
@@ -35,6 +35,7 @@ You can continue with deploying OpenShift from the metrics store installer virtu
 ```
 # ssh root@<metrics-store-installer ip or fqdn>
 ```
+**Note:** If you are not using DNS, make sure to add the new OpenShift virtual machines  to /etc/hosts on the engine and installer machines.
 
 7. Run the ansible playbook that deploys OpenShift on the created vms
 
@@ -53,7 +54,7 @@ You can continue with deploying OpenShift from the metrics store installer virtu
 - `engine_user:`(Mandatory. No default )
 - `engine_password:`(Mandatory. No default )
 - `engine_insecure:`(default: `false`)
-- `engine_cafile:`(No default )
+- `engine_cafile:`(default: `/etc/pki/ovirt-engine/ca.pem`)
 - `public_hosted_zone:`(No default )
 - `create_host_entry:`(default: `false` )
 - `root_password:`( No default )
@@ -64,7 +65,7 @@ You can continue with deploying OpenShift from the metrics store installer virtu
 - `openshift_ovirt_all_in_one:`(default: `true`)
 - `number_of_openshift_master_vms:`(default: `1`)
 - `number_of_openshift_node_vms:`(default: `0`)
-- `number_of_openshift_compute_vms:`(default: `0`)
+- `number_of_openshift_etcd_vms:`(default: `0`)
 - `number_of_openshift_lb_vms:`(default: `0`)
 - `openshift_logging_es_cluster_size:`(default: 1)
 - `openshift_logging_es_number_of_replicas:`(default: 0)

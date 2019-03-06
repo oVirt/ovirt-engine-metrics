@@ -1,60 +1,60 @@
 ---
-# Create bastion machine
-
 - name: Set engine ssh_key fact
   set_fact:
     ssh_key: "{{ lookup('file', engine_ssh_public_key_file_path) }}"
   when: ssh_key is undefined
 
-- name: Install required packages
-  yum:
-    name: python2-jmespath
-    state: latest
+- block:
+    - name:  Generate install_okd.yaml, vars.yaml and integ.ini templates
+      template:
+        src: '{{ origin_on_ovirt_role_path }}/templates/{{ item }}.template'
+        dest: '{{ origin_on_ovirt_role_path }}/{{ item }}'
+        mode: 0644
+      with_items:
+        - '{{ openshift_ansible_files }}'
+      vars:
+        create_openshift_bastion_vm_vars: true
 
-- name:  Generate install_okd.yaml, vars.yaml and integ.ini templates
-  template:
-    src: '{{ origin_on_ovirt_role_path|d("/usr/share/ansible/roles/oVirt.origin-on-ovirt") }}/templates/{{ item }}.template'
-    dest: '{{ origin_on_ovirt_role_path|d("/usr/share/ansible/roles/oVirt.origin-on-ovirt") }}/{{ item }}'
-    mode: 0644
-  with_items:
-    - '{{ openshift_ansible_files }}'
+    - name: Include vars.yaml file
+      include_vars:
+        file: '{{ origin_on_ovirt_role_path }}/vars.yaml'
 
-- name: Include vars.yaml file
-  include_vars:
-    file: '{{ origin_on_ovirt_role_path|d("/usr/share/ansible/roles/oVirt.origin-on-ovirt") }}/vars.yaml'
+    - name: Create template for OpenShift vms.
+      include_role:
+        name: oVirt.image-template
+      when: create_template
 
-- name: Create template for OpenShifte vms.
-  include_role:
-    name: oVirt.image-template
-  when: create_template|d(true)|bool == true
+    - name: Create a bastion virtual machine for installing OpenShift
+      include_tasks: create_openshift_bastion_vm.yml
 
-- name: Create a bastion virtual machine for installing OpenShift
-  include_tasks: create_openshift_bastion_vm.yml
-  when: create_openshift_bastion_vm|d(true)|bool == true
+    - name: Remove bastion machine from known hosts, in case it already exist
+      known_hosts:
+        name: "{{ bastion_machine_fqdn }}"
+        state: absent
+      ignore_errors: true
 
-# TODO replace with ansible module
-- name: Get bastion ssh public key
-  command: "sshpass -p {{ root_password }} scp root@{{ bastion_machine_fqdn }}:/root/bastion_id_rsa.pub ./bastion_id_rsa"
-  no_log: true
+    # TODO replace with ansible module
+    - name: Get bastion ssh public key
+      command: "sshpass -p {{ root_password }} scp  -o StrictHostKeyChecking=no root@{{ bastion_machine_fqdn }}:/root/bastion_id_rsa.pub ./bastion_id_rsa"
+      no_log: true
 
-- name: Set bastion public ssh key fact
-  set_fact:
-    bastion_id_rsa: "{{ lookup('file', './bastion_id_rsa') }}"
-    update_ssh_key: true
+    - pause:
+        minutes: 1
+  when: create_openshift_bastion_vm
 
-- name:  Update vars.yaml
-  template:
-    src: '{{ origin_on_ovirt_role_path|d("/usr/share/ansible/roles/oVirt.origin-on-ovirt") }}/templates/vars.yaml.template'
-    dest: '{{ origin_on_ovirt_role_path|d("/usr/share/ansible/roles/oVirt.origin-on-ovirt") }}/vars.yaml'
-    mode: 0644
+- block:
+    - name:  Generate install_okd.yaml, vars.yaml and integ.ini templates
+      template:
+        src: '{{ origin_on_ovirt_role_path }}/templates/{{ item }}.template'
+        dest: '{{ origin_on_ovirt_role_path }}/{{ item }}'
+        mode: 0644
+      with_items:
+        - '{{ openshift_ansible_files }}'
 
-- name: Refresh vars.yaml file
-  include_vars:
-    file: '{{ origin_on_ovirt_role_path|d("/usr/share/ansible/roles/oVirt.origin-on-ovirt") }}/vars.yaml'
+    - name: Include vars.yaml file
+      include_vars:
+        file: '{{ origin_on_ovirt_role_path }}/vars.yaml'
 
-- pause:
-    minutes: 1
-
-- name: Create virtual machines fot OpenShift installation
-  include_tasks: create_openshift_vms.yml
-  when: create_openshift_vms|d(true)|bool == true
+    - name: Create virtual machines for OpenShift installation
+      include_tasks: create_openshift_vms.yml
+  when: create_openshift_vms

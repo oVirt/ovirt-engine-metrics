@@ -64,7 +64,7 @@
 
   tasks:
 
-    - name: Remove engine key from bastion machine
-      file:
-        path: engine_id_rsa
-        state: absent
+    - name: Generate a file with vms in the inventory
+      template:
+        src: playbook_inventory.yaml.template
+        dest: /root/playbook_inventory.yaml

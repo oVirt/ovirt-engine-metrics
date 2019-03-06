@@ -1,6 +1,6 @@
 - block:
     - name: Log into logging project
-      shell: 'oc project {{ logging_namespace|d("openshift-logging") }}'
+      shell: 'oc project {{ logging_namespace }}'
 
     - name: Remove metrics and logs index uuid files
       file:
@@ -59,11 +59,11 @@
       ignore_errors: True
 
     - name: Binds the admin role to specified users for all projects in the cluster
-      shell: oadm policy add-cluster-role-to-user cluster-admin admin
+      shell: oc adm policy add-cluster-role-to-user cluster-admin admin
       ignore_errors: True
 
     - name: Assign the password immediately without login
-      shell: oc login --username=admin --password={{ ovirt_metrics_admin_password }}
+      shell: oc login --username=admin --password={{ openshift_logging_admin_password }}
       ignore_errors: True
 
     - name: Log back in as admin user
@@ -114,4 +114,4 @@
         ignore_files: ['README.md']
       run_once: true
 
-  when: viaq_metrics_store|default(true)|bool and logging_output_type|default("elasticsearch") == "elasticsearch"
+  when: viaq_metrics_store and logging_output_type == "elasticsearch"

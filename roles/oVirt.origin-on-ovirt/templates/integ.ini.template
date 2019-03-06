@@ -2,45 +2,47 @@
 localhost ansible_connection=local
 
 [all:vars]
-ansible_ssh_private_key_file = "{{ bastion_ssh_private_key_file_path|d('/root') }}/bastion_id_rsa"
+ansible_ssh_private_key_file = "{{ bastion_ssh_private_key_file_path }}/bastion_id_rsa"
 compatibility_version=4.2
 public_hosted_zone="{{ public_hosted_zone }}"
-openshift_ovirt_all_in_one=true
+openshift_ovirt_all_in_one={{ openshift_ovirt_all_in_one }}
 openshift_ovirt_dns_zone="{{ public_hosted_zone }}"
 openshift_web_console_install=true
 openshift_master_overwrite_named_certificates=true
+# Uncomment to disable install-time checks, for smaller scale installations
+# openshift_disable_check=memory_availability,disk_availability,docker_image_availability
 openshift_master_cluster_hostname="openshift-master.{{ public_hosted_zone }}"
 openshift_master_cluster_public_hostname="openshift.{{ public_hosted_zone }}"
-#openshift_disable_check=memory_availability,disk_availability,docker_image_availability
 # the public subdomain to use for all of the external facing logging services
 # by default it is the same as the public hostname
 openshift_master_default_subdomain="{{ public_hosted_zone }}"
 {% raw -%}
 openshift_public_hostname="{{openshift_master_cluster_public_hostname}}"
-canonical_registry=index.docker.io
 openshift_service_catalog_image_version="{{ openshift_image_tag }}"
 
 [OSEv3:vars]
 # General variables
 debug_level=1
-containerized=False
+containerized=false
 ansible_ssh_user=root
 os_firewall_use_firewalld=true
 openshift_enable_excluders=false
 openshift_install_examples=false
+# enable ntp on masters to ensure proper failover
+openshift_clock_enabled=true
 openshift_debug_level="{{ debug_level }}"
 openshift_node_debug_level="{{ node_debug_level | default(debug_level,true) }}"
 osn_storage_plugin_deps=[]
 openshift_master_bootstrap_auto_approve=true
 openshift_master_bootstrap_auto_approver_node_selector={"node-role.kubernetes.io/master":"true"}
-osm_controller_args={"experimental-cluster-signing-duration": ["20m"]}
+#osm_controller_args={"experimental-cluster-signing-duration": ["20m"]}
 osm_default_node_selector="node-role.kubernetes.io/compute=true"
-openshift_enable_service_catalog=False
+openshift_enable_service_catalog=false
 
 # Docker
 #container_runtime_docker_storage_setup_device=/dev/vdb
 container_runtime_docker_storage_type=overlay2
-openshift_docker_use_system_container=False
+openshift_docker_use_system_container=false
 {% endraw -%}
 
 # Logging
@@ -73,6 +75,9 @@ openshift_cluster_monitoring_operator_install=false
 openshift_metrics_install_metrics=false
 {% endraw -%}
 {% endif %}
+{% if ovirt_metrics_store|d(false)|bool == true %}
+openshift_logging_mux_namespaces=["ovirt-metrics-{{ ovirt_env_name }}","ovirt-logs-{{ ovirt_env_name }}"]
+{% endif %}
 {% raw %}
 [OSEv3:children]
 nodes
@@ -80,9 +85,17 @@ masters
 etcd
 
 [masters]
-;master0.example.com openshift_node_group_name="node-config-all-in-one" openshift_schedulable=true
+# dynamically set by openshift_ovirt role
+
 [etcd]
-;master0.example.com
+# dynamically set by openshift_ovirt role
+
+[infras]
+# dynamically set by openshift_ovirt role
+
+[lb]
+# dynamically set by openshift_ovirt role
+
 [nodes]
-;master0.example.com openshift_hostname=master0.example.com openshift_node_group_name="node-config-all-in-one"
+# dynamically set by openshift_ovirt role
 {% endraw %}

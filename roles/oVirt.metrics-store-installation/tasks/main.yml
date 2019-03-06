@@ -1,20 +1,26 @@
 ---
-- name: Copy engine_id_rsa to current location
-  copy:
-    src: /etc/pki/ovirt-engine/keys/engine_id_rsa
-    dest: engine_id_rsa
-    mode: 0600
+- block:
+    - name: Copy engine_id_rsa to current location
+      copy:
+        src: /etc/pki/ovirt-engine/keys/engine_id_rsa
+        dest: engine_id_rsa
+        mode: 0600
 
-- name: Generate engine ssh key
-  shell: ssh-keygen -y -f ./engine_id_rsa > ./engine_id_rsa.pub
+    - name: Generate engine ssh key
+      shell: ssh-keygen -y -f ./engine_id_rsa > ./engine_id_rsa.pub
 
-- name: Install metrics store machines
-  include_role:
-    name: '{{ origin_on_ovirt_role_path }}'
-  vars:
-    ssh_key: "{{ lookup('file', './engine_id_rsa.pub') }}"
+    - name: Update installer machine name if set by the user
+      set_fact:
+        openshift_ovirt_bastion_machine_name: metrics-store-installer
+      when: openshift_ovirt_bastion_machine_name is undefined
 
-- name: Delete engine_id_rsa.pub
-  file:
-    path: engine_id_rsa.pub
-    state: absent
+    - name: Install metrics store machines
+      include_role:
+        name: '{{ origin_on_ovirt_role_path }}'
+      vars:
+        ssh_key: "{{ lookup('file', './engine_id_rsa.pub') }}"
+  always:
+    - name: Delete engine_id_rsa.pub
+      file:
+        path: engine_id_rsa.pub
+        state: absent

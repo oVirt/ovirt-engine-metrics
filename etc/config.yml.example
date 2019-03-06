@@ -15,5 +15,8 @@ ovirt_env_name: engine
 
 # Address or hostname (FQDN) of the Elasticsearch server host
 # Example:
-#elasticsearch_host: master0.{{ public_hosted_zone }}
+# elasticsearch_host: master0.{{ public_hosted_zone }}
 elasticsearch_host:
+
+# `admin` user password for Kibana console and OpenShift console
+openshift_logging_admin_password:

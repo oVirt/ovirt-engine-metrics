@@ -8,10 +8,10 @@
       lineinfile:
         path: /etc/hosts
         regexp: '^ webconsole.openshift-web-console.svc'
-        line: "{{ ansible_default_ipv4.address }} {{ inventory_hostname }} etcd.{{ public_hosted_zone }} openshift-master.{{ public_hosted_zone }} openshift.{{ public_hosted_zone }} docker-registry-default.apps.{{ public_hosted_zone }} webconsole.openshift-web-console.svc registry-console-default.apps.{{ public_hosted_zone }} master-etcd-{{ public_hosted_zone }} kibana.{{ public_hosted_zone }} es.{{ public_hosted_zone }}"
+        line: "{{ ansible_default_ipv4.address }} master0.{{ public_hosted_zone }} {{ inventory_hostname }} etcd.{{ public_hosted_zone }} openshift-master.{{ public_hosted_zone }} openshift.{{ public_hosted_zone }} docker-registry-default.apps.{{ public_hosted_zone }} webconsole.openshift-web-console.svc registry-console-default.apps.{{ public_hosted_zone }} master-etcd-{{ public_hosted_zone }} kibana.{{ public_hosted_zone }} es.{{ public_hosted_zone }}"
         owner: root
         group: root
         mode: 0644
       when:
-        - openshift_ovirt_all_in_one is defined | ternary((openshift_ovirt_all_in_one | bool), false)
+        - openshift_ovirt_all_in_one
 {% endraw %}

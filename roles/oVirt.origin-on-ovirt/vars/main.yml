@@ -5,6 +5,7 @@ openshift_ansible_files:
   - integ.ini
   - vars.yaml
   - create_host_entry.yaml
+  - playbook_inventory.yaml
 
 ovirt_origin_bastion_packages:
   - epel-release

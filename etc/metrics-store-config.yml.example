@@ -10,44 +10,50 @@
 ovirt_env_name: engine
 
 # Path to preallocated partition to be used for elasticsearch persistent storage
-#ovirt_elasticsearch_mounted_storage_path: /var/lib
+# ovirt_elasticsearch_mounted_storage_path: /var/lib
 
-# FQDN of the Manager
+# FQDN of the Engine
 engine_url:
-# Manager user
+# Engine user
 engine_user:
 
-# Path to Manager CA certificate file (for example, '/etc/pki/ovirt-engine/ca.pem')
-engine_cafile:
+# Engine password
+engine_password:
+
+# Path to Engine CA certificate file. Default is '/etc/pki/ovirt-engine/ca.pem'
+# engine_cafile:
 
 # DNS zone (format: example.com) of the Metrics Store virtual machines
 public_hosted_zone:
 
 # The cluster in which the metrics store installer and VMs will be created. Default is 'Default'.
-#ovirt_cluster_name:
+# ovirt_cluster_name:
 
 # Storage domain for the Metrics store installation
 openshift_ovirt_storage_domain_name:
 
 # Name of the Metrics Store installer virtual machine that will be created
 # Default is 'metrics-store-installer'
-#openshift_ovirt_bastion_machine_name:
+# openshift_ovirt_bastion_machine_name:
 
 # Creates a record in '/etc/hosts'. Default is 'false'
 # Relevant only for all-in-one installation
-#create_host_entry:
+# create_host_entry:
 
 # The following variables determine the number of virtual machines to create.
 # The default is an all-in-one master installation (one Metrics Store virtual machine),
 # which normally supports up to ~50 hosts, each running ~20 virtual machines.
-#openshift_ovirt_all_in_one: true
-#number_of_openshift_master_vms: 1
-#number_of_openshift_node_vms: 0
-#number_of_openshift_compute_vms: 0
-#number_of_openshift_lb_vms: 0
+# openshift_ovirt_all_in_one: true
+# number_of_openshift_master_vms: 1
+# number_of_openshift_node_vms: 0
+# number_of_openshift_etcd_vms: 0
+# number_of_openshift_lb_vms: 0
 
 # The size of the disks that will be created for Elasticsearch. Default is 500GiB.
-#elasticsearch_disk_size: 500GiB
+# elasticsearch_disk_size: 500GiB
+
+# Root password for the Metrics Store installer and Metrics Store virtual machine
+root_password:
 
 # Additional mandatory parameters for Red Hat Virtualization:
 
@@ -55,7 +61,7 @@ openshift_ovirt_storage_domain_name:
 # Each additional Metrics Store virtual machine requires an additional OpenShift subscription.
 
 # This variable needs to be uncommented
-#openshift_distribution: openshift-enterprise
+# openshift_distribution: openshift-enterprise
 
 # URL for downloading the RHEL guest image to create the virtual machines
 # To copy the qcow_url go to:
@@ -63,36 +69,29 @@ openshift_ovirt_storage_domain_name:
 # In the Product Software tab, right-click the Download Now button of the
 # `Red Hat Enterprise Linux KVM Guest Image` and copy the link.
 # WARNING: The link will expire. Copy the link when you are ready to run the playbook.
-#qcow_url:
+# qcow_url:
 
 # User for Red Hat Subscription Manager
 rhsub_user:
 
 # List of RHV, RHEL, and OpenShift subscriptions pool IDs
 # See documentation on how to get pool IDs
-rhsub_pool:
- -
+rhsub_pool: []
 
 # Pool ID for additional OpenShift subscriptions
 # Required if you are installing more than one Metrics Store virtual machine
-#openshift_rhsub_pool:
+# openshift_rhsub_pool:
 
 # User for the container registry. Default is 'registry.redhat.io'
 # Usually the same as the user for accessing the Customer Portal
 # oreg_url: registry.redhat.io
-oreg_auth_user:
-
-# Password for the Red Hat Virtualization Manager
-#engine_password:
-
-# Root password for the Metrics Store installer and Metrics Store virtual machine
-#root_password:
+# oreg_auth_user:
 
 # `admin` user password for Kibana console and OpenShift console
-#ovirt_metrics_admin_password:
+# openshift_logging_admin_password:
 
 # Password for Red Hat Subscription Manager
-#rhsub_pass:
+# rhsub_pass:
 
 # Password for the container registry, usually the same as the password for accessing the Customer Portal
-#oreg_auth_password:
+# oreg_auth_password:

@@ -5,17 +5,14 @@
   include_role:
     name: oVirt.vm-infra
 
-- ovirt_auth:
-    url:      '{{ engine_url }}'
-    username: '{{ engine_user }}'
-    password: '{{ engine_password }}'
-    insecure: '{{ engine_insecure | default(false) }}'
-    ca_file:  '{{ engine_username | default("") }}'
-  register: loggedin
-
 - ovirt_vm_facts:
-    auth: "{{ ovirt_auth }}"
-    pattern: 'name={{ openshift_ovirt_bastion_machine_name|d("openshift-ovirt-bastion") }} and cluster={{ ovirt_cluster_name|d("default") }}'
+    auth:
+      url:      '{{ engine_url|mandatory }}'
+      username: '{{ engine_user|mandatory }}'
+      password: '{{ engine_password|mandatory }}'
+      insecure: '{{ engine_insecure }}'
+      ca_file:  '{{ engine_cafile }}'
+    pattern: 'name={{ openshift_ovirt_bastion_machine_name }} and cluster={{ ovirt_cluster_name }}'
 
 - name: Set fact of the bastion machine FQDN
   set_fact:
@@ -23,12 +20,6 @@
 
 - debug:
     msg: "{{bastion_machine_fqdn}}"
-
-- name: Logout from oVirt
-  ovirt_auth:
-    state: absent
-    ovirt_auth: "{{ ovirt_auth }}"
-  when: not loggedin.skipped | default(false)
 
 - name: Generate bastion machine RSA private host key
   command : ssh-keygen -q -t rsa -f ./bastion_id_rsa -C "" -N ""
@@ -44,8 +35,8 @@
 
 - name: Copy install_okd.yaml, vars.yaml and integ.ini to bastion machine
   copy:
-    src: '{{ origin_on_ovirt_role_path|d("/usr/share/ansible/roles/oVirt.openshift-ovirt") }}/{{ item }}'
-    dest: '{{ openshift_ansible_files_path|d("/root") }}/{{ item }}'
+    src: '{{ origin_on_ovirt_role_path }}/{{ item }}'
+    dest: '{{ openshift_ansible_files_path }}/{{ item }}'
     mode: 0644
   with_items:
     - '{{ openshift_ansible_files }}'
@@ -67,7 +58,7 @@
       vars:
         packages: "{{ ovirt_origin_bastion_base_packages }}"
       delegate_to: '{{ bastion_machine_fqdn }}'
-      when: manages_base_packages|d(true)|bool
+      when: manages_base_packages
 
     - name: Upgrade all packages
       yum:
@@ -75,27 +66,15 @@
         state: latest
       delegate_to: '{{ bastion_machine_fqdn }}'
       register: task_result
-      when: manages_base_packages|d(true)|bool
+      when: manages_base_packages
 
-    - name: Reboot immediately if there was a change
-      shell: "sleep 5 && reboot"
-      async: 1
-      poll: 0
+    - name: Reboot system
+      reboot:
+        reboot_timeout: 300
       delegate_to: '{{ bastion_machine_fqdn }}'
       when:
         - task_result is changed
-        - manages_base_packages|d(true)|bool
-
-    - name: Wait for the reboot to complete if there was a change
-      wait_for_connection:
-        connect_timeout: 20
-        sleep: 5
-        delay: 5
-        timeout: 300
-      delegate_to: '{{ bastion_machine_fqdn }}'
-      when:
-        - task_result is changed
-        - manages_base_packages|d(true)|bool
+        - manages_base_packages
 
     - name: Install packages
       yum:
@@ -104,7 +83,7 @@
       vars:
         packages: "{{ ovirt_origin_bastion_packages }}"
       delegate_to: '{{ bastion_machine_fqdn }}'
-  when: openshift_distribution|d('origin') == 'origin' and manage_packages|d(true)|bool
+  when: openshift_distribution == 'origin' and manage_packages
 
 - block:
     - name: Register the system using subscription manager
@@ -133,7 +112,7 @@
       vars:
         packages: "{{ ovirt_ocp_bastion_base_packages }}"
       delegate_to: '{{ bastion_machine_fqdn }}'
-      when: manages_base_packages|d(true)|bool
+      when: manages_base_packages
 
     - name: Upgrade all packages
       yum:
@@ -141,27 +120,15 @@
         state: latest
       delegate_to: '{{ bastion_machine_fqdn }}'
       register: task_result
-      when: manages_base_packages|d(true)|bool
+      when: manages_base_packages
 
-    - name: Reboot immediately if there was a change
-      shell: "sleep 5 && reboot"
-      async: 1
-      poll: 0
+    - name: Reboot system
+      reboot:
+        reboot_timeout: 300
       delegate_to: '{{ bastion_machine_fqdn }}'
       when:
         - task_result is changed
-        - manages_base_packages|d(true)|bool
-
-    - name: Wait for the reboot to complete if there was a change
-      wait_for_connection:
-        connect_timeout: 20
-        sleep: 5
-        delay: 5
-        timeout: 300
-      delegate_to: '{{ bastion_machine_fqdn }}'
-      when:
-        - task_result is changed
-        - manages_base_packages|d(true)|bool
+        - manages_base_packages
 
     - name: Install packages
       yum:
@@ -177,7 +144,7 @@
         username: '{{ rhsub_user }}'
         password: '{{ rhsub_pass }}'
       delegate_to: '{{ bastion_machine_fqdn }}'
-  when: openshift_distribution|d('origin') != 'origin' and manage_packages|d(true)|bool
+  when: openshift_distribution != 'origin' and manage_packages
 
 - debug:
     msg: '{{ bastion_machine_fqdn }} was created successfully'

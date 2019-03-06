@@ -53,7 +53,7 @@ required for the installation and copies it to the vm.
 - `engine_user:`(Mandatory. No default )`
 - `engine_password:`(Mandatory. No default)
 - `engine_insecure:`(default: `false`)
-- `engine_cafile:`(No default)
+- `engine_cafile:`(default: `/etc/pki/ovirt-engine/ca.pem`)
 - `engine_ssh_public_key_file_path:`(No default)
 - `public_hosted_zone:`(No default )
 - `create_host_entry:`(default: `false`)
@@ -64,7 +64,7 @@ required for the installation and copies it to the vm.
 - `openshift_ovirt_all_in_one:`(default: `true`)
 - `number_of_openshift_master_vms:`(default: `1`)
 - `number_of_openshift_node_vms:`(default: `0`)
-- `number_of_openshift_compute_vms:`(default: `0`)
+- `number_of_openshift_etcd_vms:`(default: `0`)
 - `number_of_openshift_lb_vms:`(default: `0`)
 - `ovirt_template_name:` (default:`rhelguest76`)
 - `ovirt_template_memory:` (default:`4GiB`)

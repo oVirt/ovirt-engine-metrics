@@ -31,39 +31,38 @@
     logging_role_path: '{{ logging_role_path }}'
     rsyslog_max_message_size: '{{ rsyslog_max_message_size|d("64k") }}'
     collect_ovirt_collectd_metrics: '{{ collect_ovirt_collectd_metrics|d(true) }}'
-    use_omelasticsearch_cert: '{{ use_omelasticsearch_cert|d(true) }}'
     ovirt_vds_cluster_name: '{{ host_deploy_cluster_name|d("default") }}'
 
 - block:
-    - name: Install fluentd elasticsearch CA certificate
+    - name: Copy fluentd elasticsearch CA certificate to host
       copy:
-        content: '{{ fluentd_elasticsearch_ca_cert }}'
+        src: '{{ local_fluentd_elasticsearch_ca_cert }}'
         dest: '{{ fluentd_elasticsearch_ca_cert_path }}'
         owner: '{{ logging_owner }}'
         group: '{{ logging_group }}'
         mode: '{{ logging_config_mode }}'
       when:
-        - use_omelasticsearch_cert|d(true) == true
+        - use_omelasticsearch_cert
 
-    - name: Install fluentd elasticsearch client certificate
+    - name: Copy fluentd elasticsearch client certificate
       copy:
-        content: '{{ fluentd_elasticsearch_client_cert }}'
+        src: '{{ local_fluentd_elasticsearch_client_cert }}'
         dest: '{{ fluentd_elasticsearch_client_cert_path }}'
         owner: '{{ logging_owner }}'
         group: '{{ logging_group }}'
         mode: '{{ logging_config_mode }}'
       when:
-        - use_omelasticsearch_cert|d(true) == true
+        - use_omelasticsearch_cert
 
-    - name: Install fluentd elasticsearch client key
+    - name: Copy fluentd elasticsearch client key
       copy:
-        content: '{{ fluentd_elasticsearch_client_key }}'
+        src: '{{ local_fluentd_elasticsearch_client_key }}'
         dest: '{{ fluentd_elasticsearch_client_key_path }}'
         owner: '{{ logging_owner }}'
         group: '{{ logging_group }}'
         mode: '{{ logging_config_mode }}'
       when:
-        - use_omelasticsearch_cert|d(true) == true
+        - use_omelasticsearch_cert
 
     - name: Set logging_outputs facts to send metrics to elasticsearch with HTTPS and certificates
       set_fact:
@@ -104,7 +103,7 @@
             ca_cert: '{{ fluentd_elasticsearch_ca_cert_path }}'
             cert: '{{ fluentd_elasticsearch_client_cert_path }}'
             key: '{{ fluentd_elasticsearch_client_key_path }}'
-  when: logging_output_type|d('elasticsearch') == 'elasticsearch' and use_omelasticsearch_cert|d(true)|bool == true
+  when: logging_output_type == 'elasticsearch' and use_omelasticsearch_cert
 
 - block:
     - name: Set logging_outputs facts for sending metrics to elasticsearch with HTTP request
@@ -123,7 +122,7 @@
             dynbulkid: '{{ rsyslog_elasticsearch_dynbulkid_logs|d("on") }}'
             retryfailures: '{{ rsyslog_elasticsearch_retryfailures_logs|d("on") }}'
             retryruleset: '{{ rsyslog_elasticsearch_retryruleset_logs|d("try_es") }}'
-#            allowUnsignedCerts: '{{ logs_allowUnsignedCerts|d("on") }}'
+            allowUnsignedCerts: '{{ logs_allowUnsignedCerts|d("off") }}'
           - name: ovirt-metrics-elasticsearch
             type: elasticsearch
             logs_collections:
@@ -137,8 +136,8 @@
             dynbulkid: '{{ rsyslog_elasticsearch_dynbulkid_metrics|d("on") }}'
             retryfailures: '{{ rsyslog_elasticsearch_retryfailures_metrics|d("off") }}'
             retryruleset: '{{ rsyslog_elasticsearch_retryruleset_metrics|d("try_es") }}'
-#            allowUnsignedCerts: '{{ metrics_allowUnsignedCerts|d("on") }}'
-  when: logging_output_type|d('elasticsearch') == 'elasticsearch' and use_omelasticsearch_cert|d(true)|bool == false
+            allowUnsignedCerts: '{{ metrics_allowUnsignedCerts|d("off") }}'
+  when: logging_output_type == 'elasticsearch' and use_omelasticsearch_cert
 
 - name: Run rsyslog sub-role
   include_role:

@@ -8,57 +8,54 @@
 
 engine_url:
 engine_user:
-engine_insecure: true
+# engine_insecure:
+
 # Path to engine public ssh key
 engine_ssh_public_key_file_path:
 
-# Path to engine ca file. No default. For example: /etc/pki/ovirt-engine/ca.pem
-# Mandatory if 'ovirt_engine_insecure' is false
-#engine_cafile:
+# Path to engine ca file. No default. Default to `/etc/pki/ovirt-engine/ca.pem`
+# engine_cafile:
 
 # The DNS zone the VMs created by this role will have. No default. For example: example.com
 public_hosted_zone:
 
 # The cluster in which the metrics store installer and VMs will be created. Defaults to 'Default'.
-#ovirt_cluster_name:
+# ovirt_cluster_name:
 
 # Storage domain to use for the Metrics store installation.
 openshift_ovirt_storage_domain_name:
 
 # The name of the metrics store installer that will be created for the installation.
-# Defaults to 'metrics-store-installer'.
-#openshift_ovirt_bastion_machine_name:
+# Defaults to 'openshift-ovirt-bastion'.
+# openshift_ovirt_bastion_machine_name:
 
 # Creates a record in /etc/hosts. Defaults to 'false'.
 # Relevant only for all-in-one installation
-#create_host_entry:
+# create_host_entry:
 
 # The following variables determine the number of VMs to create.
 # The default is an all-in-one master installation,
 # which can ususally support up to ~50 host with -20 VMs per host.
-#openshift_ovirt_all_in_one: true
-#number_of_openshift_master_vms: 1
-#number_of_openshift_node_vms: 0
-#number_of_openshift_compute_vms: 0
-#number_of_openshift_lb_vms: 0
+# openshift_ovirt_all_in_one: true
+# number_of_openshift_master_vms: 1
+# number_of_openshift_node_vms: 0
+# number_of_openshift_etcd_vms: 0
+# number_of_openshift_lb_vms: 0
 
 # The size of the disks that will be created for Elasticsearch. Defaults to 500GiB.
-#elasticsearch_disk_size: 500GiB
+# elasticsearch_disk_size: 500GiB
 
 # Additional mandatory parameters for Red Hat Virtualization:
 
 # Note: Basic RHV subscription includes an entitlement for 1 Metrics store all-in-one installation.
 # In order to have more than 1, an additional OpenShift subscription is required.
 
-# This variable needs to be uncommented
-#openshift_distribution: openshift-enterprise
-
 # The url of RHEL Guest image that will be used for creating the VMs.
 # To get the qcow_url go to:
 # https://access.redhat.com/downloads/content/69/ver=/rhel---7/7.6/x86_64/product-software
 # Get the link of Red Hat Enterprise Linux XXX KVM Guest Image from the download button.
 # WARNING - the link expires after some time.
-#qcow_url:
+# qcow_url:
 
 # User for Red Hat Subscription manager
 rhsub_user:
@@ -66,33 +63,32 @@ rhsub_user:
 
 # List of RHV, RHEL and OpenShift subscriptions pool IDs
 # See documentation on how to get the pool IDs
-rhsub_pool:
- -
+rhsub_pool: []
 
 # Openshift specific pool id
 # Relevat only when the installation is not all-in one.
-#openshift_rhsub_pool:
+# openshift_rhsub_pool:
 
 # The user for the container registry. Defaults to 'registry.redhat.io'
 # This is usually the same as the Red Hat credentials to access Customer Portal.
 # oreg_url: registry.redhat.io
-oreg_auth_user:
+# oreg_auth_user:
 
 
 # For security reasons, please create an encrypted file, secure_vars.yml by running:
 # ansible-vault create /etc/ovirt-engine-metrics/secure_vars.yml
 # copy the below passwords, uncomment them, update them and save the file.
 
-#engine_password:
+# engine_password:
 
-# The root password for the metrics store installer and VMs. Defaults to 'admin'.
-#root_password:
+# The root password for the metrics store installer and VMs.
+# root_password:
 
-# The admin user password that has access to Kibana and the OpenShift console. Defaults to 'admin'.
-#ovirt_metrics_admin_password:
+# The admin user password that has access to Kibana and the OpenShift console.
+# openshift_logging_admin_password:
 
 # Password for Red Hat Subscription manager
-#rhsub_pass:
+# rhsub_pass:
 
 #The password for the container registry.
-#oreg_auth_password:
+# oreg_auth_password:

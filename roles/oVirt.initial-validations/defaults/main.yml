@@ -1,6 +1,8 @@
 ---
 # Fluentd output plugin that will be used.
 fluentd_output_plugin: elasticsearch
+logging_output_type: elasticsearch
+check_logging_collectors: true
 
 fluentd_base_packages:
   - fluentd

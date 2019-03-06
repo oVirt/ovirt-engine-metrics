@@ -5,4 +5,8 @@ curator_configmap_file_path: /root/ovir_metrics_curator_configmap.yaml
 # The number of day the curator will not delete ovirt metrics records
 ovirt_metrics_curator_delete_days: 3
 
-ovirt_metrics_admin_password: admin
+logging_namespace: openshift-logging
+
+viaq_metrics_store: true
+
+logging_output_type: elasticsearch
