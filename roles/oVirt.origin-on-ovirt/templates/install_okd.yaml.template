@@ -57,14 +57,3 @@
   vars:
     openshift_logging_install_logging: true
 {% endif %}
-
-- name: Remove engine key from installer machine
-  hosts: localhost
-  gather_facts: false
-
-  tasks:
-
-    - name: Generate a file with vms in the inventory
-      template:
-        src: playbook_inventory.yaml.template
-        dest: /root/playbook_inventory.yaml
