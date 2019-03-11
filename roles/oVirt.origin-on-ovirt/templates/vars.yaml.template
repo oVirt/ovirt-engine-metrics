@@ -39,7 +39,7 @@ template_cpu: {{ ovirt_template_cpu }}
 template_disk_storage: {{ ovirt_template_disk_storage }}
 template_timeout: {{ ovirt_template_timeout }}
 template_disk_size: {{ ovirt_template_disk_size }}
-template_nics: {{ ovirt_template_nics }}
+template_nics: "{{ ovirt_template_nics }}"
 
 
 vms:
