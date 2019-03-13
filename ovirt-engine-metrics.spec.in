@@ -68,6 +68,18 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Mon Mar 18 2019 Shirly Radco <sradco@redhat.com> - 1.2.1
+Fixed issues:
+- Update metrics store installation role
+- Bug 1687492 - Fix bug with template_nics in origin-on-ovirt role
+- Fixing defaults and additional issue
+- Fixed issue with rsyslog certificates paths
+- Update bug with bastion machine ssh key population
+- Update ovirt_template_disk_size default size in README
+- Fix bug when user does not have ssh key
+- Moved post installation tasks to installation playbook
+- Add master dns record to bastion and engine machine if all-in-one
+
 * Wed Jan 30 2019 Shirly Radco <sradco@redhat.com> - 1.2.0.3
 Fixed issues:
 - Update upstream sources
