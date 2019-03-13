@@ -75,7 +75,7 @@ You can continue with deploying OpenShift from the metrics store installer virtu
 - `ovirt_template_memory:` (default:`4GiB`)
 - `ovirt_template_cpu:` (default:2)
 - `ovirt_template_timeout:` (default:`1200`)
-- `ovirt_template_disk_size:` (default:`10GiB`)
+- `ovirt_template_disk_size:` (default:`100GiB`)
 - `ovirt_template_nics: :` (default: `[ {name: nic1 , profile_name: ovirtmgmt, interface: virtio} ]`)
 - `ovirt_metrics_store:` (default: `true`)
 
