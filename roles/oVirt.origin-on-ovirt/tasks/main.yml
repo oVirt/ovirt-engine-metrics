@@ -43,6 +43,10 @@
   when: create_openshift_bastion_vm
 
 - block:
+    - name: Update_bastion ssh key
+      set_fact:
+        update_bastion_ssh_key: true
+
     - name:  Generate install_okd.yaml, vars.yaml and integ.ini templates
       template:
         src: '{{ origin_on_ovirt_role_path }}/templates/{{ item }}.template'

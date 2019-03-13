@@ -175,7 +175,9 @@ cloud_init_script_master: |
     - mkdir -p /var/lib/docker
     - /usr/sbin/mkfs.xfs -L dockervo /dev/vdb
     - echo "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}" >> /root/.ssh/authorized_keys
+{% if update_bastion_ssh_key is defined %}
     - echo "{{ lookup('file', './bastion_id_rsa') }}" >> /root/.ssh/authorized_keys
+{% endif %}
 {% if openshift_logging %}
     - echo "Defaults !requiretty" > /etc/sudoers.d/999-cloud-init-requiretty
     - mkdir -p '{{ ovirt_elasticsearch_mounted_storage_path }}/elasticsearch'
