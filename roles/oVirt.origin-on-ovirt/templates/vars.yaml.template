@@ -74,13 +74,16 @@ vms:
       state: running
       cloud_init:
         authorized_ssh_keys: "{{ ssh_key }}"
-        root_password: {{ root_password }}{% raw %}
-        custom_script: "{{ cloud_init_script_bastion }}"
+        root_password: {{ root_password }}
+{% if set_user_ssh_key is defined and set_user_ssh_key %}
+        {% raw %}custom_script: "{{ cloud_init_script_bastion }}"{% endraw %}
 
+{% raw %}
 cloud_init_script_bastion: |
   runcmd:
-    - echo "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}" >> /root/.ssh/authorized_keys
+    - echo "{{ lookup('file', '~/.ssh/id_rsa.pub') }}" >> /root/.ssh/authorized_keys
 {% endraw %}
+{% endif %}
 {% endif %}
 
 # OpenShift virtual machines spec
@@ -174,7 +177,9 @@ cloud_init_script_master: |
     - systemctl start ovirt-guest-agent
     - mkdir -p /var/lib/docker
     - /usr/sbin/mkfs.xfs -L dockervo /dev/vdb
-    - echo "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}" >> /root/.ssh/authorized_keys
+{% if set_user_ssh_key is defined and set_user_ssh_key %}
+    - echo "{{ lookup('file', '~/.ssh/id_rsa.pub') }}" >> /root/.ssh/authorized_keys
+{% endif %}
 {% if update_bastion_ssh_key is defined %}
     - echo "{{ lookup('file', './bastion_id_rsa') }}" >> /root/.ssh/authorized_keys
 {% endif %}

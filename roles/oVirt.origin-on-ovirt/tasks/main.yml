@@ -4,6 +4,18 @@
     ssh_key: "{{ lookup('file', engine_ssh_public_key_file_path) }}"
   when: ssh_key is undefined
 
+- name: Check if the user ssh public key exists
+  stat:
+    path: ~/.ssh/id_rsa.pub
+  register: user_ssh_key_stat_result
+
+- name: Set set_user_ssh_key fact
+  set_fact:
+    set_user_ssh_key: true
+  when:
+    - user_ssh_key_stat_result.stat.exists
+    - set_user_ssh_key is undefined
+
 - block:
     - name:  Generate install_okd.yaml, vars.yaml and integ.ini templates
       template:
