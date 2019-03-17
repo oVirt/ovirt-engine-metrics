@@ -19,6 +19,23 @@
         name: '{{ origin_on_ovirt_role_path }}'
       vars:
         ssh_key: "{{ lookup('file', './engine_id_rsa.pub') }}"
+
+    - name: Generate template files
+      template:
+        src: '{{ item }}.template'
+        dest: '{{ origin_on_ovirt_role_path }}/{{ item }}'
+        mode: 0644
+      with_items:
+        - ovirt_metrics_curator_configmap
+        - metrics_store_post_installation.yaml
+
+    - name: Copy files to bastion machine
+      copy:
+        src: '{{ origin_on_ovirt_role_path }}/{{ item }}'
+        dest: '{{ openshift_ansible_files_path }}/ovirt_metrics_curator_configmap.yaml'
+        mode: 0644
+      delegate_to: '{{ openshift_ovirt_bastion_machine_name }}'
+
   always:
     - name: Delete engine_id_rsa.pub
       file:

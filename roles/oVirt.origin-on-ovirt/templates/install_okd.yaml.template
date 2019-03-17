@@ -15,9 +15,6 @@
     - include_tasks: '{{ openshift_ansible_role_path }}/roles/openshift_ovirt/tasks/create_inventory_from_vms.yaml'
       when: not openshift_ovirt_all_in_one
 
-{% if create_host_entry|d(false)|bool == true %}
-- import_playbook: 'create_host_entry.yaml'
-{% endif %}
 - import_playbook: '{{ openshift_ansible_role_path }}/playbooks/prerequisites.yml'
   tags: openshift_ansible_roles
 - import_playbook: '{{ openshift_ansible_role_path }}/playbooks/openshift-node/network_manager.yml'
@@ -56,4 +53,7 @@
 - import_playbook: '{{ openshift_ansible_role_path }}/playbooks/openshift-logging/config.yml'
   vars:
     openshift_logging_install_logging: true
+{% endif %}
+{% if viaq_metrics_store|d(false)|bool == true %}
+- import_playbook: '{{ openshift_ansible_files_path }}/metrics_store_post_installation.yaml'
 {% endif %}
