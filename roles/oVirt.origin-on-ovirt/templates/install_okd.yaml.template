@@ -54,6 +54,7 @@
   vars:
     openshift_logging_install_logging: true
 {% endif %}
+
 {% if viaq_metrics_store|d(false)|bool == true %}
 - import_playbook: '{{ openshift_ansible_files_path }}/metrics_store_post_installation.yaml'
 {% endif %}

@@ -46,7 +46,6 @@
         - fluentd-cert
         - fluentd-key
 
-
     - name: Read metrics index uuid
       delegate_to: localhost
       run_once: true

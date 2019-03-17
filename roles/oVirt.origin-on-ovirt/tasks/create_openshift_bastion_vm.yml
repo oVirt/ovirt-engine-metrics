@@ -17,6 +17,7 @@
 - name: Set fact of the bastion machine FQDN
   set_fact:
     bastion_machine_fqdn: "{{ ansible_facts.ovirt_vms[0].fqdn }}"
+    bastion_machine_ip: "{{ ansible_facts.ovirt_vms[0].ip }}"
 
 - debug:
     msg: "{{bastion_machine_fqdn}}"
@@ -41,6 +42,15 @@
   with_items:
     - '{{ openshift_ansible_files }}'
   delegate_to: '{{ bastion_machine_fqdn }}'
+
+- name: Add bastion dns line to /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    regexp: '{{ bastion_machine_fqdn }}'
+    line: "{{ bastion_machine_ip }} {{ bastion_machine_fqdn }}"
+    owner: root
+    group: root
+    mode: 0644
 
 - block:
     - name: Add origin repository to bastion machine

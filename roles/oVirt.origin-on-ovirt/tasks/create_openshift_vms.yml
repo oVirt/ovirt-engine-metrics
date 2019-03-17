@@ -6,3 +6,10 @@
 - name: Create OpenShift VMs
   include_role:
     name: oVirt.vm-infra
+
+- name: Add master Vms to the masters inventory group
+  add_host:
+    groups: masters
+    hostname: '{{ [item.name, item.count - 1, ".", openshift_ovirt_dns_zone] | join }}'
+  with_items: "{{ openshift_ovirt_vm_manifest }}"
+  when: item.count > 0 and item.name == 'master'
