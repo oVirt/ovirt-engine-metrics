@@ -31,11 +31,23 @@
     - name: Log back in as admin user
       shell: oc login --username=system:admin
 
+    - name: Copy ovirt_metrics_curator_configmap.yaml to master machine
+      copy:
+        src: '{{ openshift_ansible_files_path }}/ovirt_metrics_curator_configmap.yaml'
+        dest: '{{ openshift_ansible_files_path }}/ovirt_metrics_curator_configmap.yaml'
+        mode: 0644
+
+    - name: Extract logging-curator configmap
+      shell: oc extract configmap/logging-curator --keys=curator5.yaml,config.yaml --to='{{ openshift_ansible_files_path }}'
+
     - name: Delete the current curator configmap file
       shell: oc delete configmap logging-curator ; sleep 1
 
     - name: Create the new curator configmap file
-      shell: oc create configmap logging-curator --from-file=config.yaml='{{ openshift_ansible_files_path }}/ovirt_metrics_curator_configmap.yaml' ; sleep 1
+      shell: |
+        oc create configmap logging-curator \
+        --from-file=curator5.yaml='{{ openshift_ansible_files_path }}/curator5.yaml' \
+        --from-file=config.yaml='{{ openshift_ansible_files_path }}/ovirt_metrics_curator_configmap.yaml' ; sleep 1
 
 {% raw %}
     - name: Assign an IP Address to the Elasticsearch Service
