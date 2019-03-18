@@ -2,3 +2,5 @@
 viaq_metrics_store: true
 
 logging_output_type: elasticsearch
+
+logging_namespace: openshift-logging
