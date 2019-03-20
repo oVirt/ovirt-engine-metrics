@@ -14,8 +14,11 @@
 ovirt_env_name: engine
 
 # Address or hostname (FQDN) of the Elasticsearch server host
+# If you use oVirt metrics store you cab run:
+# oc get routes
+# and use the logging-es HOST/PORT
 # Example:
-# elasticsearch_host: master0.{{ public_hosted_zone }}
+# elasticsearch_host: es.{{ public_hosted_zone }}
 elasticsearch_host:
 
 # `admin` user password for Kibana console and OpenShift console
