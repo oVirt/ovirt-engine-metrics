@@ -25,17 +25,12 @@ required for the installation and copies it to the vm.
 # ANSIBLE_JINJA2_EXTENSIONS="jinja2.ext.do" ./configure_ovirt_machines_for_metrics.sh --playbook=ovirt-metrics-store-installation.yml
 ```
 
-**Note:** If this playbook ends with failure on https://github.com/oVirt/ovirt-ansible-vm-infra/issues/65
-But all vms are created succesfully. Need to see how to fix the failure.
-You can continue with deploying OpenShift from the metrics store installer virtual machine.
-
 5. Log into the admin portal and review the metrics store installer virtual machine creation.
 
 6. Log into the metrics store installer virtual machine
 ```
 # ssh root@<metrics-store-installer ip or fqdn>
 ```
-**Note:** If you are not using DNS, make sure to add the new OpenShift virtual machines  to /etc/hosts on the engine and installer machines.
 
 7. Run the ansible playbook that deploys OpenShift on the created vms
 
