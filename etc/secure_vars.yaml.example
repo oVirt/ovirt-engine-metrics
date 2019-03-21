@@ -1,0 +1,18 @@
+# This is an example file for the oVirt Metrics Store installation secure variables
+
+# `admin` user password for Kibana console and OpenShift console
+openshift_logging_admin_password:
+
+# Password for the Red Hat Virtualization engine
+engine_password:
+
+# Root password for the Metrics Store installer and Metrics Store virtual machine
+root_password:
+
+# Additional mandatory parameters for Red Hat Virtualization:
+
+# Password for Red Hat Subscription Manager
+rhsub_pass:
+
+# Password for the container registry, usually the same as the password for accessing the Customer Portal
+oreg_auth_password:

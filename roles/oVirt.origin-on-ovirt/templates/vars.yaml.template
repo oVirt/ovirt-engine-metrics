@@ -1,31 +1,10 @@
 ---
 # Common variables for bastion and OpenShift virtual machines creation
-engine_url: {{ engine_url }}
-engine_user: {{ engine_user }}
-engine_password: {{ engine_password }}
-engine_cafile: {{ engine_cafile }}
 engine_insecure: {{ engine_insecure }}
 engine_ssh_key: "{{ ssh_key }}"
-root_password: {{ root_password }}
 qcow_url: {{ qcow_url }}
 
 manage_packages: {{ manage_packages }}
-manages_base_packages: {{ manages_base_packages }}
-
-{% if openshift_distribution != 'origin' %}
-rhsub_user: {{ rhsub_user }}
-rhsub_pass: {{ rhsub_pass }}
-{% if openshift_ovirt_all_in_one %}
-rhsub_pool: {{ rhsub_pool| first }}
-{% else %}
-rhsub_pool: {{ openshift_rhsub_pool }}
-{% endif %}
-{% if oreg_url is defined %}
-oreg_url: {{ oreg_url }}
-{% endif %}
-oreg_auth_user: {{ oreg_auth_user|d() }}
-oreg_auth_password: {{ oreg_auth_password|d() }}
-{% endif %}
 
 openshift_ovirt_dns_zone: {{ public_hosted_zone }}
 {% if openshift_distribution == 'origin' %}
@@ -47,6 +26,7 @@ template_nics: "{{ ovirt_template_nics }}"
 
 image_path: /var/tmp
 wait_for_ip: true
+wait_for_ip_version: v4
 vm_infra_create_single_timeout: 600
 vm_infra_wait_for_ip_retries: 30
 vm_infra_wait_for_ip_delay: 20

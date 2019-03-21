@@ -10,38 +10,54 @@ required for the installation and copies it to the vm.
 
 ## Running the role:
 
-1. Copy playbook_vars.yml.example as playbook_vars.yml:
-```
-# cp playbook_vars.yml.example playbook_vars.yml
-```
-2. Update the values of playbook_vars.yml to match the details of your specific environment:
-```
-# vi playbook_vars.yml
-```
-
-3. Go to origin-on-ovirt repo:
+1. Go to origin-on-ovirt repo:
 ```
 # cd  /usr/share/ansible/roles/oVirt.origin-on-ovirt
 ```
 
-4. Run the installation playbook that creates the OpenShift virtual machines and OpenShift installer virtual machine:
+2. Copy playbook_vars.yml.example as playbook_vars.yml:
 ```
-# ANSIBLE_JINJA2_EXTENSIONS="jinja2.ext.do" ansible-playbook playbooks/origin_on_ovirt.yml -e @playbook_vars.yml
+# cp playbook_vars.yml.example playbook_vars.yml
+```
+3. Update the values of playbook_vars.yml to match the details of your specific environment:
+```
+# vi playbook_vars.yml
 ```
 
-5. Log into the admin portal and review the installer virtual machine creation.
+4. On the Manager machine, copy secure_vars.yaml.example to secure_vars.yaml:
+```
+# cp secure_vars.yaml.example secure_vars.yaml
+```
 
-6. Log into the installer virtual machine
+5. Update the values of playbook_vars.yml to match the details of your specific environment:
+```
+# vi secure_vars.yaml
+```
+
+6. Encrypt secure_vars.yaml file
+```
+# ansible-vault encrypt secure_vars.yaml
+```
+
+7. Run the installation playbook that creates the OpenShift virtual machines and OpenShift installer virtual machine:
+```
+# ANSIBLE_JINJA2_EXTENSIONS="jinja2.ext.do" ansible-playbook playbooks/origin_on_ovirt.yml \
+  -e @playbook_vars.yml -e @secure_vars.yaml --ask-vault-pass
+```
+
+8. Log into the admin portal and review the installer virtual machine creation.
+
+9. Log into the installer virtual machine
 ```
 # ssh root@<openshift-ovirt-bastion ip or fqdn>
 ```
 
-7. Run the ansible plabook that deploys OpenShift on the created vms
+10. Run the ansible plabook that deploys OpenShift on the created vms
 
 ```
 # ANSIBLE_CONFIG="/usr/share/ansible/openshift-ansible/ansible.cfg" \
   ANSIBLE_ROLES_PATH="/usr/share/ansible/roles/:/usr/share/ansible/openshift-ansible/roles" \
-  ansible-playbook -i integ.ini install_okd.yaml -e @vars.yaml
+  ansible-playbook -i integ.ini install_okd.yaml -e @vars.yaml -e @secure_vars.yaml --ask-vault-pass
 ```
 
 ## Variables for installing OpenShift origin on oVirt
@@ -95,6 +111,5 @@ required for the installation and copies it to the vm.
 - `rhsub_user:` ( No default )
 - `rhsub_pass:` ( No default )
 - `rhsub_pool:` ( No default )
-- `openshift_rhsub_pool:` ( No default )
 - `oreg_auth_user:` ( No default )
 - `oreg_auth_password:` ( No default )

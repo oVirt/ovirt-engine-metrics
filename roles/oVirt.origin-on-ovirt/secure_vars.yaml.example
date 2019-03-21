@@ -1,0 +1,15 @@
+# This is an example file for the secure variable for the Origin on oVirt installation
+
+# Password for the Red Hat Virtualization engine
+engine_password:
+
+# Root password for the Metrics Store installer and Metrics Store virtual machine
+root_password:
+
+# Additional mandatory parameters for Red Hat Virtualization:
+
+# Password for Red Hat Subscription Manager
+rhsub_pass:
+
+# Password for the container registry, usually the same as the password for accessing the Customer Portal
+oreg_auth_password:

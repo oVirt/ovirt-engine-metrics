@@ -36,12 +36,26 @@
 
 - name: Copy install_okd.yaml, vars.yaml and integ.ini to bastion machine
   copy:
-    src: '{{ origin_on_ovirt_role_path }}/{{ item }}'
+    src: '{{ origin_on_ovirt_files_path }}/{{ item }}'
     dest: '{{ openshift_ansible_files_path }}/{{ item }}'
     mode: 0644
   with_items:
     - '{{ openshift_ansible_files }}'
   delegate_to: '{{ bastion_machine_fqdn }}'
+
+- name: Check if secure_vars.yaml file exist
+  stat:
+    path: '{{ origin_on_ovirt_secure_vars_file }}'
+  register: secure_vars_file_exists
+
+- name: Copy secure_vars.yaml to bastion machine
+  copy:
+    src: '{{ origin_on_ovirt_secure_vars_file }}'
+    dest: '{{ openshift_ansible_files_path }}/secure_vars.yaml'
+    mode: 0644
+    decrypt: no
+  delegate_to: '{{ bastion_machine_fqdn }}'
+  when: secure_vars_file_exists.stat.exists
 
 - block:
     - name: Add origin repository to bastion machine

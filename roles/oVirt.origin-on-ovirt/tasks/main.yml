@@ -16,11 +16,21 @@
     - user_ssh_key_stat_result.stat.exists
     - set_user_ssh_key is undefined
 
+- name: Set engine_url fact
+  set_fact:
+    engine_url: 'https://{{ engine_fqdn }}/ovirt-engine/api'
+  when: engine_url is undefined
+
 - block:
+    - name: Creates generated files directory
+      file:
+        path: '{{ origin_on_ovirt_files_path }}'
+        state: directory
+
     - name: Generate install_okd.yaml, vars.yaml and integ.ini templates
       template:
         src: '{{ origin_on_ovirt_role_path }}/templates/{{ item }}.template'
-        dest: '{{ origin_on_ovirt_role_path }}/{{ item }}'
+        dest: '{{ origin_on_ovirt_files_path }}/{{ item }}'
         mode: 0644
       with_items:
         - '{{ openshift_ansible_files }}'
@@ -29,7 +39,7 @@
 
     - name: Include vars.yaml file
       include_vars:
-        file: '{{ origin_on_ovirt_role_path }}/vars.yaml'
+        file: '{{ origin_on_ovirt_files_path }}/vars.yaml'
 
     - name: Create template for OpenShift vms.
       include_role:
@@ -63,14 +73,14 @@
     - name: Generate install_okd.yaml, vars.yaml and integ.ini templates
       template:
         src: '{{ origin_on_ovirt_role_path }}/templates/{{ item }}.template'
-        dest: '{{ origin_on_ovirt_role_path }}/{{ item }}'
+        dest: '{{ origin_on_ovirt_files_path }}/{{ item }}'
         mode: 0644
       with_items:
         - '{{ openshift_ansible_files }}'
 
     - name: Include vars.yaml file
       include_vars:
-        file: '{{ origin_on_ovirt_role_path }}/vars.yaml'
+        file: '{{ origin_on_ovirt_files_path }}/vars.yaml'
 
     - name: Create virtual machines for OpenShift installation
       include_tasks: create_openshift_vms.yml

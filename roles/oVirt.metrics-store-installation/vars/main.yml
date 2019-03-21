@@ -1,5 +1,7 @@
 ---
 origin_on_ovirt_role_path: /usr/share/ansible/roles/oVirt.metrics/roles/oVirt.origin-on-ovirt
+origin_on_ovirt_files_path: '{{ origin_on_ovirt_role_path }}/files'
+ovirt_metrics_pkg_sysconf_dir: /etc/ovirt-engine-metrics
 openshift_logging: true
 ovirt_metrics_store: true
 logging_namespace: openshift-logging

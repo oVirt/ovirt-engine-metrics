@@ -19,6 +19,8 @@ qcow_url: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.
 bastion_ssh_private_key_file_path: /root
 openshift_ansible_role_path: /usr/share/ansible/openshift-ansible
 origin_on_ovirt_role_path: /usr/share/ansible/roles/oVirt.origin-on-ovirt
+origin_on_ovirt_files_path: '{{ origin_on_ovirt_role_path }}/files'
+origin_on_ovirt_secure_vars_file: '{{ origin_on_ovirt_files_path }}/secure_vars.yaml'
 ovirt_elasticsearch_mounted_storage_path: /var/lib
 openshift_ansible_files_path: /root
 openshift_ovirt_storage_domain_name: hosted_storage

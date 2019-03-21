@@ -12,19 +12,21 @@ ovirt_env_name: engine
 # Path to preallocated partition to be used for elasticsearch persistent storage
 # ovirt_elasticsearch_mounted_storage_path: /var/lib
 
-# FQDN of the Engine
-engine_url:
-# Engine user
-engine_user:
+# DNS zone (format: example.com) of the Metrics Store virtual machines
+public_hosted_zone:
 
-# Engine password
-engine_password:
+# Engine FQDN
+engine_fqdn:
+
+# Engine URL. Default is "https://'engine_fqdn'/ovirt-engine/api".
+# engine_url:
+
+# Engine user
+# Please update engine_password in the secure_vars.yaml file.
+engine_user:
 
 # Path to Engine CA certificate file. Default is '/etc/pki/ovirt-engine/ca.pem'
 # engine_cafile:
-
-# DNS zone (format: example.com) of the Metrics Store virtual machines
-public_hosted_zone:
 
 # The cluster in which the metrics store installer and VMs will be created. Default is 'Default'.
 # ovirt_cluster_name:
@@ -52,9 +54,6 @@ openshift_ovirt_storage_domain_name:
 # The size of the disks that will be created for Elasticsearch. Default is 500GiB.
 # elasticsearch_disk_size: 500GiB
 
-# Root password for the Metrics Store installer and Metrics Store virtual machine
-root_password:
-
 # Additional mandatory parameters for Red Hat Virtualization:
 
 # Note: Basic RHV subscription includes an entitlement for a single Metrics Store all-in-one installation.
@@ -69,26 +68,17 @@ root_password:
 # qcow_url:
 
 # User for Red Hat Subscription Manager
+# Please update rhsub_pass in the secure_vars.yaml file.
 rhsub_user:
 
-# List of RHV, RHEL, and OpenShift subscriptions pool IDs
+# RHEL and OpenShift subscriptions pool ID
 # See documentation on how to get pool IDs
-rhsub_pool: []
-
-# Pool ID for additional OpenShift subscriptions
-# Required if you are installing more than one Metrics Store virtual machine
-# openshift_rhsub_pool:
+rhsub_pool:
 
 # User for the container registry. Default is 'registry.redhat.io'
 # Usually the same as the user for accessing the Customer Portal
 # oreg_url: registry.redhat.io
-# oreg_auth_user:
 
-# `admin` user password for Kibana console and OpenShift console
-# openshift_logging_admin_password:
-
-# Password for Red Hat Subscription Manager
-# rhsub_pass:
-
-# Password for the container registry, usually the same as the password for accessing the Customer Portal
-# oreg_auth_password:
+# User for the container registry, usually the same as the password for accessing the Customer Portal
+# Please update oreg_auth_password in the secure_vars.yaml file.
+oreg_auth_user:

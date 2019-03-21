@@ -15,29 +15,45 @@ required for the installation and copies it to the vm.
 # vi /etc/ovirt-engine-metrics/config.yml.d/metrics-store-config.yml
 ```
 
-3. Go to ovirt-engine-metrics repo:
+3. On the Manager machine, copy /etc/ovirt-engine-metrics/secure_vars.yaml.example to /etc/ovirt-engine-metrics/secure_vars.yaml:
+```
+# cp /etc/ovirt-engine-metrics/secure_vars.yaml.example /etc/ovirt-engine-metrics/secure_vars.yaml
+```
+
+4. Update the values of /etc/ovirt-engine-metrics/secure_vars.yaml to match the details of your specific environment:
+```
+# vi /etc/ovirt-engine-metrics/secure_vars.yaml
+```
+
+5. Encrypt secure_vars.yaml file
+```
+# ansible-vault encrypt /etc/ovirt-engine-metrics/secure_vars.yaml
+```
+
+6. Go to ovirt-engine-metrics repo:
 ```
 # cd /usr/share/ovirt-engine-metrics
 ```
 
-4. Run the metrics store installation playbook that creates the metrics store installer virtual machine
+7. Run the metrics store installation playbook that creates the metrics store installer virtual machine
 ```
-# ANSIBLE_JINJA2_EXTENSIONS="jinja2.ext.do" ./configure_ovirt_machines_for_metrics.sh --playbook=ovirt-metrics-store-installation.yml
+# ANSIBLE_JINJA2_EXTENSIONS="jinja2.ext.do" ./configure_ovirt_machines_for_metrics.sh \
+  --playbook=ovirt-metrics-store-installation.yml --ask-vault-pass
 ```
 
-5. Log into the admin portal and review the metrics store installer virtual machine creation.
+8. Log into the admin portal and review the metrics store installer virtual machine creation.
 
-6. Log into the metrics store installer virtual machine
+9. Log into the metrics store installer virtual machine
 ```
 # ssh root@<metrics-store-installer ip or fqdn>
 ```
 
-7. Run the ansible playbook that deploys OpenShift on the created vms
+10. Run the ansible playbook that deploys OpenShift on the created vms
 
 ```
 # ANSIBLE_CONFIG="/usr/share/ansible/openshift-ansible/ansible.cfg" \
   ANSIBLE_ROLES_PATH="/usr/share/ansible/roles/:/usr/share/ansible/openshift-ansible/roles" \
-  ansible-playbook -i integ.ini install_okd.yaml -e @vars.yaml
+  ansible-playbook -i integ.ini install_okd.yaml -e @vars.yaml -e @secure_vars.yaml --ask-vault-pass
 ```
 
 ## Variables for installing the oVirt metrics store
@@ -84,6 +100,5 @@ required for the installation and copies it to the vm.
 - `rhsub_user:` ( No default )
 - `rhsub_pass:` ( No default )
 - `rhsub_pool:` ( No default )
-- `openshift_rhsub_pool:` ( No default )
 - `oreg_auth_user:` ( No default )
 - `oreg_auth_password:` ( No default )
