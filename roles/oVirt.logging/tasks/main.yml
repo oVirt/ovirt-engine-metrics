@@ -31,7 +31,7 @@
     logging_role_path: '{{ logging_role_path }}'
     rsyslog_max_message_size: '{{ rsyslog_max_message_size|d("64k") }}'
     collect_ovirt_collectd_metrics: '{{ collect_ovirt_collectd_metrics|d(true) }}'
-    ovirt_vds_cluster_name: '{{ host_deploy_cluster_name|d("default") }}'
+    ovirt_vds_cluster_name: '{{ host_deploy_cluster_name|d("Default") }}'
 
 - block:
     - name: Copy elasticsearch CA certificate to host
