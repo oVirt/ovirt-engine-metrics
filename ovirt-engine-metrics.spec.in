@@ -68,6 +68,15 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Thu Mar 21 2019 Shirly Radco <sradco@redhat.com> - 1.2.1.1
+Fixed issues:
+- Add missing default logging_namespace to role
+- Fix issue with missing bastion ip address
+- Updated US source: Fixed oVirt logs parsing
+- Update elasticsearch_host config file documentation
+- Fix bug in deploying fluentd
+- Removed unneeded comments from metrics store installation README
+
 * Mon Mar 18 2019 Shirly Radco <sradco@redhat.com> - 1.2.1
 Fixed issues:
 - Update metrics store installation role
