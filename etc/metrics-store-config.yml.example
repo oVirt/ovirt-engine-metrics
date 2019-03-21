@@ -60,9 +60,6 @@ root_password:
 # Note: Basic RHV subscription includes an entitlement for a single Metrics Store all-in-one installation.
 # Each additional Metrics Store virtual machine requires an additional OpenShift subscription.
 
-# This variable needs to be uncommented
-# openshift_distribution: openshift-enterprise
-
 # URL for downloading the RHEL guest image to create the virtual machines
 # To copy the qcow_url go to:
 # https://access.redhat.com/downloads/content/69/ver=/rhel---7/7.6/x86_64/product-software
