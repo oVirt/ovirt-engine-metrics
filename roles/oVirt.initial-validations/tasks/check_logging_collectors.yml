@@ -7,6 +7,11 @@
     fluentd_elasticsearch_host: ""
   when: (fluentd_elasticsearch_host == "elasticsearch-server.example.com") or (fluentd_elasticsearch_host is undefined)
 
+- name: Update fluentd_elasticsearch_host if elasticsearch_host is defined
+  set_fact:
+    fluentd_elasticsearch_host: "{{ elasticsearch_host }}"
+  when: elasticsearch_host is defined
+
 - name: Set elasticsearch_host if undefined and fluentd_elasticsearch_host is defined
   set_fact:
     elasticsearch_host: "{{ fluentd_elasticsearch_host }}"

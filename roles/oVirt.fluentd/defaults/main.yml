@@ -23,6 +23,9 @@ fluentd_config_mode: 0640
 # File mode for Fluentd configuration directories.
 fluentd_config_dir_mode: 0750
 
+# Default output type
+logging_output_type: elasticsearch
+
 # Fluentd default output plugin
 fluentd_output_plugin: '{{ logging_output_type }}'
 

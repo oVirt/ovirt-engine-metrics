@@ -13,6 +13,8 @@
     - ovirt_env_name is undefined
   changed_when: true
   notify: set failed validation
+  delegate_to: localhost
+  run_once: true
 
 - name: force all notified handlers to run at this point, not waiting for normal sync points
   meta: flush_handlers
@@ -24,6 +26,8 @@
       when:  ovirt_env_name | length > 49
       changed_when: true
       notify:  set failed validation
+      delegate_to: localhost
+      run_once: true
 
     - name: Check environment name does not start with a number
       debug:
@@ -31,6 +35,8 @@
       when: ovirt_env_name is match('^[0-9]')
       changed_when: true
       notify:  set failed validation
+      delegate_to: localhost
+      run_once: true
 
     - name: Check environment name does not start a with dash
       debug:
@@ -38,6 +44,8 @@
       when: ovirt_env_name.startswith('-')
       changed_when: true
       notify:  set failed validation
+      delegate_to: localhost
+      run_once: true
 
     - name: Check environment name does not end a with dash
       debug:
@@ -45,6 +53,8 @@
       when: ovirt_env_name.endswith('-')
       changed_when: true
       notify:  set failed validation
+      delegate_to: localhost
+      run_once: true
 
     - name: Check environment name includes only alphanum and dashes
       debug:
@@ -52,6 +62,8 @@
       when: ovirt_env_name is match('.*[^a-zA-Z0-9-].*')
       changed_when: true
       notify:  set failed validation
+      delegate_to: localhost
+      run_once: true
 
     - name: force all notified handlers to run at this point, not waiting for normal sync points
       meta: flush_handlers

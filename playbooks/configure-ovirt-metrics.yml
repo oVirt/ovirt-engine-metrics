@@ -1,6 +1,6 @@
 ---
 - name: Add metrics store host to inventory
-  hosts: engine
+  hosts: engine:hosts
   tags:
     - post-install
 
