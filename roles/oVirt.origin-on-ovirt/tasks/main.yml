@@ -17,7 +17,7 @@
     - set_user_ssh_key is undefined
 
 - block:
-    - name:  Generate install_okd.yaml, vars.yaml and integ.ini templates
+    - name: Generate install_okd.yaml, vars.yaml and integ.ini templates
       template:
         src: '{{ origin_on_ovirt_role_path }}/templates/{{ item }}.template'
         dest: '{{ origin_on_ovirt_role_path }}/{{ item }}'
@@ -59,7 +59,7 @@
       set_fact:
         update_bastion_ssh_key: true
 
-    - name:  Generate install_okd.yaml, vars.yaml and integ.ini templates
+    - name: Generate install_okd.yaml, vars.yaml and integ.ini templates
       template:
         src: '{{ origin_on_ovirt_role_path }}/templates/{{ item }}.template'
         dest: '{{ origin_on_ovirt_role_path }}/{{ item }}'
