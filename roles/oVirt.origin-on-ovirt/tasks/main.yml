@@ -50,7 +50,8 @@
       command: "sshpass -p {{ root_password }} scp  -o StrictHostKeyChecking=no root@{{ bastion_machine_fqdn }}:/root/bastion_id_rsa.pub ./bastion_id_rsa"
       no_log: true
 
-    - pause:
+    - name: Wait one minute
+      pause:
         minutes: 1
   when: create_openshift_bastion_vm
 
