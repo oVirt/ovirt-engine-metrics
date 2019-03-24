@@ -24,40 +24,58 @@
   when: logging_output_type is undefined
 
 # Check collectors base packages availability
+
 - name: Check Rsyslog packages are available
   yum:
-    name: "{{ rsyslog_base_packages }}"
+    list: "{{ item }}"
+  with_items:
+    - "{{ rsyslog_base_packages }}"
   register: rsyslog_packages_availability
-  ignore_errors: true
+  when: logging_collector is undefined or logging_collector == 'rsyslog'
+
+- name: Set rsyslog_base_packages_available fact
+  set_fact:
+    rsyslog_base_packages_available: false
+  with_items: "{{ rsyslog_packages_availability.results }}"
+  when:
+    - item.results == []
+    - logging_collector is undefined or logging_collector == 'rsyslog'
 
 - name: Set logging_collector as rsyslog
   set_fact:
     logging_collector: "rsyslog"
   when:
-    - rsyslog_packages_availability.rc == 0
+    - rsyslog_base_packages_available
     - logging_collector is undefined
 
 - name: Check Fluentd packages are available
   yum:
-    name: "{{ fluentd_base_packages }}"
+    list: "{{ item }}"
+  with_items:
+    - "{{ fluentd_base_packages }}"
   register: fluentd_packages_availability
-  when: rsyslog_packages_availability.rc > 0
-  ignore_errors: true
+  when:
+    - not rsyslog_base_packages_available or logging_collector == 'fluentd'
+
+- name: Set fluentd_base_packages_available fact
+  set_fact:
+    fluentd_base_packages_available: false
+  with_items: "{{ fluentd_packages_availability.results }}"
+  when:
+    - item.results == []
+    - not rsyslog_base_packages_available or logging_collector == 'fluentd'
 
 - name: Set logging_collector as fluentd
   set_fact:
     logging_collector: "fluentd"
   when:
-    - rsyslog_packages_availability.rc > 0
-    - fluentd_packages_availability.rc == 0
+    - fluentd_base_packages_available
     - logging_collector is undefined
 
 - name: Validate Fluentd or Rsyslog base packages are available
   debug:
     msg: "Logs collector base packages are not available. Metrics role will not be able to continue"
-  when:
-    - rsyslog_packages_availability.rc > 0
-    - fluentd_packages_availability.rc > 0
+  when: logging_collector is undefined
   changed_when: true
   notify: set failed validation
 
@@ -65,19 +83,13 @@
   debug:
     msg: "Log collector is missing required base packages. Metrics role will not be able to continue"
   when:
-    - logging_collector is undefined
+    - not rsyslog_base_packages_available
+    - not fluentd_base_packages_available
   changed_when: true
   notify: set failed validation
 
 # TODO add api to add warning message for the user to update its configuration file
 - block:
-    - name: Validate logging_collector
-      debug:
-        msg: "Specified log collector is missing required base packages. Metrics role will not be able to continue"
-      when:
-        - ( logging_collector == 'rsyslog' and rsyslog_packages_availability.rc > 0 ) or ( logging_collector == 'fluentd' and fluentd_packages_availability.rc > 0 )
-      changed_when: true
-      notify: set failed validation
 
     # Rsyslog validations
     - name: Update user configuration required

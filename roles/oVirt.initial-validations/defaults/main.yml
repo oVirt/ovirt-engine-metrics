@@ -3,6 +3,8 @@
 fluentd_output_plugin: elasticsearch
 logging_output_type: elasticsearch
 check_logging_collectors: true
+rsyslog_base_packages_available: true
+fluentd_base_packages_available: true
 
 fluentd_base_packages:
   - fluentd

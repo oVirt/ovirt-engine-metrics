@@ -73,7 +73,7 @@
       vars:
         packages: "{{ ovirt_origin_bastion_base_packages }}"
       delegate_to: '{{ bastion_machine_fqdn }}'
-      when: manages_base_packages
+      when: manage_packages|default(true)
 
     - name: Upgrade all packages
       yum:
@@ -81,7 +81,7 @@
         state: latest
       delegate_to: '{{ bastion_machine_fqdn }}'
       register: task_result
-      when: manages_base_packages
+      when: manage_packages|default(true)
 
     - name: Reboot system
       reboot:
@@ -89,7 +89,7 @@
       delegate_to: '{{ bastion_machine_fqdn }}'
       when:
         - task_result is changed
-        - manages_base_packages
+        - manage_packages|default(true)
 
     - name: Install packages
       yum:
@@ -98,7 +98,9 @@
       vars:
         packages: "{{ ovirt_origin_bastion_packages }}"
       delegate_to: '{{ bastion_machine_fqdn }}'
-  when: openshift_distribution == 'origin' and manage_packages
+  when:
+    - openshift_distribution == 'origin'
+    - manage_packages|default(true)
 
 - block:
     - name: Register the system using subscription manager
@@ -128,7 +130,7 @@
       vars:
         packages: "{{ ovirt_ocp_bastion_base_packages }}"
       delegate_to: '{{ bastion_machine_fqdn }}'
-      when: manages_base_packages
+      when: manage_packages|default(true)
 
     - name: Upgrade all packages
       yum:
@@ -136,7 +138,7 @@
         state: latest
       delegate_to: '{{ bastion_machine_fqdn }}'
       register: task_result
-      when: manages_base_packages
+      when: manage_packages|default(true)
 
     - name: Reboot system
       reboot:
@@ -144,7 +146,7 @@
       delegate_to: '{{ bastion_machine_fqdn }}'
       when:
         - task_result is changed
-        - manages_base_packages
+        - manage_packages|default(true)
 
     - name: Install packages
       yum:
@@ -153,6 +155,7 @@
       vars:
         packages: "{{ ovirt_ocp_bastion_packages }}"
       delegate_to: '{{ bastion_machine_fqdn }}'
+      when: manage_packages|default(true)
 
     - name: Unregister the system using subscription manager
       redhat_subscription:
