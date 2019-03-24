@@ -2,3 +2,14 @@
 - name: set failed validation
   set_fact:
     failed_validation: true
+
+- name: systemd daemon reload
+  systemd:
+    daemon_reload: yes
+
+- name: stop collectd service
+  service:
+    name: collectd
+    state: stopped
+    enabled: false
+  ignore_errors: true

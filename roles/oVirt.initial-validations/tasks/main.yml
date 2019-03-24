@@ -5,6 +5,16 @@
   include_tasks: check_logging_collectors.yml
   when: check_logging_collectors
 
+- name: Check if Collectd should be disabled and stopped
+  debug:
+    msg: "If configured, Collectd will be disabled and stopped since collect_ovirt_collectd_metrics is false"
+  when:
+    - not collect_ovirt_collectd_metrics|d(true)
+  changed_when: true
+  notify:
+    - systemd daemon reload
+    - stop collectd service
+
 # Validate ovirt-env-name
 - name: Validate ovirt-env-name parameter is set
   debug:
