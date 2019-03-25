@@ -7,11 +7,11 @@
 
 - ovirt_vm_facts:
     auth:
-      url:      '{{ engine_url|mandatory }}'
+      url: '{{ engine_url|mandatory }}'
       username: '{{ engine_user|mandatory }}'
       password: '{{ engine_password|mandatory }}'
       insecure: '{{ engine_insecure }}'
-      ca_file:  '{{ engine_cafile }}'
+      ca_file: '{{ engine_cafile }}'
     pattern: 'name={{ openshift_ovirt_bastion_machine_name }} and cluster={{ ovirt_cluster_name }}'
   no_log: true
 
@@ -23,7 +23,7 @@
     msg: "{{bastion_machine_fqdn}}"
 
 - name: Generate bastion machine RSA private host key
-  command : ssh-keygen -q -t rsa -f ./bastion_id_rsa -C "" -N ""
+  command: ssh-keygen -q -t rsa -f ./bastion_id_rsa -C "" -N ""
   args:
     creates: ./bastion_id_rsa
   delegate_to: '{{ bastion_machine_fqdn }}'
