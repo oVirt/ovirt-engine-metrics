@@ -15,7 +15,6 @@ ovirt_template_nics:
     profile_name: ovirtmgmt
     interface: virtio
 wait_for_ip: True
-qcow_url: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2c
 bastion_ssh_private_key_file_path: /root
 openshift_ansible_role_path: /usr/share/ansible/openshift-ansible
 origin_on_ovirt_role_path: /usr/share/ansible/roles/oVirt.origin-on-ovirt

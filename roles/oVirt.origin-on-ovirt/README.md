@@ -103,7 +103,6 @@ required for the installation and copies it to the vm.
 ### Additional mandatory variables for Red Hat Virtualization:
 ### Please be sure to secure these variables, either by vault or deleting them after installation.
 
-- `qcow_url:`( No default )
 - `rhsub_user:`( No default )
 - `rhsub_pass:`( No default )
 - `rhsub_pool:`( default: [] )
