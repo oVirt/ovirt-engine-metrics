@@ -1,46 +1,51 @@
-# This is an example file for variables required for origin on oVirt installation
+# This is an example file for variables required for Origin on oVirt installation
 # Please update the below variables
+
+# Please update the below variables if you wish to install Origin on oVirt.
+# This README is NOT relevant for installing oVirt Metrics store based on OpenShift Logging
+
+# The variables that are not commented out are mandatory.
+# The other variables already have a default, but it can be updated,
+# by uncommenting the variable and updating its value.
 
 # Path to preallocated partition to be used for elasticsearch persistent storage
 # ovirt_elasticsearch_mounted_storage_path: /var/lib
 
-# engine_insecure:
+# engine_insecure: false
 
 # Path to engine public ssh key
 engine_ssh_public_key_file_path:
-
-# Path to engine ca file. No default. Default to `/etc/pki/ovirt-engine/ca.pem`
-# engine_cafile:
 
 # The DNS zone the VMs created by this role will have. No default. For example: example.com
 public_hosted_zone:
 
 # Engine FQDN
+# You can use engine_url instead of this variable, by uncommenting and updating its value.
 engine_fqdn:
 
-# Engine URL. Default is "https://'engine_fqdn'/ovirt-engine/api".
-# engine_url:
+# Engine URL. Default is "https://{{ engine_fqdn }}/ovirt-engine/api".
+# engine_url: 'https://{{ engine_fqdn }}/ovirt-engine/api'
 
 # Engine user
 # Please update the engine_password in the secure_vars.yaml file.
 engine_user:
 
 # Path to Engine CA certificate file. Default is '/etc/pki/ovirt-engine/ca.pem'
-# engine_cafile:
+# engine_cafile: /etc/pki/ovirt-engine/ca.pem
 
 # The cluster in which the metrics store installer and VMs will be created. Defaults to 'Default'.
-# ovirt_cluster_name:
+# ovirt_cluster_name: Default
 
 # Storage domain to use for the Metrics store installation.
 openshift_ovirt_storage_domain_name:
 
 # The name of the metrics store installer that will be created for the installation.
 # Defaults to 'openshift-ovirt-bastion'.
-# openshift_ovirt_bastion_machine_name:
+# openshift_ovirt_bastion_machine_name: openshift-ovirt-bastion
 
 # Creates a record in /etc/hosts. Defaults to 'false'.
 # Relevant only for all-in-one installation
-# create_host_entry:
+# create_host_entry: false
 
 # The following variables determine the number of VMs to create.
 # The default is an all-in-one master installation,
@@ -76,8 +81,10 @@ rhsub_pool:
 
 # User for the container registry. Default is 'registry.redhat.io'
 # Usually the same as the user for accessing the Customer Portal
+
+# URL of the container registry. Default is 'registry.redhat.io'
 # oreg_url: registry.redhat.io
 
-# User for the container registry, usually the same as the password for accessing the Customer Portal
-# Please update the oreg_auth_password in the secure_vars.yaml file.
-oreg_auth_user:
+# User for the container registry.
+# Usually the same as the user for accessing the Customer Portal
+# oreg_auth_user:

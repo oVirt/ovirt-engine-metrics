@@ -1,6 +1,9 @@
 # This is an example file for the oVirt Metrics Store installation configuration
-
 # Update the following variables to install oVirt Metrics Store based on OpenShift Logging
+
+# The variables that are not commented out are mandatory.
+# The other variables already have a default, but it can be updated,
+# by uncommenting the variable and updating its value.
 
 # Environment name. Can be used to identify data collected in a single central
 # store sent from more than one oVirt engine.
@@ -16,31 +19,32 @@ ovirt_env_name: engine
 public_hosted_zone:
 
 # Engine FQDN
+# You can use engine_url instead of this variable, by uncommenting and updating its value.
 engine_fqdn:
 
-# Engine URL. Default is "https://'engine_fqdn'/ovirt-engine/api".
-# engine_url:
+# Engine URL. Default is "https://{{ engine_fqdn }}/ovirt-engine/api".
+# engine_url: 'https://{{ engine_fqdn }}/ovirt-engine/api'
 
 # Engine user
 # Please update engine_password in the secure_vars.yaml file.
 engine_user:
 
 # Path to Engine CA certificate file. Default is '/etc/pki/ovirt-engine/ca.pem'
-# engine_cafile:
+# engine_cafile: /etc/pki/ovirt-engine/ca.pem
 
 # The cluster in which the metrics store installer and VMs will be created. Default is 'Default'.
-# ovirt_cluster_name:
+# ovirt_cluster_name: Default
 
 # Storage domain for the Metrics store installation
 openshift_ovirt_storage_domain_name:
 
 # Name of the Metrics Store installer virtual machine that will be created
 # Default is 'metrics-store-installer'
-# openshift_ovirt_bastion_machine_name:
+# openshift_ovirt_bastion_machine_name: metrics-store-installer
 
 # Creates a record in '/etc/hosts'. Default is 'false'
 # Relevant only for all-in-one installation
-# create_host_entry:
+# create_host_entry: false
 
 # The following variables determine the number of virtual machines to create.
 # The default is an all-in-one master installation (one Metrics Store virtual machine),
@@ -75,10 +79,9 @@ rhsub_user:
 # See documentation on how to get pool IDs
 rhsub_pool:
 
-# User for the container registry. Default is 'registry.redhat.io'
-# Usually the same as the user for accessing the Customer Portal
+# URL of the container registry. Default is 'registry.redhat.io'
 # oreg_url: registry.redhat.io
 
-# User for the container registry, usually the same as the password for accessing the Customer Portal
-# Please update oreg_auth_password in the secure_vars.yaml file.
-oreg_auth_user:
+# User for the container registry.
+# Usually the same as the user for accessing the Customer Portal
+# oreg_auth_user:
