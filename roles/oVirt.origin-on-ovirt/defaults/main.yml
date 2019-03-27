@@ -7,7 +7,6 @@ engine_insecure: false
 ovirt_cluster_name: Default
 ovirt_template_memory: 4Gib
 ovirt_template_cpu: 2
-ovirt_template_disk_storage: hosted_storage
 ovirt_template_timeout: 1200
 ovirt_template_disk_size: 100GiB
 ovirt_template_nics:
