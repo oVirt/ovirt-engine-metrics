@@ -20,6 +20,3 @@ ovirt_env_name: engine
 # Example:
 # elasticsearch_host: es.{{ public_hosted_zone }}
 elasticsearch_host:
-
-# `admin` user password for Kibana console and OpenShift console
-openshift_logging_admin_password:
