@@ -68,6 +68,23 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Wed Mar 27 2019 Shirly Radco <sradco@redhat.com> - 1.2.1.2
+Fixed issues:
+- Remove openshift_distribution from config file
+- Update default cluster name from default to Default
+- Bug 1683157 - Disabled logging for sensitive tasks
+- lint: main: fix double space after colon
+- lint: main: ANSIBLE0011 All tasks should be named
+- lint: fix too many spaces after|before colon
+- Bug 1691363 - Fix bug with curator update
+- automation: Add git hash to milestone builds
+- Bug 1677996 - Encrypt passwords for Metrics installation
+- Bug 1692702 - Set default qcow_url only for Origin
+- Update mandatory variables and variables with default
+- Bug 1677246 - Fix validations when running on an isolated machine
+- remove openshift_logging_admin_password from config.yml file
+- Bug 1693296 - Fix support for non default template disk storage
+
 * Thu Mar 21 2019 Shirly Radco <sradco@redhat.com> - 1.2.1.1
 Fixed issues:
 - Add missing default logging_namespace to role
