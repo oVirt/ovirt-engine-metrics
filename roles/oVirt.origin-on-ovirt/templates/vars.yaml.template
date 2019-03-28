@@ -1,5 +1,8 @@
 ---
 # Common variables for bastion and OpenShift virtual machines creation
+engine_url: {{ engine_url }}
+engine_user: {{ engine_user }}
+engine_cafile: {{ engine_cafile }}
 engine_insecure: {{ engine_insecure }}
 engine_ssh_key: "{{ ssh_key }}"
 qcow_url: {{ qcow_url }}
@@ -14,6 +17,12 @@ template_name: {{ ovirt_template_name|d('centos76') }}
 openshift_deployment_type: openshift-enterprise
 ansible_distribution: RedHat
 template_name: {{ ovirt_template_name|d('rhelguest76') }}
+rhsub_user: {{ rhsub_user }}
+rhsub_pool: {{ rhsub_pool }}
+oreg_auth_user: {{ oreg_auth_user }}
+{% if oreg_url is defined %}
+oreg_url: {{ oreg_url }}
+{% endif %}
 {% endif %}
 
 template_cluster: {{ ovirt_cluster_name }}

@@ -58,18 +58,21 @@ openshift_ovirt_storage_domain_name:
 # The size of the disks that will be created for Elasticsearch. Default is 500GiB.
 # elasticsearch_disk_size: 500GiB
 
-# Additional mandatory parameters for Red Hat Virtualization:
-
-# Note: Basic RHV subscription includes an entitlement for a single Metrics Store all-in-one installation.
-# Each additional Metrics Store virtual machine requires an additional OpenShift subscription.
-
+# For Origin installation you can set qcow_url to:
+# 'https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2c'
+#
 # URL for downloading the RHEL guest image to create the virtual machines
 # To copy the qcow_url go to:
 # https://access.redhat.com/downloads/content/69/ver=/rhel---7/7.6/x86_64/product-software
 # In the Product Software tab, right-click the Download Now button of the
 # `Red Hat Enterprise Linux KVM Guest Image` and copy the link.
 # WARNING: The link will expire. Copy the link when you are ready to run the playbook.
-# qcow_url:
+qcow_url:
+
+# Additional mandatory parameters for Red Hat Virtualization:
+
+# Note: Basic RHV subscription includes an entitlement for a single Metrics Store all-in-one installation.
+# Each additional Metrics Store virtual machine requires an additional OpenShift subscription.
 
 # User for Red Hat Subscription Manager
 # Please update rhsub_pass in the secure_vars.yaml file.
@@ -84,4 +87,4 @@ rhsub_pool:
 
 # User for the container registry.
 # Usually the same as the user for accessing the Customer Portal
-# oreg_auth_user:
+oreg_auth_user:

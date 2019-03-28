@@ -27,13 +27,6 @@
         path: '{{ origin_on_ovirt_files_path }}'
         state: directory
 
-    - name: Set qcow_url if OpenShift distribution is Origin
-      set_fact:
-        qcow_url: 'https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2c'
-      when:
-        - openshift_distribution == 'origin'
-        - qcow_url is undefined
-
     - name: Generate install_okd.yaml, vars.yaml and integ.ini templates
       template:
         src: '{{ origin_on_ovirt_role_path }}/templates/{{ item }}.template'
