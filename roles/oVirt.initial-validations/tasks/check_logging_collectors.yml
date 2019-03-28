@@ -25,66 +25,74 @@
 
 # Check collectors base packages availability
 
-- name: Check Rsyslog packages are available
-  yum:
-    list: "{{ item }}"
-  with_items:
-    - "{{ rsyslog_base_packages }}"
-  register: rsyslog_packages_availability
+- block:
+    - name: Check Rsyslog packages are available
+      yum:
+        list: "{{ item }}"
+      with_items:
+        - "{{ rsyslog_base_packages }}"
+      register: rsyslog_packages_availability
+
+    - name: Set rsyslog_base_packages_available fact
+      set_fact:
+        rsyslog_base_packages_available: false
+      with_items: "{{ rsyslog_packages_availability.results }}"
+      when:
+        - item.results == []
+
+    - name: Set logging_collector as rsyslog
+      set_fact:
+        logging_collector: "rsyslog"
+      when:
+        - rsyslog_base_packages_available
+        - logging_collector is undefined
   when: logging_collector is undefined or logging_collector == 'rsyslog'
 
-- name: Set rsyslog_base_packages_available fact
-  set_fact:
-    rsyslog_base_packages_available: false
-  with_items: "{{ rsyslog_packages_availability.results }}"
-  when:
-    - item.results == []
-    - logging_collector is undefined or logging_collector == 'rsyslog'
+- block:
+    - name: Check Fluentd packages are available
+      yum:
+        list: "{{ item }}"
+      with_items:
+        - "{{ fluentd_base_packages }}"
+      register: fluentd_packages_availability
 
-- name: Set logging_collector as rsyslog
-  set_fact:
-    logging_collector: "rsyslog"
-  when:
-    - rsyslog_base_packages_available
-    - logging_collector is undefined
+    - name: Set fluentd_base_packages_available fact
+      set_fact:
+        fluentd_base_packages_available: false
+      with_items: "{{ fluentd_packages_availability.results }}"
+      when:
+        - item.results == []
 
-- name: Check Fluentd packages are available
-  yum:
-    list: "{{ item }}"
-  with_items:
-    - "{{ fluentd_base_packages }}"
-  register: fluentd_packages_availability
-  when:
-    - not rsyslog_base_packages_available or logging_collector == 'fluentd'
+    - name: Set logging_collector as fluentd
+      set_fact:
+        logging_collector: "fluentd"
+      when:
+        - fluentd_base_packages_available
+        - logging_collector is undefined
+  when: not rsyslog_base_packages_available or logging_collector == 'fluentd'
 
-- name: Set fluentd_base_packages_available fact
-  set_fact:
-    fluentd_base_packages_available: false
-  with_items: "{{ fluentd_packages_availability.results }}"
-  when:
-    - item.results == []
-    - not rsyslog_base_packages_available or logging_collector == 'fluentd'
-
-- name: Set logging_collector as fluentd
-  set_fact:
-    logging_collector: "fluentd"
-  when:
-    - fluentd_base_packages_available
-    - logging_collector is undefined
-
-- name: Validate Fluentd or Rsyslog base packages are available
+- name: Validate logging_collector is defined
   debug:
     msg: "Logs collector base packages are not available. Metrics role will not be able to continue"
   when: logging_collector is undefined
   changed_when: true
   notify: set failed validation
 
-- name: Validate logging_collector
+- name: Validate Rsyslog logging_collector base packages are available
   debug:
-    msg: "Log collector is missing required base packages. Metrics role will not be able to continue"
+    msg: "Rsyslog collector is missing required base packages. Metrics role will not be able to continue"
   when:
     - not rsyslog_base_packages_available
-    - not fluentd_base_packages_available
+    - logging_collector|d('') == 'rsyslog'
+  changed_when: true
+  notify: set failed validation
+
+- name: Validate Fluentd logging_collector base packages are available
+  debug:
+    msg: "Fluentd collector is missing required base packages. Metrics role will not be able to continue"
+  when:
+    - not rsyslog_base_packages_available
+    - logging_collector|d('') == 'fluentd'
   changed_when: true
   notify: set failed validation
 
