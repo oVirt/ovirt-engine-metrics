@@ -90,6 +90,19 @@
       vars:
         packages: "{{ ovirt_origin_bastion_packages }}"
       delegate_to: '{{ bastion_machine_fqdn }}'
+
+    - name: Clean openshift-ansibale path
+      file:
+        state: absent
+        path: '{{ openshift_ansible_role_path }}'
+      delegate_to: '{{ bastion_machine_fqdn }}'
+
+    - name: Clone openshift-ansible repo
+      git:
+        repo: 'https://github.com/openshift/openshift-ansible.git'
+        dest: '{{ openshift_ansible_role_path }}'
+        version: release-3.11
+      delegate_to: '{{ bastion_machine_fqdn }}'
   when:
     - openshift_distribution == 'origin'
     - manage_packages|default(true)
