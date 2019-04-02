@@ -7,8 +7,8 @@ openshift_ansible_files:
   - playbook_inventory.yaml
 
 ovirt_origin_bastion_packages:
-  - epel-release
-  - centos-release-openshift-origin311
+  - ansible
+  - openshift-ansible
 
 ovirt_origin_bastion_base_packages:
   - wget
@@ -22,6 +22,9 @@ ovirt_origin_bastion_base_packages:
   - sos
   - psacct
   - screen
+  - epel-release
+  - centos-release-openshift-origin311
+  - centos-release-ansible26
 
 ovirt_ocp_bastion_base_packages:
   - wget

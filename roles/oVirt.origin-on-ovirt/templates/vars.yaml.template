@@ -150,16 +150,6 @@ openshift_ovirt_vm_profile:
 {% endraw %}
 
 cloud_init_script_master: |
-{% if openshift_distribution == 'origin' %}
-  yum_repos:
-    centos-ovirt42:
-      baseurl: http://mirror.centos.org/centos/7/virt/x86_64/ovirt-4.2
-      enabled: true
-      gpgcheck: false
-  packages:
-    - epel-release
-    - centos-release-openshift-origin311
-{% endif %}
   runcmd:
     - sed -i 's/# ignored_nics =.*/ignored_nics = docker0, tun0 /' etc/ovirt-guest-agent.conf
     - systemctl enable ovirt-guest-agent
