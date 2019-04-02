@@ -58,14 +58,6 @@
   when: secure_vars_file_exists.stat.exists
 
 - block:
-    - name: Add origin repository to bastion machine
-      yum_repository:
-        name: centos-ovirt42
-        description: Centos YUM repo
-        baseurl: http://mirror.centos.org/centos/7/virt/x86_64/ovirt-4.2
-        gpgcheck: false
-      delegate_to: '{{ bastion_machine_fqdn }}'
-
     - name: Install origin base packages
       yum:
         name: '{{ packages }}'
