@@ -91,7 +91,7 @@
   debug:
     msg: "Fluentd collector is missing required base packages. Metrics role will not be able to continue"
   when:
-    - not rsyslog_base_packages_available
+    - not fluentd_base_packages_available
     - logging_collector|d('') == 'fluentd'
   changed_when: true
   notify: set failed validation
