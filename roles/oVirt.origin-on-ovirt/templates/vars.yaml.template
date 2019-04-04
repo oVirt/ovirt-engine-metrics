@@ -63,7 +63,7 @@ vms:
       state: running
       cloud_init:
         authorized_ssh_keys: "{{ ssh_key }}"
-        root_password: {{ root_password }}
+        root_password: {% raw %}"{{ root_password }}"{% endraw %}
 {% if set_user_ssh_key is defined and set_user_ssh_key %}
         {% raw %}custom_script: "{{ cloud_init_script_bastion }}"{% endraw %}
 
@@ -118,7 +118,7 @@ openshift_ovirt_vm_profile:
     state: running
     cloud_init:
       authorized_ssh_keys: "{{ ssh_key }}"
-      root_password: {{ root_password }}{% raw %}
+      root_password: {% raw %}"{{ root_password }}"
       custom_script: "{{ cloud_init_script_master }}"
 {% endraw %}
   node_vm:
@@ -145,7 +145,7 @@ openshift_ovirt_vm_profile:
     state: running
     cloud_init:
       authorized_ssh_keys: "{{ ssh_key }}"
-      root_password: {{ root_password }}{% raw %}
+      root_password: {% raw %}"{{ root_password }}"
       custom_script: "{{ cloud_init_script_master }}"
 {% endraw %}
 
