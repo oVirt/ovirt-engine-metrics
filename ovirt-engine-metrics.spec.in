@@ -68,6 +68,14 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Sun Apr 07 2019 Shirly Radco <sradco@redhat.com> - 1.3.0
+Fixed issues:
+- Bug 1696179 - Fix bug with initial validations for fluentd
+- Bug 1683353 - Remove generated vms root password in vars.yaml
+- Bug 1693784 - Add packages required for installing openshift origin
+- Bug 1695067 - Clone openshift-ansible 3.11 repo for origin installation
+- Add condition for setting qcow_url
+
 * Thu Mar 28 2019 Shirly Radco <sradco@redhat.com> - 1.2.1.3
 Fixed issues:
 - Bug 1693560 - Fix failure in initial validations
