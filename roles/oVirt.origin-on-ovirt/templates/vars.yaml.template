@@ -5,8 +5,9 @@ engine_user: {{ engine_user }}
 engine_cafile: {{ engine_cafile }}
 engine_insecure: {{ engine_insecure }}
 engine_ssh_key: "{{ ssh_key }}"
+{% if create_template %}
 qcow_url: {{ qcow_url }}
-
+{% endif %}
 manage_packages: {{ manage_packages }}
 
 openshift_ovirt_dns_zone: {{ public_hosted_zone }}
