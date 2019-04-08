@@ -24,9 +24,11 @@
       shell: oc adm policy add-cluster-role-to-user cluster-admin admin
       ignore_errors: True
 
+{% raw %}
     - name: Assign the password immediately without login
-      shell: oc login --username=admin --password={{ openshift_logging_admin_password }}
+      shell: 'oc login --username=admin --password={{ openshift_logging_admin_password }}'
       ignore_errors: True
+{% endraw %}
 
     - name: Log back in as admin user
       shell: oc login --username=system:admin
