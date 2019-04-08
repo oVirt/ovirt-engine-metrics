@@ -64,15 +64,16 @@ vms:
       state: running
       cloud_init:
         authorized_ssh_keys: "{{ ssh_key }}"
-        root_password: {% raw %}"{{ root_password }}"{% endraw %}
+        {% raw %}root_password: "{{ root_password }}"
+{% endraw -%}
 {% if set_user_ssh_key is defined and set_user_ssh_key %}
-        {% raw %}custom_script: "{{ cloud_init_script_bastion }}"{% endraw %}
+        {% raw %}custom_script: "{{ cloud_init_script_bastion }}"
+{% endraw %}
 
-{% raw %}
 cloud_init_script_bastion: |
   runcmd:
     - echo "{{ lookup('file', '~/.ssh/id_rsa.pub') }}" >> /root/.ssh/authorized_keys
-{% endraw %}
+
 {% endif %}
 {% endif %}
 
@@ -119,7 +120,7 @@ openshift_ovirt_vm_profile:
     state: running
     cloud_init:
       authorized_ssh_keys: "{{ ssh_key }}"
-      root_password: {% raw %}"{{ root_password }}"
+      {% raw %}root_password: "{{ root_password }}"
       custom_script: "{{ cloud_init_script_master }}"
 {% endraw %}
   node_vm:
@@ -146,7 +147,7 @@ openshift_ovirt_vm_profile:
     state: running
     cloud_init:
       authorized_ssh_keys: "{{ ssh_key }}"
-      root_password: {% raw %}"{{ root_password }}"
+      {% raw %}root_password: "{{ root_password }}"
       custom_script: "{{ cloud_init_script_master }}"
 {% endraw %}
 
