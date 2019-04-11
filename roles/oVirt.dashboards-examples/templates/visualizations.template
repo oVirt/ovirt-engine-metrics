@@ -10,7 +10,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:cpu\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:cpu\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -24,7 +24,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:memory\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:memory\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -38,7 +38,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:df\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:df\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -52,7 +52,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:memory\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:memory\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -66,7 +66,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-logs-[%ovirt_env_name%].[%ovirt_env_uuid_logs%].*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[{\"meta\":{\"index\":\"project.ovirt-logs-[%ovirt_env_name%].[%ovirt_env_uuid_logs%].*\",\"negate\":true,\"key\":\"level\",\"value\":\"INFO\",\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"level\":{\"query\":\"INFO\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"index\":\"project.ovirt-logs-[%ovirt_env_name%].[%ovirt_env_uuid_logs%].*\",\"negate\":true,\"key\":\"level\",\"value\":\"DEBUG\",\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"level\":{\"query\":\"DEBUG\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[{\"meta\":{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"negate\":true,\"key\":\"level\",\"value\":\"INFO\",\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"level\":{\"query\":\"INFO\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"negate\":true,\"key\":\"level\",\"value\":\"DEBUG\",\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"level\":{\"query\":\"DEBUG\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
       }
     }
   },
@@ -80,7 +80,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -94,7 +94,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:interface AND collectd.type:if_packets\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:interface AND collectd.type:if_packets\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -108,7 +108,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:interface AND collectd.type:if_octets\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:interface AND collectd.type:if_octets\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -122,7 +122,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:uptime\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:uptime\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -136,7 +136,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-logs-[%ovirt_env_name%].[%ovirt_env_uuid_logs%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"EVENT_ID\\\\: AND USER_VDC_LOGIN\"}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"EVENT_ID\\\\: AND USER_VDC_LOGIN\"}},\"filter\":[]}"
       }
     }
   },
@@ -150,7 +150,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"collectd.plugin:memory\"}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"collectd.plugin:memory\"}},\"filter\":[]}"
       }
     }
   },
@@ -164,7 +164,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:percent\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:percent\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -178,7 +178,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:cpu AND (collectd.type_instance:user or collectd.type_instance:system)\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:cpu AND (collectd.type_instance:user or collectd.type_instance:system)\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -192,7 +192,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:memory AND collectd.type_instance:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:memory AND collectd.type_instance:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -206,7 +206,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -220,7 +220,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:memory\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:memory\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -234,7 +234,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"ovirt.entity:vms\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"ovirt.entity:vms\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -248,7 +248,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:if_octets\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:if_octets\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -262,7 +262,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"collectd.plugin:virt AND collectd.type:disk_octets\"}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"collectd.plugin:virt AND collectd.type:disk_octets\"}},\"filter\":[]}"
       }
     }
   },
@@ -276,7 +276,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:memory AND collectd.type_instance:total\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:memory AND collectd.type_instance:total\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -290,7 +290,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:if_dropped\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:if_dropped\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -304,7 +304,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:if_errors\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:if_errors\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -318,7 +318,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:if_octets\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:if_octets\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -332,7 +332,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin: virt AND collectd.type: memory AND collectd.type_instance: total\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin: virt AND collectd.type: memory AND collectd.type_instance: total\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -346,7 +346,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:percent\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:percent\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -360,7 +360,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:disk_ops\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:disk_ops\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -374,7 +374,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:memory AND collectd.type_instance:total\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:memory AND collectd.type_instance:total\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -388,7 +388,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:percent\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:percent\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -402,7 +402,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:interface AND collectd.type:if_errors\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:interface AND collectd.type:if_errors\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -416,7 +416,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:df AND collectd.type_instance:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:df AND collectd.type_instance:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -430,7 +430,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:disk_octets\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:disk_octets\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -444,7 +444,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:interface AND collectd.type:if_errors\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:interface AND collectd.type:if_errors\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -458,7 +458,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:interface AND collectd.type:if_errors\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:interface AND collectd.type:if_errors\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -472,7 +472,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:df AND collectd.type_instance:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:df AND collectd.type_instance:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -486,7 +486,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:postgresql\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:postgresql\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -500,7 +500,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"collectd.plugin:cpu AND (collectd.type_instance:user OR collectd.type_instance:system)\"}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"collectd.plugin:cpu AND (collectd.type_instance:user OR collectd.type_instance:system)\"}},\"filter\":[]}"
       }
     }
   },
@@ -514,7 +514,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:memory AND collectd.type_instance:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:memory AND collectd.type_instance:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -528,7 +528,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:df AND collectd.type:percent_bytes AND collectd.type_instance:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:df AND collectd.type:percent_bytes AND collectd.type_instance:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -542,7 +542,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-logs-[%ovirt_env_name%].[%ovirt_env_uuid_logs%].*\",\"query\":{\"query_string\":{\"query\":\"level:WARN\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"query\":{\"query_string\":{\"query\":\"level:WARN\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -556,7 +556,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-logs-[%ovirt_env_name%].[%ovirt_env_uuid_logs%].*\",\"query\":{\"query_string\":{\"query\":\"level:ERROR\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"query\":{\"query_string\":{\"query\":\"level:ERROR\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -570,7 +570,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:processes AND collectd.type:ps_state\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:processes AND collectd.type:ps_state\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -584,7 +584,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-metrics-[%ovirt_env_name%].[%ovirt_env_uuid_metrics%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"collectd.plugin:processes AND collectd.type:ps_state\"}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"collectd.plugin:processes AND collectd.type:ps_state\"}},\"filter\":[]}"
       }
     }
   }

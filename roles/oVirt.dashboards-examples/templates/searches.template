@@ -16,7 +16,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-logs-[%ovirt_env_name%].[%ovirt_env_uuid_logs%].*\",\"query\":{\"query_string\":{\"query\":\"EVENT_ID\\\\:\",\"analyze_wildcard\":true}},\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"query\":{\"query_string\":{\"query\":\"EVENT_ID\\\\:\",\"analyze_wildcard\":true}},\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
       }
     }
   },
@@ -36,7 +36,7 @@
       ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"project.ovirt-logs-[%ovirt_env_name%].[%ovirt_env_uuid_logs%].*\",\"query\":{\"query_string\":{\"query\":\"EVENT_ID\\\\: AND USER_VDC_LOGIN(30)\",\"analyze_wildcard\":true}},\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"query\":{\"query_string\":{\"query\":\"EVENT_ID\\\\: AND USER_VDC_LOGIN(30)\",\"analyze_wildcard\":true}},\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
       }
     }
   }

@@ -9,10 +9,38 @@
   delegate_to: localhost
   run_once: true
 
+- name: Set ovirt_metrics_index_prefix_metrics when ovirt_env_uuid_metrics is defined
+  set_fact:
+    ovirt_metrics_index_prefix_metrics: 'project.ovirt-metrics-{{ ovirt_env_name }}.{{ ovirt_env_uuid_metrics }}'
+  when:
+    - ovirt_env_uuid_metrics is defined
+    - ovirt_metrics_index_prefix_metrics is undefined
+
+- name: Set ovirt_metrics_index_prefix_logs when ovirt_env_uuid_logs is defined
+  set_fact:
+    ovirt_metrics_index_prefix_logs: 'project.ovirt-logs-{{ ovirt_env_name }}.{{ ovirt_env_uuid_logs }}'
+  when:
+    - ovirt_env_uuid_logs is defined
+    - ovirt_metrics_index_prefix_logs is undefined
+
+- name: Set ovirt_metrics_index_prefix_metrics when ovirt_env_uuid_metrics is undefined
+  set_fact:
+    ovirt_metrics_index_prefix_metrics: 'project.ovirt-metrics-{{ ovirt_env_name }}'
+  when:
+    - ovirt_env_uuid_metrics is undefined
+    - ovirt_metrics_index_prefix_metrics is undefined
+
+- name: Set ovirt_metrics_index_prefix_logs when ovirt_env_uuid_logs is undefined
+  set_fact:
+    ovirt_metrics_index_prefix_logs: 'project.ovirt-logs-{{ ovirt_env_name }}'
+  when:
+    - ovirt_env_uuid_logs is undefined
+    - ovirt_metrics_index_prefix_logs is undefined
+
 - name: Generate searches json file
   template:
     src: searches.template
-    dest: '{{ ovirt_metrics_dashboards_examples_dir }}searches.json'
+    dest: '{{ ovirt_metrics_dashboards_examples_dir }}/searches.json'
     mode: 0644
   delegate_to: localhost
   run_once: true
@@ -20,7 +48,7 @@
 - name: Generate visualizations json file
   template:
     src: visualizations.template
-    dest: '{{ ovirt_metrics_dashboards_examples_dir }}visualizations.json'
+    dest: '{{ ovirt_metrics_dashboards_examples_dir }}/visualizations.json'
     mode: 0644
   delegate_to: localhost
   run_once: true
