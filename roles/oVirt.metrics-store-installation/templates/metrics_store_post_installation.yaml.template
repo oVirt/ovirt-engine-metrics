@@ -27,6 +27,7 @@
 {% raw %}
     - name: Assign the password immediately without login
       shell: 'oc login --username=admin --password={{ openshift_logging_admin_password }}'
+      no_log: true
       ignore_errors: True
 {% endraw %}
 
