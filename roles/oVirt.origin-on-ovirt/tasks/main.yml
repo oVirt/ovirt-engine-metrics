@@ -55,7 +55,6 @@
         state: absent
       ignore_errors: true
 
-    # TODO replace with ansible module
     - name: Get bastion ssh public key
       command: "sshpass -p {{ root_password }} scp  -o StrictHostKeyChecking=no root@{{ bastion_machine_fqdn }}:/root/bastion_id_rsa.pub ./bastion_id_rsa"
       no_log: true
