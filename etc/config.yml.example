@@ -4,12 +4,13 @@
 # to '/etc/ovirt-engine-metrics/config.yml.d/', rename it 'config.yml',
 # and update the parameters. All parameters are mandatory.
 
-# Environment name. Can be used to identify data collected in a single central
+# Environment name. Used to identify data collected in a single central
 # store sent from more than one oVirt engine.
-# Maximum field length is 49 characters.
-# For more details see:
-# https://www.ovirt.org/develop/release-management/features/metrics/metrics-store-installation/#ovirt-metrics-store-setup
-# If you are installing RHV Metrics Store, 'ovirt_env_name' must match 'ovirt_env_name' in metrics-store-config.yml.
+# Use the following convention:
+#  - Include only alphanumeric characters and hyphens ( "-" ).
+#  - Name cannot begin with a hyphen or a number, or end with a hyphen.
+#  - Maximum of 49 characters. Wildcard patterns (e.g. ovirt-metrics*) cannot be used.
+# If you are installing oVirt Metrics Store, 'ovirt_env_name' must match 'ovirt_env_name' in metrics-store-config.yml.
 # Default is 'engine'.
 ovirt_env_name: engine
 
