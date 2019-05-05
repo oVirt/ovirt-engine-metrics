@@ -32,8 +32,8 @@ engine_user:
 # Path to Engine CA certificate file. Default is '/etc/pki/ovirt-engine/ca.pem'
 # engine_cafile: /etc/pki/ovirt-engine/ca.pem
 
-# The cluster in which the metrics store installer and VMs will be created. Default is 'Default'.
-# ovirt_cluster_name: Default
+# The cluster in which the metrics store installer and VMs will be created.
+ovirt_cluster_name:
 
 # Storage domain for the Metrics store installation
 openshift_ovirt_storage_domain_name:
