@@ -152,10 +152,28 @@ openshift_ovirt_vm_profile:
 {% endraw %}
 
 cloud_init_script_master: |
+{% if openshift_distribution == 'origin' %}
+  yum_repos:
+    centos-ovirt42:
+      baseurl: http://mirror.centos.org/centos/7/virt/x86_64/ovirt-4.2
+      enabled: true
+      gpgcheck: false
+{% endif %}
+  packages:
+    - ovirt-guest-agent
+{% if openshift_distribution == 'origin' %}
+    - epel-release
+    - NetworkManager
+    - centos-release-openshift-origin311
+{% endif %}
   runcmd:
     - sed -i 's/# ignored_nics =.*/ignored_nics = docker0, tun0 /' etc/ovirt-guest-agent.conf
     - systemctl enable ovirt-guest-agent
     - systemctl start ovirt-guest-agent
+{% if openshift_distribution == 'origin' %}
+    - systemctl enable NetworkManager
+    - systemctl start NetworkManager
+{% endif %}
     - mkdir -p /var/lib/docker
     - /usr/sbin/mkfs.xfs -L dockervo /dev/vdb
 {% if set_user_ssh_key is defined and set_user_ssh_key %}
