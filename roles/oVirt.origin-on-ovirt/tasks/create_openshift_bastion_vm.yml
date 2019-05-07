@@ -8,22 +8,47 @@
 - block:
   - name: Login to oVirt
     ovirt_auth:
-      hostname: '{{ engine_fqdn | default(lookup('env','OVIRT_HOSTNAME')) | default(omit) }}'
       url: '{{ engine_url|mandatory }}'
       username: '{{ engine_user|mandatory }}'
       password: '{{ engine_password|mandatory }}'
       insecure: '{{ engine_insecure }}'
       ca_file: '{{ engine_cafile }}'
     when: ovirt_auth is undefined or not ovirt_auth
+    no_log: true
     register: loggedin
 
-  - ovirt_vm_facts:
+  - name: Collect oVirt VM facts
+    ovirt_vm_facts:
       auth: '{{ ovirt_auth }}'
       pattern: 'name={{ openshift_ovirt_bastion_machine_name }} and cluster={{ ovirt_cluster_name }}'
+      fetch_nested: true
+      nested_attributes: ips
     no_log: true
     until: ansible_facts.ovirt_vms[0].fqdn is defined
     retries: 5
     delay: 60
+
+  - name: Set bastion_machine_ip_address fact
+    set_fact:
+      bastion_machine_ip_address: "{{ item.1.address }}"
+    with_subelements:
+      - "{{ ansible_facts.ovirt_vms[0].reported_devices }}"
+      - ips
+    when:
+      - item.1.version  == 'v4'
+      - create_host_entry|d(false)|bool == true
+    ignore_errors: true
+
+  - name: Add dns line to /etc/hosts if create_host_entry true
+    lineinfile:
+      path: /etc/hosts
+      regexp: '{{ openshift_ovirt_bastion_machine_name }}'
+      line: "{{ bastion_machine_ip_address }} {{ ansible_facts.ovirt_vms[0].fqdn }} {{ openshift_ovirt_bastion_machine_name }}"
+      owner: root
+      group: root
+      mode: 0644
+    when: create_host_entry|d(false)|bool == true
+    ignore_errors: true
 
   always:
     - name: Logout from oVirt
