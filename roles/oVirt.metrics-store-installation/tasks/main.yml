@@ -1,13 +1,7 @@
 ---
 - block:
-    - name: Copy engine_id_rsa to current location
-      copy:
-        src: /etc/pki/ovirt-engine/keys/engine_id_rsa
-        dest: engine_id_rsa
-        mode: 0600
-
     - name: Generate engine ssh key
-      shell: ssh-keygen -y -f ./engine_id_rsa > ./engine_id_rsa.pub
+      shell: "ssh-keygen -y -f {{ ovirt_engine_id_rsa_path }}/engine_id_rsa > ./engine_id_rsa.pub"
 
     - name: Update installer machine name if set by the user
       set_fact:
