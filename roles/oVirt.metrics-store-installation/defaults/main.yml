@@ -7,3 +7,5 @@ ovirt_metrics_curator_delete_days: 3
 logging_namespace: openshift-logging
 
 viaq_metrics_store: true
+
+ovirt_engine_id_rsa_path: /etc/pki/ovirt-engine/keys
