@@ -11,6 +11,9 @@ openshift_web_console_install=true
 openshift_master_overwrite_named_certificates=true
 # Uncomment to disable install-time checks, for smaller scale installations
 # openshift_disable_check=memory_availability,disk_availability,docker_image_availability
+{% if openshift_disable_check is defined %}
+openshift_disable_check={{ openshift_disable_check }}
+{% endif %}
 openshift_master_cluster_hostname="openshift-master.{{ public_hosted_zone }}"
 openshift_master_cluster_public_hostname="openshift.{{ public_hosted_zone }}"
 # the public subdomain to use for all of the external facing logging services
