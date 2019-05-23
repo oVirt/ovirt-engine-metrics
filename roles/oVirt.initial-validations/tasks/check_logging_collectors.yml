@@ -29,6 +29,7 @@
     - name: Check Rsyslog packages are available
       yum:
         list: "{{ item }}"
+        lock_timeout: 60
       with_items:
         - "{{ rsyslog_base_packages }}"
       register: rsyslog_packages_availability
@@ -52,6 +53,7 @@
     - name: Check Fluentd packages are available
       yum:
         list: "{{ item }}"
+        lock_timeout: 60
       with_items:
         - "{{ fluentd_base_packages }}"
       register: fluentd_packages_availability
