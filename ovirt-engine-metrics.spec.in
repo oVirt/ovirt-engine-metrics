@@ -68,6 +68,11 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue May 28 2019 Shirly Radco <sradco@redhat.com> - 1.3.1.1
+Fixed issues:
+- Add flag that allows setting openshift_disable_check
+- Bug 1713223 - Add lock_timeout to yum due to locking issue
+
 * Wed May 15 2019 Shirly Radco <sradco@redhat.com> - 1.3.1
 Fixed issues:
 - Update ovirt_env_name text in config.yml.example
