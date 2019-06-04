@@ -42,7 +42,7 @@
         file: '{{ origin_on_ovirt_files_path }}/vars.yaml'
 
     - name: Create template for OpenShift vms.
-      include_role:
+      import_role:
         name: oVirt.image-template
       when: create_template
 
