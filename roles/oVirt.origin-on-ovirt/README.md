@@ -62,7 +62,10 @@ required for the installation and copies it to the vm.
 
 ## Variables for installing OpenShift origin on oVirt
 
-- `openshift_distribution:`(default: `origin`)
+- `openshift_distribution:`
+   The default for `oVirt` is `origin`.
+   For `Red Hat Virtualization`, default is `openshift-enterprise`.
+- `openshift_ansible_files_path:`(default: `/root`)
 - `openshift_ansible_files_path:`(default: `/root`)
 - `ovirt_elasticsearch_mounted_storage_path:`(default:`/var/lib`)
 - `engine_url:`(Mandatory. No default )
