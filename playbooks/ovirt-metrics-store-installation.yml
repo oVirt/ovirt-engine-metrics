@@ -4,12 +4,12 @@
 
   tasks:
   - include_role:
-       name: oVirt.metrics/roles/oVirt.initial-validations
+      name: oVirt.metrics/roles/oVirt.initial-validations
     vars:
       check_logging_collectors: false
 
   - include_role:
-       name: oVirt.metrics/roles/oVirt.metrics-store-installation
+      name: oVirt.metrics/roles/oVirt.metrics-store-installation
     when: failed_validation is undefined
 
 - name: Add master host dns entry to /etc/hosts
@@ -17,19 +17,19 @@
 
   tasks:
 
-  - include_role:
-       name: oVirt.metrics/roles/oVirt.initial-validations
-    vars:
-      check_logging_collectors: false
+    - include_role:
+        name: oVirt.metrics/roles/oVirt.initial-validations
+      vars:
+        check_logging_collectors: false
 
-  - name: Update installer machine name if set by the user
-    set_fact:
-      openshift_ovirt_bastion_machine_name: metrics-store-installer
-    when: openshift_ovirt_bastion_machine_name is undefined
+    - name: Update installer machine name if set by the user
+      set_fact:
+        openshift_ovirt_bastion_machine_name: metrics-store-installer
+      when: openshift_ovirt_bastion_machine_name is undefined
 
-  - include_role:
-       name: oVirt.metrics/roles/oVirt.origin-on-ovirt
-       tasks_from: create_host_entry.yaml
-    when:
-      - failed_validation is undefined
-      - create_host_entry|d(false)|bool == true
+    - include_role:
+        name: oVirt.metrics/roles/oVirt.origin-on-ovirt
+        tasks_from: create_host_entry.yaml
+      when:
+        - failed_validation is undefined
+        - create_host_entry|d(false)|bool == true
