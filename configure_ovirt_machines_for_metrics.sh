@@ -107,7 +107,7 @@ while [ -n "$1" ]; do
 			usage
 		;;
 		*)
-			extra_opts+="${x}"
+			extra_opts+=("${x}")
 		;;
 	esac
 done
