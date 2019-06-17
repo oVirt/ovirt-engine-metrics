@@ -167,7 +167,7 @@ cloud_init_script_master: |
     - centos-release-openshift-origin311
 {% endif %}
   runcmd:
-    - sed -i 's/# ignored_nics =.*/ignored_nics = docker0, tun0 /' etc/ovirt-guest-agent.conf
+    - sed -i 's/# ignored_nics =.*/ignored_nics = docker0 tun0 /' etc/ovirt-guest-agent.conf
     - systemctl enable ovirt-guest-agent
     - systemctl start ovirt-guest-agent
 {% if openshift_distribution == 'origin' %}
