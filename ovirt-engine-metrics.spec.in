@@ -36,7 +36,7 @@ Group:          Virtualization/Management
 BuildArch:      noarch
 Url:            http://www.ovirt.org
 
-Requires:	ansible >= 2.4.0
+Requires:	ansible >= 2.7.0
 
 # In oVirt 4.1.0, content of this package was in a different one, which was
 # built from the engine sources.
