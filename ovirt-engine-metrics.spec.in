@@ -38,7 +38,7 @@ Url:            http://www.ovirt.org
 
 Requires:	ansible >= 2.7.0
 Requires:	ovirt-ansible-image-template >= 1.1.11
-Requires:	ovirt-ansible-vm-infra >= 1.1.17
+Requires:	ovirt-ansible-vm-infra >= 1.1.18
 
 # In oVirt 4.1.0, content of this package was in a different one, which was
 # built from the engine sources.
