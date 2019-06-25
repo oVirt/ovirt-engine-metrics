@@ -70,6 +70,12 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Jun 25 2019 Shirly Radco <sradco@redhat.com> - 1.3.3
+Fixed issues:
+- Bug 1721581 - packaging: spec: require ansible >= 2.8.1
+- Bug 1715519 - Pass extra args separately
+- Bug 1683157 - Remove unrequired debug messages
+
 * Tue Jun 18 2019 Shirly Radco <sradco@redhat.com> - 1.3.2
 Fixed issues:
 - Bug 1715511 - Update README for openshift_distribution value
