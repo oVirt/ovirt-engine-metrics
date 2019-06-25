@@ -38,11 +38,4 @@
   tags:
     - openshift_ovirt
 
-- name: Dictionary for oVirt.vm-infra role for creating the OpenShift vms
-  debug:
-    msg: "{{ vms }}"
-
-- name: affinity_groups for oVirt.vm-infra role for creating the OpenShift vms
-  debug:
-    msg: "{{ affinity_groups }}"
 ...
