@@ -22,9 +22,7 @@ ovirt_origin_bastion_base_packages:
   - sos
   - psacct
   - screen
-  - epel-release
   - centos-release-openshift-origin311
-  - centos-release-ansible26
 
 ovirt_ocp_bastion_base_packages:
   - wget

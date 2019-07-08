@@ -109,6 +109,16 @@
       delegate_to: '{{ bastion_machine_fqdn }}'
       when: manage_packages|default(true)
 
+    - name: Add ansible27 repository
+      yum_repository:
+        name: configmanagement-ansible27
+        description: configmanagement-ansible27
+        file: external_repos
+        baseurl: http://mirror.centos.org/$contentdir/7/configmanagement/$basearch/ansible27/
+        mirrorlist: http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=configmanagement-ansible27
+        enabled: yes
+      delegate_to: '{{ bastion_machine_fqdn }}'
+
     - name: Upgrade all packages
       yum:
         name: '*'
