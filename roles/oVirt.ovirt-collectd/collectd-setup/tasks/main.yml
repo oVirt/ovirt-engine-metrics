@@ -17,3 +17,9 @@
     src: global_configuration.conf.j2
     dest: /etc/collectd.d/05-global-configuration.conf
   notify: restart collectd
+
+- name: Remove libvirt.conf
+  file:
+    state: absent
+    path: /etc/collectd.d/libvirt.conf
+  notify: restart collectd
