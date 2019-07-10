@@ -70,6 +70,13 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Wed Jul 10 2019 Shirly Radco <sradco@redhat.com> - 1.3.3.2
+Fixed issues:
+- Bug 1698888 - Extract public key from bastion VM using fetch command
+- Bug 1727064 - Install Ansible 2.7 from configmanagement repo
+- packaging: spec: require ovirt-ansible-vm-infra >= 1.1.19
+- Bug 1717954 - Remove libvirt.conf that breaks collectd config
+
 * Tue Jul 02 2019 Shirly Radco <sradco@redhat.com> - 1.3.3.1
 Fixed issues:
 - Revert commit #68 Remove the check for rsyslog_default
