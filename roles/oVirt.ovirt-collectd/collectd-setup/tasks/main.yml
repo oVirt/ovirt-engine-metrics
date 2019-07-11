@@ -18,8 +18,14 @@
     dest: /etc/collectd.d/05-global-configuration.conf
   notify: restart collectd
 
-- name: Remove libvirt.conf
-  file:
-    state: absent
+- name: Check if libvirt.conf file exist
+  stat:
     path: /etc/collectd.d/libvirt.conf
+  register: libvirt_conf_exists
+
+- name: Overwrite libvirt.conf content
+  copy:
+    content: '# included in 20-builtins-conf-for-ovirt.conf'
+    dest: /etc/collectd.d/libvirt.conf
+  when: libvirt_conf_exists.stat.exists
   notify: restart collectd
