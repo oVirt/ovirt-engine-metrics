@@ -14,8 +14,19 @@
 
 - name: Add master host dns entry to /etc/hosts
   hosts: masters
+  gather_facts: false
 
   tasks:
+
+    - name: Wait for the reboot to complete
+      wait_for_connection:
+        connect_timeout: 20
+        sleep: 5
+        delay: 5
+        timeout: 300
+
+    - name: gather facts
+      setup:
 
     - include_role:
         name: oVirt.metrics/roles/oVirt.initial-validations
