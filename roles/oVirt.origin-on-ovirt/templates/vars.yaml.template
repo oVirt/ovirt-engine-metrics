@@ -64,6 +64,9 @@ vms:
       state: running
       cloud_init:
         authorized_ssh_keys: "{{ ssh_key }}"
+{% if create_host_entry|d(false)|bool %}
+        host_name: '{{ openshift_ovirt_bastion_machine_name }}'
+{% endif %}
         {% raw %}root_password: "{{ root_password }}"
 {% endraw -%}
 {% if set_user_ssh_key is defined and set_user_ssh_key %}
