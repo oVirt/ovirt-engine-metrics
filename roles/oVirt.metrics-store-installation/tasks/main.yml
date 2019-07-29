@@ -17,6 +17,7 @@
       include_vars:
         file: '{{ ovirt_metrics_pkg_sysconf_dir }}/secure_vars.yaml'
       when: secure_vars_file_exists.stat.exists
+      no_log: true
 
     - name: Install metrics store machines
       include_role:

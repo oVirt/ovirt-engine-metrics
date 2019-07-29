@@ -11,6 +11,7 @@
     vms: "{{ lookup('template', './vms.j2') }}"
   tags:
     - openshift_ovirt
+  no_log: true
 
 - name: Create affnity groups
   set_fact:
