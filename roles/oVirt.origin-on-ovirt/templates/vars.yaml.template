@@ -123,6 +123,9 @@ openshift_ovirt_vm_profile:
     state: running
     cloud_init:
       authorized_ssh_keys: "{{ ssh_key }}"
+{% if create_host_entry|d(false)|bool %}
+      host_name: 'master0.{{ public_hosted_zone }}'
+{% endif %}
       {% raw %}root_password: "{{ root_password }}"
       custom_script: "{{ cloud_init_script_master }}"
 {% endraw %}
