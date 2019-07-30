@@ -70,6 +70,14 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Jul 30 2019 Shirly Radco <sradco@redhat.com> - 1.3.3.3
+Fixed issues:
+- packaging: spec: require ansible >= 2.8.3
+- Bug 1717954 - Update libvirt.conf content
+- Bug 1683157 - Hide sensitive data when running in verbose mode
+- Bug 1731871 - Wait for reboot to complete validation.
+- Add host_name to the cloud_init bastion VM provisioning.
+
 * Wed Jul 10 2019 Shirly Radco <sradco@redhat.com> - 1.3.3.2
 Fixed issues:
 - Bug 1698888 - Extract public key from bastion VM using fetch command
