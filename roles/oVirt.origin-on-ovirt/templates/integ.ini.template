@@ -70,7 +70,7 @@ openshift_logging_kibana_hostname="kibana.{{ public_hosted_zone }}"
 # the public hostname for Elasticsearch direct API access
 openshift_logging_es_hostname="es.{{ public_hosted_zone }}"
 openshift_logging_mux_hostname="mux.{{ public_hosted_zone }}"
-openshift_logging_es_memory_limit='{{ ovirt_openshift_logging_es_memory_limit|d("16Gi") }}'
+openshift_logging_es_memory_limit={{ ovirt_openshift_logging_es_memory_limit|d("16Gi") }}
 openshift_logging_es_cpu_request={{ ovirt_openshift_logging_es_cpu_request|d(1) }}
 openshift_logging_use_ops=false
 openshift_logging_mux_namespaces=[]
