@@ -32,6 +32,7 @@ template_cpu: {{ ovirt_template_cpu }}
 template_disk_storage: {{ openshift_ovirt_storage_domain_name }}
 template_timeout: {{ ovirt_template_timeout }}
 template_disk_size: {{ ovirt_template_disk_size }}
+disk_resize_timeout: {{ ovirt_template_disk_resize_timeout }}
 template_nics: "{{ ovirt_template_nics }}"
 
 image_path: /var/tmp
