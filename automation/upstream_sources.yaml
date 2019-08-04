@@ -1,5 +1,5 @@
 git:
 - branch: master
-  commit: a4a96165764cb7b17adeca31995d6311942730bb
+  commit: 68dc54a0f93a5b6a6f409724574526335bc3f7ba
   files_dest_dir: roles/oVirt.linux-system-roles-logging
   url: https://github.com/linux-system-roles/logging
