@@ -80,6 +80,12 @@ openshift_metrics_install_metrics=false
 {% endif %}
 {% if ovirt_metrics_store|d(false)|bool == true %}
 openshift_logging_mux_namespaces=["ovirt-metrics-{{ ovirt_env_name }}","ovirt-logs-{{ ovirt_env_name }}"]
+template_service_broker_install=False
+osm_use_cockpit=False
+openshift_hosted_registry_selector='useregistry=false'
+openshift_hosted_manage_registry=False
+openshift_hosted_manage_registry_console=False
+openshift_use_manageiq=False
 {% endif %}
 {% raw %}
 [OSEv3:children]
