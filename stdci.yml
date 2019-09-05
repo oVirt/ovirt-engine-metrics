@@ -3,6 +3,7 @@ Distributions: ["el7", "fc28", "fc29"]
 Release Branches:
   master:
     - ovirt-master
+  ovirt-engine-metrics-4.3:
     - ovirt-4.3
   ovirt-engine-metrics-4.2:
     - ovirt-4.2
