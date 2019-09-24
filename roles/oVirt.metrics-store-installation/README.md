@@ -38,7 +38,7 @@ required for the installation and copies it to the vm.
 7. Run the metrics store installation playbook that creates the metrics store installer virtual machine
 ```
 # ANSIBLE_JINJA2_EXTENSIONS="jinja2.ext.do" ./configure_ovirt_machines_for_metrics.sh \
-  --playbook=ovirt-metrics-store-installation.yml --ask-vault-pass
+  --playbook=ovirt-metrics-store-installation.yml --ask-vault-pass -vvv
 ```
 
 8. Log into the admin portal and review the metrics store installer virtual machine creation.
@@ -53,7 +53,7 @@ required for the installation and copies it to the vm.
 ```
 # ANSIBLE_CONFIG="/usr/share/ansible/openshift-ansible/ansible.cfg" \
   ANSIBLE_ROLES_PATH="/usr/share/ansible/roles/:/usr/share/ansible/openshift-ansible/roles" \
-  ansible-playbook -i integ.ini install_okd.yaml -e @vars.yaml -e @secure_vars.yaml --ask-vault-pass
+  ansible-playbook -i integ.ini install_okd.yaml -e @vars.yaml -e @secure_vars.yaml --ask-vault-pass -vvv
 ```
 
 ## Variables for installing the oVirt metrics store

@@ -47,7 +47,7 @@ It can also enable / disable the services.
 
 In order to run this role you will need to run:
 
-     configure_ovirt_machines_for_metrics.sh --playbook=manage-ovirt-metrics-services.yml
+     configure_ovirt_machines_for_metrics.sh --playbook=manage-ovirt-metrics-services.yml -vvv
 
 
 You will need to set the following variables:
