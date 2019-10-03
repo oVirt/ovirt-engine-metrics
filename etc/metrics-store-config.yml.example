@@ -15,7 +15,10 @@ ovirt_env_name: engine
 # Path to preallocated partition to be used for elasticsearch persistent storage
 # ovirt_elasticsearch_mounted_storage_path: /var/lib
 
-# DNS zone (format: example.com) of the Metrics Store virtual machines
+# The DNS zone of the Metrics Store virtual machines. No default.
+# For example:
+# If public_hosted_zone: example.com, then 1st master metrics store VM address will be set to `master0.example.com`.
+# All metrics and logs will be sent to these VMs.
 public_hosted_zone:
 
 # Engine FQDN
@@ -45,15 +48,6 @@ openshift_ovirt_storage_domain_name:
 # Creates a record in '/etc/hosts'. Default is 'false'
 # Relevant only for all-in-one installation
 # create_host_entry: false
-
-# The following variables determine the number of virtual machines to create.
-# The default is an all-in-one master installation (one Metrics Store virtual machine),
-# which normally supports up to ~50 hosts, each running ~20 virtual machines.
-# openshift_ovirt_all_in_one: true
-# number_of_openshift_master_vms: 1
-# number_of_openshift_node_vms: 0
-# number_of_openshift_etcd_vms: 0
-# number_of_openshift_lb_vms: 0
 
 # The size of the disks that will be created for Elasticsearch. Default is 500GiB.
 # elasticsearch_disk_size: 500GiB
