@@ -98,7 +98,6 @@
   changed_when: true
   notify: set failed validation
 
-# TODO add api to add warning message for the user to update its configuration file
 - block:
 
     # Rsyslog validations
