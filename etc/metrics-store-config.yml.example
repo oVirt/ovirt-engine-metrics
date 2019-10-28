@@ -76,8 +76,8 @@ rhsub_user:
 # See documentation on how to get pool IDs
 rhsub_pool:
 
-# URL of the container registry. Default is 'registry.redhat.io'
-# oreg_url: registry.redhat.io
+# URL of the container registry. Default is 'registry.redhat.io/openshift3/ose-${component}:${version}'
+# oreg_url:
 
 # User for the container registry.
 # Usually the same as the user for accessing the Customer Portal
