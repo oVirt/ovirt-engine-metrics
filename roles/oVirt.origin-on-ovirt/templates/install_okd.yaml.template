@@ -40,10 +40,14 @@
         group: 65534
         mode: 0770
 
+    - name: Allow apache to modify files in /srv/git_repos
+      sefcontext:
+        target: '{{ ovirt_elasticsearch_mounted_storage_path|d("/var/lib") }}/elasticsearch(/.*)?'
+        setype: svirt_sandbox_file_t
+        state: present
+
     - name: Fixup SELinux permissions for elasticsearch
-      shell: |
-               semanage fcontext -a -t svirt_sandbox_file_t '{{ ovirt_elasticsearch_mounted_storage_path|d("/var/lib") }}/elasticsearch(/.*)?'
-               restorecon -R -v '{{ ovirt_elasticsearch_mounted_storage_path|d("/var/lib") }}/elasticsearch'
+      shell: restorecon -R -v '{{ ovirt_elasticsearch_mounted_storage_path|d("/var/lib") }}/elasticsearch'
 
     - name: Add permissions to the directory
       shell: oc adm policy add-scc-to-user hostmount-anyuid system:serviceaccount:{{ logging_namespace }}:aggregated-logging-elasticsearch
