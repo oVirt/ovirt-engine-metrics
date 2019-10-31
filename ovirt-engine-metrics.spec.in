@@ -70,6 +70,11 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Thu Oct 31 2019 Shirly Radco <sradco@redhat.com> - 1.3.5
+Fixed issues:
+- Bug 1753955 - Update public_hosted_zone description
+- Bug 1753941 - Added -vvv to the ansible scripts run command
+
 * Tue Aug 27 2019 Shirly Radco <sradco@redhat.com> - 1.3.4.1
 Fixed issues:
 - Bug 1723453 - Update resize disk size timeout parameter
