@@ -25,21 +25,24 @@
 
 # Check collectors base packages availability
 
-- block:
-    - name: Check Rsyslog packages are available
-      yum:
-        list: "{{ item }}"
-        lock_timeout: 60
-      with_items:
-        - "{{ rsyslog_base_packages }}"
-      register: rsyslog_packages_availability
 
-    - name: Set rsyslog_base_packages_available fact
+- block:
+    - name: Install Rsyslog packages
+      yum:
+        name: '{{ rsyslog_base_packages }}'
+        state: latest
+      ignore_errors: yes
+
+    - name: Gather the rpm package facts
+      package_facts:
+        manager: rpm
+
+    - name: Check Rsyslog packages are available
       set_fact:
         rsyslog_base_packages_available: false
-      with_items: "{{ rsyslog_packages_availability.results }}"
-      when:
-        - item.results == []
+      with_items:
+        - "{{ rsyslog_base_packages }}"
+      when: item not in ansible_facts.packages
 
     - name: Set logging_collector as rsyslog
       set_fact:
@@ -50,20 +53,22 @@
   when: logging_collector is undefined or logging_collector == 'rsyslog'
 
 - block:
-    - name: Check Fluentd packages are available
+    - name: Install Fluentd packages
       yum:
-        list: "{{ item }}"
-        lock_timeout: 60
-      with_items:
-        - "{{ fluentd_base_packages }}"
-      register: fluentd_packages_availability
+        name: '{{ fluentd_base_packages }}'
+        state: latest
+      ignore_errors: yes
 
-    - name: Set fluentd_base_packages_available fact
+    - name: Gather the rpm package facts
+      package_facts:
+        manager: rpm
+
+    - name: Check Fluentd packages are available
       set_fact:
         fluentd_base_packages_available: false
-      with_items: "{{ fluentd_packages_availability.results }}"
-      when:
-        - item.results == []
+      with_items:
+        - "{{ fluentd_base_packages }}"
+      when: item not in ansible_facts.packages
 
     - name: Set logging_collector as fluentd
       set_fact:
