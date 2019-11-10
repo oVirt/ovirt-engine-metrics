@@ -64,6 +64,9 @@ required for the installation and copies it to the vm.
 
 - `openshift_distribution:`
    The default for `oVirt` is `origin`.
+   In Red Hat Virtualization an additional file named: 10-rhv_vars.yml
+   is added to /etc/ovirt-engine-metrics/config.yml.d/
+   and overwrite the variable to `openshift-enterprise`.
    For `Red Hat Virtualization`, default is `openshift-enterprise`.
 - `openshift_ansible_files_path:`(default: `/root`)
 - `openshift_ansible_files_path:`(default: `/root`)
