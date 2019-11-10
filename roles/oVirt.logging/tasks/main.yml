@@ -26,6 +26,23 @@
     collect_ovirt_engine_log: '{{ true if engine_log_exists.stat.exists else false }}'
   when: collect_ovirt_engine_log is undefined
 
+- name: Check if listen.conf file exist
+  stat:
+    path: /etc/rsyslog.d/listen.conf
+  register: listen_conf_exists
+
+- name: Overwrite listen.conf content
+  copy:
+    content: '#$SystemLogSocketName /run/systemd/journal/syslog'
+    dest: /etc/rsyslog.d/listen.conf
+  when: listen_conf_exists.stat.exists
+
+- name: Restart Rsyslog
+  service:
+    name: rsyslog
+    state: restarted
+  when: listen_conf_exists.stat.exists
+
 - name: Set logging facts
   set_fact:
     logging_role_path: '{{ logging_role_path }}'
