@@ -7,3 +7,5 @@ service_name:
   - 'collectd'
   - 'fluentd'
   - 'rsyslog'
+
+hosts_not_configured_for_ovirt_metrics_file_path: /etc/ovirt-engine-metrics/hosts_not_configured_for_metrics

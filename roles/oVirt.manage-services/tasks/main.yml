@@ -1,5 +1,5 @@
 ---
-- name: manage services
+- name: Manage services
   service:
     name: '{{ item }}'
     state: '{{ service_state }}'
@@ -7,6 +7,57 @@
   with_items: '{{ service_name }}'
   ignore_errors: true
 
+# List hosts that Collectd, Fluentd/Rsyslog are not running on
+- block:
+    - name: Run initial validations sub-role
+      include_role:
+        name: "oVirt.metrics/roles/oVirt.initial-validations"
+
+    - name: Set service_name fact when logging_collector is rsyslog
+      set_fact:
+        service_name:
+          - collectd
+          - rsyslog
+      when: logging_collector == "rsyslog"
+
+    - name: Set service_name fact when logging_collector is fluentd
+      set_fact:
+        service_name:
+          - collectd
+          - fluentd
+      when: logging_collector == "fluentd"
+
+    - name: Check service status
+      command: systemctl status "{{ item }}"
+      with_items:
+        - '{{ service_name }}'
+      register: result
+      ignore_errors: yes
+
+    - name: Clean file
+      copy:
+        dest: '{{ hosts_not_configured_for_ovirt_metrics_file_path }}'
+        content: '# This file lists hosts where some of the oVirt metrics related services are not active in'
+        force: yes
+      delegate_to: localhost
+
+    - name: Add line to file if service is not running
+      lineinfile:
+        path: '{{ hosts_not_configured_for_ovirt_metrics_file_path }}'
+        line: "{{ ansible_facts['nodename'] }}\n{{item.stdout_lines| to_nice_yaml}}"
+      loop: "{{result.results}}"
+      when:
+        - item.rc != 0
+      delegate_to: localhost
+
+    - debug:
+        msg:
+        - 'Please review hosts list who are not configured for oVirt metrics,'
+        - 'due to inactive ovirt metrics related services, at {{ hosts_not_configured_for_ovirt_metrics_file_path }}'
+      run_once: true
+  when: not cleanup_services|d(false)
+
+# Cleanup oVirt metrics services
 - block:
     - name: Set logging_purge_confs to remove oVirt metrics store configurations from Rsyslog
       set_fact:
