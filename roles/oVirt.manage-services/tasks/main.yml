@@ -5,3 +5,29 @@
     state: '{{ service_state }}'
     enabled: '{{ service_enabled }}'
   with_items: '{{ service_name }}'
+  ignore_errors: true
+
+- block:
+    - name: Set logging_purge_confs to remove oVirt metrics store configurations from Rsyslog
+      set_fact:
+        logging_purge_confs: true
+        logging_role_path: /usr/share/ansible/roles/oVirt.metrics/roles/oVirt.linux-system-roles-logging
+
+    - name: Run rsyslog sub-role
+      include_role:
+        name: oVirt.metrics/roles/oVirt.linux-system-roles-logging
+
+    - name: Check if elasticsearch_host is set
+      debug:
+        msg: "Please delete the value of 'elasticsearch_host' from your your configuration file."
+      when:
+        - elasticsearch_host is defined
+        - elasticsearch_host != ""
+
+    - name: Check if fluentd_elasticsearch_host is set
+      debug:
+        msg: "Please delete the value of 'fluentd_elasticsearch_host' from your your configuration file"
+      when:
+        - fluentd_elasticsearch_host is defined
+        - fluentd_elasticsearch_host != ""
+  when: cleanup_services|d(false)

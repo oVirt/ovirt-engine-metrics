@@ -64,9 +64,17 @@ You will need to set the following variables:
 
   A list of the the services that will be managed by the role.
 
-
 In order to set these variable add the required variables to a file in
 /etc/ovirt-engine-metrics/config.yml.d/ or in the command line.
+
+### Cleanup oVirt Metrics
+This role stops and disables Collectd, Fluentd and restores Rsyslog to default configurations.
+After running this role, user can delete the oVirt metrics store VMs.
+
+In order to run this role you will need to run:
+
+     configure_ovirt_machines_for_metrics.sh --playbook=cleanup-ovirt-metrics.yml -vvv
+
 
 License
 -------
