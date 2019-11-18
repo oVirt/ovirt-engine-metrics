@@ -36,7 +36,7 @@ Group:          Virtualization/Management
 BuildArch:      noarch
 Url:            http://www.ovirt.org
 
-Requires:	ansible >= 2.8.3
+Requires:	ansible >= 2.9
 Requires:	ovirt-ansible-image-template >= 1.1.11
 Requires:	ovirt-ansible-vm-infra >= 1.1.19
 
