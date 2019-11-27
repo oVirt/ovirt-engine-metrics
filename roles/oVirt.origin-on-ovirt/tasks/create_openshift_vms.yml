@@ -35,3 +35,70 @@
   when:
     - create_host_entry|d(false)|bool == true
     - openshift_ovirt_all_in_one
+
+- block:
+    - name: Satellite preparation
+      command: "rpm -Uvh http://{{ rhsub_server }}/pub/katello-ca-consumer-latest.noarch.rpm"
+      args:
+        creates: /etc/rhsm/ca/katello-server-ca.pem
+      when:
+        - rhsub_server is defined
+      delegate_to: '{{ item }}'
+      with_items: "{{ groups['masters'] }}"
+
+    - name: Register the VM using activation key
+      redhat_subscription:
+        activationkey: "{{ rhsub_ak }}"
+        org_id: "{{ rhsub_orgid }}"
+      register: rh_subscription
+      until: rh_subscription is succeeded
+      no_log: true
+      when:
+        - rhsub_ak is defined
+        - rhsub_orgid is defined
+        - rhsub_server is defined
+      delegate_to: '{{ item }}'
+      with_items: "{{ groups['masters'] }}"
+
+    - name: Register the VM using user/password
+      redhat_subscription:
+        state: present
+        username: '{{ rhsub_user }}'
+        password: '{{ rhsub_pass }}'
+        pool_ids: '{{ rhsub_pool }}'
+      register: rh_subscription
+      until: rh_subscription is succeeded
+      no_log: true
+      when:
+        - rhsub_user is defined
+        - rhsub_pass is defined
+        - rhsub_server is undefined
+      delegate_to: '{{ item }}'
+      with_items: "{{ groups['masters'] }}"
+
+    - name: Disable all RHSM repositories
+      rhsm_repository:
+        name: '*'
+        state: disabled
+      delegate_to: '{{ item }}'
+      with_items: "{{ groups['masters'] }}"
+
+    - name: Upgrade all packages
+      yum:
+        name: '*'
+        state: latest
+      delegate_to: '{{ item }}'
+      with_items: "{{ groups['masters'] }}"
+      register: task_result
+      when:
+        - manage_packages|default(true)
+
+    - name: Reboot system
+      reboot:
+        reboot_timeout: 300
+      delegate_to: '{{ item }}'
+      with_items: "{{ groups['masters'] }}"
+      when:
+        - task_result is changed
+        - manage_packages|default(true)
+  when: openshift_distribution != 'origin'

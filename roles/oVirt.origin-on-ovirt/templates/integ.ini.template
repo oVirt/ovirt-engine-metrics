@@ -19,6 +19,17 @@ openshift_master_cluster_public_hostname="openshift.{{ public_hosted_zone }}"
 # the public subdomain to use for all of the external facing logging services
 # by default it is the same as the public hostname
 openshift_master_default_subdomain="{{ public_hosted_zone }}"
+{% if rhsub_server is defined %}
+oreg_url={{ rhsub_server }}:5000/{{ rhsub_orgid | lower }}-ocp311-openshift3_ose-${component}:${version}
+openshift_disable_check="docker_image_availability"
+openshift_docker_insecure_registries="{{ rhsub_server }}:5000"
+openshift_docker_additional_registries="{{ rhsub_server }}:5000"
+openshift_examples_modify_imagestreams=True
+oreg_test_login=false
+openshift_examples_registryurl="{{ oreg_url | default(openshift_hosted_images_dict[openshift_deployment_type]) }}"
+registry_host="{{ openshift_examples_registryurl.split('/')[0] if '.' in openshift_examples_registryurl.split('/')[0] else '' }}"
+osm_etcd_image={{ osm_etcd_image }}
+{% endif %}
 {% raw -%}
 openshift_public_hostname="{{openshift_master_cluster_public_hostname}}"
 openshift_service_catalog_image_version="{{ openshift_image_tag }}"

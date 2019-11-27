@@ -4,23 +4,52 @@ This role creates a vm that is used to run the oVirt metrics store
 installation and it generates the inventory, vars.yaml and playbook files
 required for the installation and copies it to the vm.
 
-In order to run the installation, follow the steps below.
-If you are using Satellite, Please refer to the README-Satellite.md file.
+In order to run the installation using Satellite, follow the steps below.
+If you are not using Satellite, Please refer to the README.md file.
+
+##Prerequisites
+
+Please see the following documentation for configuring the Satellite server:
+https://developers.redhat.com/blog/2019/04/08/red-hat-openshift-3-11-disconnected-installation-using-satellite-docker-registry/
+
+### Required Images
+Please make sure you have the following Docker images synchronized in you Satellite server product:
+openshift3/oauth-proxy
+openshift3/ose-console
+openshift3/ose-control-plane
+openshift3/ose-deployer
+openshift3/ose-docker-registry
+openshift3/ose-haproxy-router
+openshift3/ose-logging-auth-proxy
+openshift3/ose-logging-curator5
+openshift3/ose-logging-elasticsearch5
+openshift3/ose-logging-fluentd
+openshift3/ose-logging-kibana5
+openshift3/ose-node
+openshift3/ose-pod
+openshift3/ose-web-console
+openshift3/registry-console
+rhel7/etcd
+
+### Required qcow image
+
+Please go to https://access.redhat.com/downloads/content/69/ver=/rhel---7/7.6/x86_64/product-software
+In the Product Software tab, Download the `Red Hat Enterprise Linux KVM Guest Image` to the engine machine.
 
 ## Running the role:
 
-1. On the Manager machine, copy /etc/ovirt-engine-metrics/metrics-store-config.yml.example to metrics-store-config.yml:
+1. On the Manager machine, copy /etc/ovirt-engine-metrics/metrics-store-config-satellite.yml.example to metrics-store-config.yml:
 ```
-# cp /etc/ovirt-engine-metrics/metrics-store-config.yml.example /etc/ovirt-engine-metrics/config.yml.d/metrics-store-config.yml
+# cp /etc/ovirt-engine-metrics/metrics-store-config-satellite.yml.example /etc/ovirt-engine-metrics/config.yml.d/metrics-store-config.yml
 ```
 2. Update the values of /etc/ovirt-engine-metrics/metrics-store-config.yml to match the details of your specific environment:
 ```
 # vi /etc/ovirt-engine-metrics/config.yml.d/metrics-store-config.yml
 ```
 
-3. On the Manager machine, copy /etc/ovirt-engine-metrics/secure_vars.yaml.example to /etc/ovirt-engine-metrics/secure_vars.yaml:
+3. On the Manager machine, copy /etc/ovirt-engine-metrics/secure_vars_satellite.yaml.example to /etc/ovirt-engine-metrics/secure_vars.yaml:
 ```
-# cp /etc/ovirt-engine-metrics/secure_vars.yaml.example /etc/ovirt-engine-metrics/secure_vars.yaml
+# cp /etc/ovirt-engine-metrics/secure_vars_satellite.yaml.example /etc/ovirt-engine-metrics/secure_vars.yaml
 ```
 
 4. Update the values of /etc/ovirt-engine-metrics/secure_vars.yaml to match the details of your specific environment:
@@ -63,6 +92,9 @@ If you are using Satellite, Please refer to the README-Satellite.md file.
 
 - `openshift_distribution:`
    The default for `oVirt` is `origin`.
+   In Red Hat Virtualization an additional file named: 10-rhv_vars.yml
+   is added to /etc/ovirt-engine-metrics/config.yml.d/
+   and overwrite the variable to `openshift-enterprise`.
    For `Red Hat Virtualization`, default is `openshift-enterprise`.
 - `openshift_ansible_files_path:`(default: `/root`)
 - `ovirt_elasticsearch_mounted_storage_path:`(default:`/var/lib`)
@@ -99,8 +131,7 @@ If you are using Satellite, Please refer to the README-Satellite.md file.
 
 ### Additional mandatory variables for Red Hat Virtualization:
 
-- `rhsub_user:`( No default )
-- `rhsub_pass:`( No default )
-- `rhsub_pool:`( default: [] )
-- `oreg_auth_user:` ( No default )
-- `oreg_auth_password:` ( No default )
+- `rhsub_ak:`( No default )
+- `rhsub_orgid:`( No default )
+- `osm_etcd_image:`( No default )
+- `rhsub_server:`( default: [] )
