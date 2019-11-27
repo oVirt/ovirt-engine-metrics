@@ -18,11 +18,20 @@ template_name: {{ ovirt_template_name|d('centos76') }}
 openshift_deployment_type: openshift-enterprise
 ansible_distribution: RedHat
 template_name: {{ ovirt_template_name|d('rhelguest76') }}
+{% if rhsub_user is defined %}
 rhsub_user: {{ rhsub_user }}
+{% endif %}
+{% if rhsub_pool is defined %}
 rhsub_pool: {{ rhsub_pool }}
+{% endif %}
+{% if oreg_auth_user is defined %}
 oreg_auth_user: {{ oreg_auth_user }}
+{% endif %}
 {% if oreg_url is defined %}
 oreg_url: {{ oreg_url }}
+{% endif %}
+{% if rhsub_server is defined %}
+rhsub_server: {{ rhsub_server }}
 {% endif %}
 {% endif %}
 

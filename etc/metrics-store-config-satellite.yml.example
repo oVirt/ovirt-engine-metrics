@@ -64,9 +64,9 @@ openshift_ovirt_storage_domain_name:
 # URL for downloading the RHEL guest image to create the virtual machines
 # To copy the qcow_url go to:
 # https://access.redhat.com/downloads/content/69/ver=/rhel---7/7.6/x86_64/product-software
-# In the Product Software tab, right-click the Download Now button of the
-# `Red Hat Enterprise Linux KVM Guest Image` and copy the link.
-# WARNING: The link will expire. Copy the link when you are ready to run the playbook.
+# In the Product Software tab, Download the `Red Hat Enterprise Linux KVM Guest Image` to the engine machine.
+# Set the qcow_url to the local path of the qcow image. Example:
+# qcow_url: file:///path/to/qcow/image
 qcow_url:
 
 # Additional mandatory parameters for Red Hat Virtualization:
@@ -74,17 +74,19 @@ qcow_url:
 # NOTE: Basic RHV subscription includes an entitlement for a single Metrics Store all-in-one installation.
 # Each additional Metrics Store virtual machine requires an additional OpenShift subscription.
 
-# User for Red Hat Subscription Manager
-# Please update rhsub_pass in the secure_vars.yaml file.
-rhsub_user:
+# The following is relevant when using Satellite. For aditional details please see:
+# https://docs.openshift.com/container-platform/3.11/install/disconnected_install.html#disconnected-installing-openshift
 
-# RHEL and OpenShift subscriptions pool ID
-# See documentation on how to get pool IDs
-rhsub_pool:
+# Custom hostname for Red Hat Satellite server
+# Example: sattelite.server.example.com
+rhsub_server:
 
-# URL of the container registry. Default is 'registry.redhat.io/openshift3/ose-${component}:${version}'
+# URL of the container registry. Default is '{{ rhsub_server }}:5000/{{ rhsub_orgid }}-ocp311-openshift3_ose-${component}:${version}'
 # oreg_url:
 
-# User for the container registry.
-# Usually the same as the user for accessing the Customer Portal
-oreg_auth_user:
+# Organization ID for Red Hat Subscription Manager
+rhsub_orgid:
+
+# In Satellit UI go to
+# Products->Your OCP Product Name->Repositories->Your rhel7/etcd repository->Container Image Tags->Your Tag Name->Lifecycle Environments->Published At
+osm_etcd_image:
