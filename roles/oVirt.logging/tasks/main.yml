@@ -43,12 +43,39 @@
     state: restarted
   when: listen_conf_exists.stat.exists
 
+- block:
+
+    - name: Check Hosted Engine VM name
+      command: engine-config -g HostedEngineVmName --cver=general
+      register: hosted_engine_vm_name_result
+
+    - name: Query Hosted Engine cluster name
+      command: /usr/share/ovirt-engine/dbscripts/engine-psql.sh -t -c "select cluster_name from vms where vm_name='{{ hosted_engine_vm_name_result.stdout }}'"
+      register: hosted_engine_vm_cluster_name_result
+      ignore_errors: true
+
+    - name: Set engine_cluster fact if engine is running on a VM
+      set_fact:
+        engine_cluster: "{{ hosted_engine_vm_cluster_name_result.stdout | trim }}"
+      ignore_errors: true
+      when: hosted_engine_vm_cluster_name_result.stdout | trim != ""
+
+    - name: Set engine_cluster fact if engine is running as standalone
+      set_fact:
+        engine_cluster: "Standalone"
+      ignore_errors: true
+      when: hosted_engine_vm_cluster_name_result.stdout | trim == "" or hosted_engine_vm_cluster_name_result.stdout is undefined
+
+  when:
+    - hostvars[inventory_hostname]["ovirt_vds_cluster_name"] is undefined
+    - host_deploy_cluster_name is undefined
+
 - name: Set logging facts
   set_fact:
     logging_role_path: '{{ logging_role_path }}'
     rsyslog_max_message_size: '{{ rsyslog_max_message_size|d("64k") }}'
     collect_ovirt_collectd_metrics: '{{ collect_ovirt_collectd_metrics|d(true) }}'
-    ovirt_vds_cluster_name: '{{ host_deploy_cluster_name|d("Default") }}'
+    ovirt_vds_cluster_name: '{{ hostvars[inventory_hostname]["ovirt_vds_cluster_name"]|d(host_deploy_cluster_name)|d(engine_cluster) }}'
 
 - block:
     - name: Copy elasticsearch CA certificate to host
