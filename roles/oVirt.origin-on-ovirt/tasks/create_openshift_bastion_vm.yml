@@ -18,13 +18,14 @@
     register: loggedin
 
   - name: Collect oVirt VM facts
-    ovirt_vm_facts:
+    ovirt_vm_info:
       auth: '{{ ovirt_auth }}'
       pattern: 'name={{ openshift_ovirt_bastion_machine_name }} and cluster={{ ovirt_cluster_name }}'
       fetch_nested: true
       nested_attributes: ips
+    register: created_vms_info
     no_log: true
-    until: ansible_facts.ovirt_vms[0].fqdn is defined
+    until: created_vms_info.ovirt_vms[0].fqdn is defined
     retries: 5
     delay: 60
 
@@ -32,7 +33,7 @@
     set_fact:
       bastion_machine_ip_address: "{{ item.1.address }}"
     with_subelements:
-      - "{{ ansible_facts.ovirt_vms[0].reported_devices }}"
+      - "{{ created_vms_info.ovirt_vms[0].reported_devices }}"
       - ips
     when:
       - item.1.version  == 'v4'
@@ -43,7 +44,7 @@
     lineinfile:
       path: /etc/hosts
       regexp: '{{ openshift_ovirt_bastion_machine_name }}'
-      line: "{{ bastion_machine_ip_address }} {{ ansible_facts.ovirt_vms[0].fqdn }} {{ openshift_ovirt_bastion_machine_name }}"
+      line: "{{ bastion_machine_ip_address }} {{ created_vms_info.ovirt_vms[0].fqdn }} {{ openshift_ovirt_bastion_machine_name }}"
       owner: root
       group: root
       mode: 0644
@@ -59,7 +60,7 @@
 
 - name: Set fact of the bastion machine FQDN
   set_fact:
-    bastion_machine_fqdn: "{{ ansible_facts.ovirt_vms[0].fqdn }}"
+    bastion_machine_fqdn: "{{ created_vms_info.ovirt_vms[0].fqdn }}"
 
 - debug:
     msg: "{{bastion_machine_fqdn}}"
