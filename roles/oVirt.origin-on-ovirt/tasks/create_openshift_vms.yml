@@ -12,4 +12,26 @@
     groups: masters
     hostname: '{{ [item.name, item.count - 1, ".", openshift_ovirt_dns_zone] | join }}'
   with_items: "{{ openshift_ovirt_vm_manifest }}"
-  when: item.count > 0 and item.name == 'master'
+  when: item.count > 0 and item.name.startswith('master')
+
+- block:
+    - name: Set host_dns_entry fact
+      set_fact:
+        host_dns_entry: "{{ hostvars[groups['masters'][0]]['ansible_host'] }} {{ hostvars[groups['masters'][0]]['inventory_hostname'] }} etcd.{{ public_hosted_zone }} openshift-master.{{ public_hosted_zone }} openshift.{{ public_hosted_zone }} docker-registry-default.apps.{{ public_hosted_zone }} webconsole.openshift-web-console.svc registry-console-default.apps.{{ public_hosted_zone }} master-etcd-{{ public_hosted_zone }} kibana.{{ public_hosted_zone }} es.{{ public_hosted_zone }}"
+
+    - name: Add dns line to localhost and bastion machines /etc/hosts if host_dns_entry file exists
+      lineinfile:
+        path: /etc/hosts
+        regexp: 'webconsole\.openshift\-web\-console\.svc'
+        line: "{{ host_dns_entry }}"
+        owner: root
+        group: root
+        mode: 0644
+      delegate_to: '{{ item }}'
+      with_items:
+        - localhost
+        - '{{ openshift_ovirt_bastion_machine_name  }}'
+        - '{{ hostvars[groups["masters"][0]]["inventory_hostname"] }}'
+  when:
+    - create_host_entry|d(false)|bool == true
+    - openshift_ovirt_all_in_one

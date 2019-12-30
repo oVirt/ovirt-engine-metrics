@@ -84,7 +84,11 @@ cloud_init_script_bastion: |
 # OpenShift virtual machines spec
 
 openshift_ovirt_vm_manifest:
+{% if openshift_ovirt_machine_suffix is undefined %}
   - name: "master"
+{% else %}
+  - name: "master-{{openshift_ovirt_machine_suffix}}"
+{% endif %}
     count: {{ number_of_openshift_master_vms  | d(1) }}
     profile: "master_vm"
   - name: "node"
@@ -125,7 +129,11 @@ openshift_ovirt_vm_profile:
     cloud_init:
       authorized_ssh_keys: "{{ ssh_key }}"
 {% if create_host_entry|d(false)|bool %}
-      host_name: 'master0.{{ public_hosted_zone }}'
+{% if openshift_ovirt_machine_suffix is undefined %}
+      host_name: master0.{{ public_hosted_zone }}
+{% else %}
+      host_name: master-{{openshift_ovirt_machine_suffix}}0.{{ public_hosted_zone }}
+{% endif %}
 {% endif %}
       {% raw %}root_password: "{{ root_password }}"
       custom_script: "{{ cloud_init_script_master }}"
