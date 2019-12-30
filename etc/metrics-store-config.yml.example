@@ -21,6 +21,12 @@ ovirt_env_name: engine
 # All metrics and logs will be sent to these VMs.
 public_hosted_zone:
 
+# It is optional to add a suffix to the metrics store VM. By default, this variable is not set (optional).
+# Example:
+# If 'public_hosted_zone' is 'example.com' and 'openshift_ovirt_machine_suffix' is set to 'prod',
+# then the metrics store VM name will be 'master-prod0.example.com'.
+# openshift_ovirt_machine_suffix:
+
 # Engine FQDN
 # You can use engine_url instead of this variable, by uncommenting and updating its value.
 engine_fqdn:
