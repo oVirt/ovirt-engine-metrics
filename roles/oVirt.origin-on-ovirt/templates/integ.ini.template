@@ -14,8 +14,13 @@ openshift_master_overwrite_named_certificates=true
 {% if openshift_disable_check is defined %}
 openshift_disable_check={{ openshift_disable_check }}
 {% endif %}
+{% if openshift_ovirt_machine_suffix is undefined %}
 openshift_master_cluster_hostname="openshift-master.{{ public_hosted_zone }}"
 openshift_master_cluster_public_hostname="openshift.{{ public_hosted_zone }}"
+{% else %}
+openshift_master_cluster_hostname="openshift-master-{{ openshift_ovirt_machine_suffix }}.{{ public_hosted_zone }}"
+openshift_master_cluster_public_hostname="openshift-{{ openshift_ovirt_machine_suffix }}.{{ public_hosted_zone }}"
+{% endif %}
 # the public subdomain to use for all of the external facing logging services
 # by default it is the same as the public hostname
 openshift_master_default_subdomain="{{ public_hosted_zone }}"
@@ -73,14 +78,21 @@ openshift_logging_mux_allow_external=true
 openshift_logging_mux_file_buffer_storage_type=hostmount
 openshift_logging_elasticsearch_storage_type=hostmount
 openshift_logging_elasticsearch_hostmount_path='{{ ovirt_elasticsearch_mounted_storage_path|d("/var/lib") }}/elasticsearch'
-{% raw -%}
-# the public URL for OpenShift UI access
-openshift_logging_master_public_url="https://{{ openshift_public_hostname }}:8443"
+{% if openshift_ovirt_machine_suffix is undefined %}
 # the public hostname for Kibana browser access
 openshift_logging_kibana_hostname="kibana.{{ public_hosted_zone }}"
 # the public hostname for Elasticsearch direct API access
 openshift_logging_es_hostname="es.{{ public_hosted_zone }}"
 openshift_logging_mux_hostname="mux.{{ public_hosted_zone }}"
+{% else %}
+openshift_logging_kibana_hostname="kibana-{{ openshift_ovirt_machine_suffix }}.{{ public_hosted_zone }}"
+# the public hostname for Elasticsearch direct API access
+openshift_logging_es_hostname="es-{{ openshift_ovirt_machine_suffix }}.{{ public_hosted_zone }}"
+openshift_logging_mux_hostname="mux-{{ openshift_ovirt_machine_suffix }}.{{ public_hosted_zone }}"
+{% endif %}
+{% raw -%}
+# the public URL for OpenShift UI access
+openshift_logging_master_public_url="https://{{ openshift_public_hostname }}:8443"
 openshift_logging_es_memory_limit={{ ovirt_openshift_logging_es_memory_limit|d("16Gi") }}
 openshift_logging_es_cpu_request={{ ovirt_openshift_logging_es_cpu_request|d(1) }}
 openshift_logging_use_ops=false

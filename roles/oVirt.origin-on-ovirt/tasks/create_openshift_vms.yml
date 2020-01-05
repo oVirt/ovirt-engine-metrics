@@ -18,6 +18,12 @@
     - name: Set host_dns_entry fact
       set_fact:
         host_dns_entry: "{{ hostvars[groups['masters'][0]]['ansible_host'] }} {{ hostvars[groups['masters'][0]]['inventory_hostname'] }} etcd.{{ public_hosted_zone }} openshift-master.{{ public_hosted_zone }} openshift.{{ public_hosted_zone }} docker-registry-default.apps.{{ public_hosted_zone }} webconsole.openshift-web-console.svc registry-console-default.apps.{{ public_hosted_zone }} master-etcd-{{ public_hosted_zone }} kibana.{{ public_hosted_zone }} es.{{ public_hosted_zone }}"
+      when: openshift_ovirt_machine_suffix is undefined
+
+    - name: Set host_dns_entry fact
+      set_fact:
+        host_dns_entry: "{{ hostvars[groups['masters'][0]]['ansible_host'] }} {{ hostvars[groups['masters'][0]]['inventory_hostname'] }} etcd-{{ openshift_ovirt_machine_suffix }}.{{ public_hosted_zone }} openshift-master-{{ openshift_ovirt_machine_suffix }}.{{ public_hosted_zone }} openshift-{{ openshift_ovirt_machine_suffix }}.{{ public_hosted_zone }} docker-registry-default.apps.{{ public_hosted_zone }} webconsole.openshift-web-console.svc registry-console-default.apps.{{ public_hosted_zone }} master-etcd-{{ openshift_ovirt_machine_suffix }}-{{ public_hosted_zone }} kibana-{{ openshift_ovirt_machine_suffix }}.{{ public_hosted_zone }} es-{{ openshift_ovirt_machine_suffix }}.{{ public_hosted_zone }}"
+      when: openshift_ovirt_machine_suffix is defined
 
     - name: Add dns line to localhost and bastion machines /etc/hosts if host_dns_entry file exists
       lineinfile:
