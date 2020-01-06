@@ -49,3 +49,9 @@ ovirt_ocp_bastion_enable_repo:
 ovirt_ocp_bastion_packages:
   - ansible
   - openshift-ansible
+
+ovirt_ocp_enable_repo:
+  - rhel-7-server-rpms
+  - rhel-7-server-extras-rpms
+  - rhel-7-server-ose-3.11-rpms
+  - rhel-7-server-ansible-2.6-rpms

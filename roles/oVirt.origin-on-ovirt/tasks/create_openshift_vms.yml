@@ -89,6 +89,12 @@
       delegate_to: '{{ item }}'
       with_items: "{{ groups['masters'] }}"
 
+    - name: Enable RHSM repositories for OCP VMs
+      rhsm_repository:
+        name: '{{ ovirt_ocp_enable_repo }}'
+      delegate_to: '{{ item }}'
+      with_items: "{{ groups['masters'] }}"
+
     - name: Upgrade all packages
       yum:
         name: '*'
