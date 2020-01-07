@@ -71,6 +71,16 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Jan 07 2020 Shirly Radco <sradco@redhat.com> - 1.3.6.1
+Fixed issues:
+- Bug 1780234 - Fix cluster name for metrics and logs
+- Bug 1782412 - Allow flat DNS name to metrics store vms
+- Bug 1711873 - Enable metrics store installation in isolated environments
+- Bug 1782412 - Fix additional issues for flat dns support
+- Fix bug with oreg_url default
+- Bug 1711873 - Replace Satellite installation using command with package
+- Bug 1711873- Enable RHSM repositories for ocp vms
+
 * Wed Dec 04 2019 Shirly Radco <sradco@redhat.com> - 1.3.6
 Fixed issues:
 - Bug 1727546 - Add cleanup playbook for ovirt metrics
