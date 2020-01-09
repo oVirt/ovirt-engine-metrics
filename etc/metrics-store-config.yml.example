@@ -81,6 +81,13 @@ qcow_url:
 #     interface:
 #     network:
 #     profile:
+# bastion_nic_mode: |
+#   nic_name:
+#   nic_ip_address:
+#   nic_netmask:
+#   nic_gateway:
+#   nic_on_boot:
+#   dns_servers:
 
 # Example - Metrics Store VMs
 # NOTE: The master0 is the VM name. If you specified `openshift_ovirt_machine_suffix`,
@@ -92,6 +99,14 @@ qcow_url:
 #       interface:
 #       network:
 #       profile:
+# master_nic_mode: |
+#   master0:
+#     nic_name:
+#     nic_ip_address:
+#     nic_netmask:
+#     nic_gateway:
+#     nic_on_boot:
+#     dns_servers:
 
 # Additional mandatory parameters for Red Hat Virtualization:
 

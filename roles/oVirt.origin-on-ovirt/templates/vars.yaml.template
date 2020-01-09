@@ -67,6 +67,10 @@ vms:
     nics:
 {{ bastion_nics | indent( width=6, indentfirst=True) }}
 {% endif %}
+{% if bastion_nic_mode is defined %}
+    nic_mode:
+{{ bastion_nic_mode | indent( width=6, indentfirst=True) }}
+{% endif %}
     profile:
 {% if openshift_distribution == 'origin' %}
       template: {{ ovirt_template_name|d('centos76') }}
@@ -107,6 +111,10 @@ openshift_ovirt_vm_manifest:
 {% if master_nics is defined %}
     nics:
 {{ master_nics | indent( width=6, indentfirst=True) }}
+{% endif %}
+{% if master_nic_mode is defined %}
+    nic_mode:
+{{ master_nic_mode | indent( width=6, indentfirst=True) }}
 {% endif %}
   - name: "node"
     count: {{ number_of_openshift_node_vms | d(0) }}
