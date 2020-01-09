@@ -64,9 +64,9 @@ openshift_ovirt_storage_domain_name:
 # URL for downloading the RHEL guest image to create the virtual machines
 # To copy the qcow_url go to:
 # https://access.redhat.com/downloads/content/69/ver=/rhel---7/7.6/x86_64/product-software
-# In the Product Software tab, Download the `Red Hat Enterprise Linux KVM Guest Image` to the engine machine.
-# Set the qcow_url to the local path of the qcow image. Example:
-# qcow_url: file:///path/to/qcow/image
+# In the Product Software tab, Download the `Red Hat Enterprise Linux KVM Guest Image`
+# to your engine machine and set the qcow_url to your local path.
+# Example: qcow_url: file:///path/to/image
 qcow_url:
 
 # Additional mandatory parameters for Red Hat Virtualization:
