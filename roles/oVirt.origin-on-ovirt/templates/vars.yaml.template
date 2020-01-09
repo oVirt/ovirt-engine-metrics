@@ -63,6 +63,10 @@ vms:
   - name: '{{ openshift_ovirt_bastion_machine_name }}'
     cluster: '{{ ovirt_cluster_name }}'
     tag: openshift_ovirt_bastion_machine
+{% if bastion_nics is defined %}
+    nics:
+{{ bastion_nics | indent( width=6, indentfirst=True) }}
+{% endif %}
     profile:
 {% if openshift_distribution == 'origin' %}
       template: {{ ovirt_template_name|d('centos76') }}
@@ -100,6 +104,10 @@ openshift_ovirt_vm_manifest:
 {% endif %}
     count: {{ number_of_openshift_master_vms  | d(1) }}
     profile: "master_vm"
+{% if master_nics is defined %}
+    nics:
+{{ master_nics | indent( width=6, indentfirst=True) }}
+{% endif %}
   - name: "node"
     count: {{ number_of_openshift_node_vms | d(0) }}
     profile: "node_vm"

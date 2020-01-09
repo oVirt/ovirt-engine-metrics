@@ -69,6 +69,31 @@ openshift_ovirt_storage_domain_name:
 # qcow_url: file:///path/to/qcow/image
 qcow_url:
 
+# The VMs network interface details.
+# See https://github.com/openshift/openshift-ansible/tree/release-3.11/roles/openshift_ovirt for more information.
+# bastion_nics:
+# master_nics:
+
+# Example -  Metrics store installer VM
+# bastion_nics: |
+#   - name:
+#     mac_address:
+#     interface:
+#     network:
+#     profile:
+
+
+# Example - Metrics Store VMs
+# NOTE: The master0 is the VM name. If you specified `openshift_ovirt_machine_suffix`,
+# then please update master0 to master-<openshift_ovirt_machine_suffix>0.
+# master_nics: |
+#   master0:
+#     - name:
+#       mac_address:
+#       interface:
+#       network:
+#       profile:
+
 # Additional mandatory parameters for Red Hat Virtualization:
 
 # NOTE: Basic RHV subscription includes an entitlement for a single Metrics Store all-in-one installation.
