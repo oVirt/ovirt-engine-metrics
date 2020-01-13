@@ -71,6 +71,11 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Mon Jan 13 2020 Shirly Radco <sradco@redhat.com> - 1.3.6.2
+Fixed issues:
+- Bug 1711006 - Added support for configuring nics variables
+- Bug 1711006 - Added support for configuring nic_mode
+
 * Tue Jan 07 2020 Shirly Radco <sradco@redhat.com> - 1.3.6.1
 Fixed issues:
 - Bug 1780234 - Fix cluster name for metrics and logs
