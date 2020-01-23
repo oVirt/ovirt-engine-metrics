@@ -33,6 +33,9 @@ oreg_url: {{ oreg_url }}
 {% if rhsub_server is defined %}
 rhsub_server: {{ rhsub_server }}
 {% endif %}
+{% if rhsub_orgid is defined %}
+rhsub_orgid: {{ rhsub_orgid }}
+{% endif %}
 {% endif %}
 
 template_cluster: {{ ovirt_cluster_name }}
