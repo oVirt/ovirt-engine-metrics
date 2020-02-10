@@ -5,5 +5,3 @@ Release Branches:
     - ovirt-master
   ovirt-engine-metrics-4.3:
     - ovirt-4.3
-  ovirt-engine-metrics-4.2:
-    - ovirt-4.2
