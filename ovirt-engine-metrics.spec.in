@@ -71,6 +71,16 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Wed Feb 12 2020 Shirly Radco <sradco@redhat.com> - 1.4.0
+Fixed issues:
+- Fix bug with oreg_url default
+- Replace Satellite installation using command with package
+- Enable RHSM repositories for ocp vms
+- Update qcow_url documentation
+- Bug 1685597 - Added support for configuring nics variables
+- Bug 1685597 - Added support for configuring nic_mode
+- Add rhsub_orgid to vars.yaml.template
+
 * Tue Aug 27 2019 Shirly Radco <sradco@redhat.com> - 1.3.4.1
 Fixed issues:
 - Bug 1723453 - Update resize disk size timeout parameter
