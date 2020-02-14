@@ -1,7 +1,7 @@
-yum-utils
+dnf-utils
 autoconf
 automake
 make
-python-devel
+python3-devel
 gettext-devel
 git

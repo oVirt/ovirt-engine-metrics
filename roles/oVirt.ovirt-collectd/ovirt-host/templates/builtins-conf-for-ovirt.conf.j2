@@ -71,7 +71,7 @@ LoadPlugin processes
   Process "collectd"
   ProcessMatch "libvirt" "/usr/sbin/libvirtd --listen"
   ProcessMatch "qemu" "/usr/libexec/qemu-kvm"
-  ProcessMatch "vdsmd" "/usr/bin/python2 /usr/share/vdsm/vdsm"
-  ProcessMatch "momd" "python /usr/sbin/momd"
+  ProcessMatch "vdsmd" "/usr/bin/python3 /usr/share/vdsm/vdsm"
+  ProcessMatch "momd" "python3 /usr/sbin/momd"
   ProcessMatch "supervdsmd" "/usr/share/vdsm/supervdsm"
 </Plugin>

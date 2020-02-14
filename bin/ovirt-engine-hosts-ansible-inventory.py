@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 #
 # ovirt-engine-hosts-ansible-inventory
 #
