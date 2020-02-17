@@ -3,5 +3,3 @@ Distributions: "el8"
 Release Branches:
   master:
     - ovirt-master
-  ovirt-engine-metrics-4.3:
-    - ovirt-4.3
