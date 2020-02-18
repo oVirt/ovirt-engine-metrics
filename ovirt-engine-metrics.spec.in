@@ -71,6 +71,11 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Feb 18 2020 Shirly Radco <sradco@redhat.com> - 1.4.0.1
+Fixed issues:
+- automation: add el8 jobs
+- automation: remove 4.3 branch from master jobs
+
 * Wed Feb 12 2020 Shirly Radco <sradco@redhat.com> - 1.4.0
 Fixed issues:
 - Fix bug with oreg_url default
