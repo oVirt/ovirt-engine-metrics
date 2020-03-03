@@ -70,10 +70,6 @@ vms:
     nics:
 {{ bastion_nics | indent( width=6, indentfirst=True) }}
 {% endif %}
-{% if bastion_nic_mode is defined %}
-    nic_mode:
-{{ bastion_nic_mode | indent( width=6, indentfirst=True) }}
-{% endif %}
     profile:
 {% if openshift_distribution == 'origin' %}
       template: {{ ovirt_template_name|d('centos76') }}
@@ -88,6 +84,10 @@ vms:
       state: running
       cloud_init:
         authorized_ssh_keys: "{{ ssh_key }}"
+{% if bastion_nic_mode is defined %}
+        'nic_boot_protocol': 'static'
+{{ bastion_nic_mode | indent( width=8, indentfirst=True) }}
+{% endif %}
 {% if create_host_entry|d(false)|bool %}
         host_name: '{{ openshift_ovirt_bastion_machine_name }}'
 {% endif %}
