@@ -81,7 +81,10 @@ vms:
       template: {{ ovirt_template_name|d('rhelguest76') }}
 {% endif %}
       cores: {{ openshift_ovirt_bastion_machine_cpu|d(4) }}
+      sockets: {{ openshift_ovirt_bastion_machine_cpu_sockets|d(1) }}
+      cpu_threads: {{ openshift_ovirt_bastion_machine_cpu_threads|d(1) }}
       memory: {{ openshift_ovirt_bastion_machine_memory|d('8GiB') }}
+      memory_guaranteed: {{ openshift_ovirt_bastion_machine_memory_guaranteed|d('4GiB') }}
       state: running
       cloud_init:
         authorized_ssh_keys: "{{ ssh_key }}"
@@ -140,7 +143,10 @@ openshift_ovirt_vm_profile:
     template: {{ ovirt_template_name|d('rhelguest76') }}
 {% endif %}
     memory: {{ openshift_vm_memory | d('30GiB') }}
+    memory_guaranteed: {{ openshift_vm_memory_guaranteed | d('4GiB') }}
     cores: {{ openshift_vm_cores | d('4') }}
+    sockets: {{ openshift_vm_sockets | d('1') }}
+    cpu_threads: {{ openshift_vm_threads | d('1') }}
     high_availability: true
     disks:
       - size: {{ docker_disk_size|d('10GiB') }}
@@ -174,7 +180,10 @@ openshift_ovirt_vm_profile:
     template: {{ ovirt_template_name|d('rhelguest76') }}
 {% endif %}
     memory: {{ openshift_vm_memory | d('30GiB') }}
+    memory_guaranteed: {{ openshift_vm_memory_guaranteed | d('4GiB') }}
     cores: {{ openshift_vm_cores | d('4') }}
+    sockets: {{ openshift_vm_sockets | d('1') }}
+    cpu_threads: {{ openshift_vm_threads | d('1') }}
     high_availability: true
     disks:
       - size: {{ docker_disk_size|d('50GiB') }}

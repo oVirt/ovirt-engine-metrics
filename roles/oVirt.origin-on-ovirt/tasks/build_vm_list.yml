@@ -22,12 +22,13 @@
         {
       'name': '{{ item.name }}_ag',
       'cluster': '{{ openshift_ovirt_cluster }}',
-      'vm_enforcing': 'false',
+      'vm_enforcing': '{{ vm_enforcing | default(false) }}',
       'vm_rule': 'negative',
       'vms': [
         {% for iter in range(item.count) -%}
       '{{ item.name }}{{ iter }}.{{ openshift_ovirt_dns_zone }}',
         {% endfor -%}
+      '{{ openshift_ovirt_bastion_machine_name }}',
       ]
         }
         {% endif -%}
