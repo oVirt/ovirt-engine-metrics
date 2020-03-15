@@ -71,6 +71,11 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Sun Mar 15 2020 Shirly Radco <sradco@redhat.com> - 1.3.7
+Fixed issues:
+- Bug 1807860 - Allow resource allocation options to be customized
+- Bug 1797023 - Fix static IP for metrics-store-installer vm
+
 * Tue Jan 28 2020 Shirly Radco <sradco@redhat.com> - 1.3.6.3
 Fixed issues:
 - Bug 1795564 - Add rhsub_orgid to vars.yaml.template
