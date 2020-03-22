@@ -71,6 +71,12 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Sun Mar 22 2020 Shirly Radco <sradco@redhat.com> - 1.4.0.2
+Fixed issues:
+- automation: Replace fc29 with fc30
+- Bug 1807860 - Allow resource allocation options to be customized
+- Bug 1797023 - Fix static IP for metrics-store-installer vm
+
 * Tue Feb 18 2020 Shirly Radco <sradco@redhat.com> - 1.4.0.1
 Fixed issues:
 - automation: add el8 jobs
