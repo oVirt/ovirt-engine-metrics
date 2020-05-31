@@ -166,6 +166,7 @@
             dynbulkid: '{{ rsyslog_elasticsearch_dynbulkid_logs|d("on") }}'
             retryfailures: '{{ rsyslog_elasticsearch_retryfailures_logs|d("on") }}'
             retryruleset: '{{ rsyslog_elasticsearch_retryruleset_logs|d("try_es") }}'
+            usehttps: '{{ rsyslog_elasticsearch_usehttps_logs|d("on") }}'
           - name: ovirt-metrics-elasticsearch
             type: elasticsearch
             logs_collections:
@@ -179,6 +180,7 @@
             dynbulkid: '{{ rsyslog_elasticsearch_dynbulkid_metrics|d("on") }}'
             retryfailures: '{{ rsyslog_elasticsearch_retryfailures_metrics|d("off") }}'
             retryruleset: '{{ rsyslog_elasticsearch_retryruleset_metrics|d("try_es") }}'
+            usehttps: '{{ rsyslog_elasticsearch_usehttps_metrics|d("on") }}'
   when: logging_output_type == 'elasticsearch' and not use_omelasticsearch_cert
 
 - name: Run rsyslog sub-role
