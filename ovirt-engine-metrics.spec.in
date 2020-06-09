@@ -71,6 +71,10 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Jun 09 2020 Shirly Radco <sradco@redhat.com> - 1.3.8
+Fixed issues:
+- Bug 1842260 - Missing usehttps when not using certificates
+
 * Sun Mar 15 2020 Shirly Radco <sradco@redhat.com> - 1.3.7
 Fixed issues:
 - Bug 1807860 - Allow resource allocation options to be customized
