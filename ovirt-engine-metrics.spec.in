@@ -71,6 +71,10 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Jun 30 2020 Shirly Radco <sradco@redhat.com> - 1.4.1.1
+Fixed issues:
+- Bug 1827177 - Remove OCP metrics store installation
+
 * Tue Jun 09 2020 Shirly Radco <sradco@redhat.com> - 1.4.1
 Fixed issues:
 - Bug 1842260 - Missing usehttps when not using certificates
