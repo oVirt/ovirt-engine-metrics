@@ -6,7 +6,7 @@ Usage: $0
 
   --playbook=PLAYBOOK
         PLAYBOOK, the name of the playbook to run, is one of:
-        ${PLAYBOOK}, manage-ovirt-metrics-services.yml, ovirt-metrics-store-installation.yml, cleanup-ovirt-metrics.yml.
+        ${PLAYBOOK}, manage-ovirt-metrics-services.yml, cleanup-ovirt-metrics.yml.
         Default is ${PLAYBOOK}.
   --scope=SCOPE
         SCOPE is one of 'engine', 'all'.

@@ -1,8 +1,0 @@
-{% raw %}
----
-
-ansible_play_hosts: {{ ansible_play_hosts }}
-
-ansible_play_batch: {{ ansible_play_batch }}
-
-{% endraw %}

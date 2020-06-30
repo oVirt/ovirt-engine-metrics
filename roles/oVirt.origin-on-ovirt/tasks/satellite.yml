@@ -1,5 +1,0 @@
----
-- name: Satellite preparation
-  package:
-    name: "http://{{ rhsub_server }}/pub/katello-ca-consumer-latest.noarch.rpm"
-    state: present

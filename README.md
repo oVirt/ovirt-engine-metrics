@@ -1,7 +1,7 @@
 oVirt Engine Metrics
 ====================
 
-The `oVirt.metrics` role enables you to set up oVirt Metrics store, deploy rsyslog/fluentd and collectd on the engine and hypervisors
+The `oVirt.metrics` role enables you to deploy and configure rsyslog/fluentd and collectd on the engine and hypervisors to send metrics and logs to a remote Elasticsearch
 and manage the services.
 
 Role Variables
