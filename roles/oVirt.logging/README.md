@@ -22,10 +22,6 @@ The available variables for this role are:
 
   File mode for logging configuration files.
 
-- `logging_role_path:` (default: `"/usr/share/ansible/roles/oVirt.metrics/roles/oVirt.linux-system-roles-logging"`)
-
-  Path to the linux-system-roles-logging role directory.
-
 - `collect_ovirt_vdsm_log:` (default: `"true"`)
 
   By setting this variable to false, vsdm logs will not be collected.

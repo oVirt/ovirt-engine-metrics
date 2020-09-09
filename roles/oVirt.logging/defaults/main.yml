@@ -17,8 +17,6 @@ logging_group: root
 # File mode for logging configuration files.
 logging_config_mode: 0640
 
-logging_role_path: /usr/share/ansible/roles/oVirt.metrics/roles/oVirt.linux-system-roles-logging
-
 # Relevant only to elasticsearch output plugin
 # Path to the Rsyslog configuration directory.
 rsyslog_certs_config_dir: /etc/rsyslog.d

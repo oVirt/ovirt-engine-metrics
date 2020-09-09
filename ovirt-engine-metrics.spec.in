@@ -40,6 +40,7 @@ Requires:	ansible >= 2.9
 Requires:	ovirt-ansible-image-template >= 1.2.0
 Requires:	ovirt-ansible-vm-infra >= 1.2.0
 Requires:	python3-jmespath
+Requires:	rhel-system-roles >= 1.0-19
 
 # In oVirt 4.1.0, content of this package was in a different one, which was
 # built from the engine sources.

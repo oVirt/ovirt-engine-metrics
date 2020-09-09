@@ -94,9 +94,7 @@ install: \
 .PHONY: ovirt-engine-metrics.spec.in
 
 dist:	ovirt-engine-metrics.spec
-	git ls-files | tar --files-from /proc/self/fd/0 -czf "$(TARBALL)" \
-		ovirt-engine-metrics.spec \
-		roles/oVirt.linux-system-roles-logging
+	git ls-files | tar --files-from /proc/self/fd/0 -czf "$(TARBALL)" ovirt-engine-metrics.spec
 	@echo
 	@echo For distro specific packaging refer to http://www.ovirt.org/Build_Binary_Package
 	@echo

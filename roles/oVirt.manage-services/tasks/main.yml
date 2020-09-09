@@ -59,14 +59,26 @@
 
 # Cleanup oVirt metrics services
 - block:
+    - name: Set facts to Configure rsyslog to default state
+      Set fact:
+        logging_inputs:
+          - name: basic_input
+            type: basics
+        logging_outputs:
+          - name: default_files
+            type: file
+        logging_flows:
+          - name: basic-flow
+            inputs: [basic_input]
+            outputs: [default_files]
+
     - name: Set logging_purge_confs to remove oVirt metrics store configurations from Rsyslog
       set_fact:
         logging_purge_confs: true
-        logging_role_path: /usr/share/ansible/roles/oVirt.metrics/roles/oVirt.linux-system-roles-logging
 
     - name: Run rsyslog sub-role
       include_role:
-        name: oVirt.metrics/roles/oVirt.linux-system-roles-logging
+        name: linux-system-roles.logging
 
     - name: Check if elasticsearch_host is set
       debug:
