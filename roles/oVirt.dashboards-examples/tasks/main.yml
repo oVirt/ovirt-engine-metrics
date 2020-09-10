@@ -1,68 +1,75 @@
 ---
-- name: Ensure dashboards examples directory exists
-  file:
-    path: '{{ ovirt_metrics_dashboards_examples_dir }}'
-    state: directory
-    owner: root
-    group: root
-    mode: 0750
-  delegate_to: localhost
-  run_once: true
 
-- name: Set ovirt_metrics_index_prefix_metrics when ovirt_env_uuid_metrics is defined
-  set_fact:
-    ovirt_metrics_index_prefix_metrics: 'project.ovirt-metrics-{{ ovirt_env_name }}.{{ ovirt_env_uuid_metrics }}'
-  when:
-    - ovirt_env_uuid_metrics is defined
-    - ovirt_metrics_index_prefix_metrics is undefined
+- block:
+    - name: Include oVirt metrics config.yml.d vars directory
+      include_vars:
+        dir: '{{ ovirt_metrics_config_yml_dir }}'
+        ignore_files: ['README.md']
 
-- name: Set ovirt_metrics_index_prefix_logs when ovirt_env_uuid_logs is defined
-  set_fact:
-    ovirt_metrics_index_prefix_logs: 'project.ovirt-logs-{{ ovirt_env_name }}.{{ ovirt_env_uuid_logs }}'
-  when:
-    - ovirt_env_uuid_logs is defined
-    - ovirt_metrics_index_prefix_logs is undefined
+    - name: Set ovirt_metrics_index_prefix_metrics
+      set_fact:
+        ovirt_metrics_index_prefix_metrics: 'project.ovirt-metrics-{{ ovirt_env_name }}'
+      when:
+        - ovirt_env_uuid_metrics is undefined
+        - ovirt_metrics_index_prefix_metrics is undefined
 
-- name: Set ovirt_metrics_index_prefix_metrics when ovirt_env_uuid_metrics is undefined
-  set_fact:
-    ovirt_metrics_index_prefix_metrics: 'project.ovirt-metrics-{{ ovirt_env_name }}'
-  when:
-    - ovirt_env_uuid_metrics is undefined
-    - ovirt_metrics_index_prefix_metrics is undefined
+    - name: Set ovirt_metrics_index_prefix_logs
+      set_fact:
+        ovirt_metrics_index_prefix_logs: 'project.ovirt-logs-{{ ovirt_env_name }}'
+      when:
+        - ovirt_metrics_index_prefix_logs is undefined
+        - ovirt_env_uuid_logs is undefined
 
-- name: Set ovirt_metrics_index_prefix_logs when ovirt_env_uuid_logs is undefined
-  set_fact:
-    ovirt_metrics_index_prefix_logs: 'project.ovirt-logs-{{ ovirt_env_name }}'
-  when:
-    - ovirt_env_uuid_logs is undefined
-    - ovirt_metrics_index_prefix_logs is undefined
+    - name: Set ovirt_metrics_index_prefix_metrics when ovirt_env_uuid_metrics is defined
+      set_fact:
+        ovirt_metrics_index_prefix_metrics: 'project.ovirt-metrics-{{ ovirt_env_name }}.{{ ovirt_env_uuid_metrics }}'
+      when:
+        - ovirt_env_uuid_metrics is defined
+        - ovirt_metrics_index_prefix_metrics is undefined
 
-- name: Generate searches json file
-  template:
-    src: searches.template
-    dest: '{{ ovirt_metrics_dashboards_examples_dir }}/searches.json'
-    mode: 0644
-  delegate_to: localhost
-  run_once: true
+    - name: Set ovirt_metrics_index_prefix_logs when ovirt_env_uuid_logs is defined
+      set_fact:
+        ovirt_metrics_index_prefix_logs: 'project.ovirt-logs-{{ ovirt_env_name }}.{{ ovirt_env_uuid_logs }}'
+      when:
+        - ovirt_env_uuid_logs is defined
+        - ovirt_metrics_index_prefix_logs is undefined
 
-- name: Generate visualizations json file
-  template:
-    src: visualizations.template
-    dest: '{{ ovirt_metrics_dashboards_examples_dir }}/visualizations.json'
-    mode: 0644
-  delegate_to: localhost
-  run_once: true
+    - name: Ensure dashboards examples directory exists
+      file:
+        path: '{{ ovirt_metrics_dashboards_examples_dir }}'
+        state: directory
+        owner: root
+        group: root
+        mode: 0750
+      delegate_to: localhost
+      run_once: true
 
-- name: Copy dashboards json file
-  copy:
-    src: dashboards.json
-    dest: '{{ ovirt_metrics_dashboards_examples_dir }}'
-    mode: 0644
-  delegate_to: localhost
-  run_once: true
+    - name: Generate searches json file
+      template:
+        src: searches.template
+        dest: '{{ ovirt_metrics_dashboards_examples_dir }}/searches.json'
+        mode: 0644
+      delegate_to: localhost
+      run_once: true
 
-- debug:
-    msg: "Example dashboards are located at {{ ovirt_metrics_dashboards_examples_dir }}"
-  delegate_to: localhost
-  run_once: true
+    - name: Generate visualizations json file
+      template:
+        src: visualizations.template
+        dest: '{{ ovirt_metrics_dashboards_examples_dir }}/visualizations.json'
+        mode: 0644
+      delegate_to: localhost
+      run_once: true
 
+    - name: Copy dashboards json file
+      copy:
+        src: dashboards.json
+        dest: '{{ ovirt_metrics_dashboards_examples_dir }}'
+        mode: 0644
+      delegate_to: localhost
+      run_once: true
+
+    - debug:
+        msg: "Example dashboards are located at {{ ovirt_metrics_dashboards_examples_dir }}"
+      delegate_to: localhost
+      run_once: true
+  when: logging_output_type == "elasticsearch"

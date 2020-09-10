@@ -1,25 +1,15 @@
 ---
-- name: Add metrics store host to inventory
-  hosts: engine:hosts
+- name: Generate Example Dashboards
+  hosts: engine
   tags:
-    - post-install
+    - dashboards
 
   tasks:
-    - name: Add metrics store host to inventory
+    - name: Run initial validations sub-role
       include_role:
-        name: "oVirt.metrics/roles/oVirt.add-metrics-store-host"
+        name: "oVirt.metrics/roles/oVirt.initial-validations"
 
-- name: Post metrics store installation roles
-  hosts: metrics_store
-  tags:
-    - post-install
-
-  tasks:
     - block:
-        - name: Run metrics store post installation setup
-          include_role:
-            name: "oVirt.metrics/roles/oVirt.metrics-store-setup"
-
         - name: Run dashboards examples sub-role
           include_role:
             name: "oVirt.metrics/roles/oVirt.dashboards-examples"

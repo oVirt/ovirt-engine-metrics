@@ -10,7 +10,6 @@
 #  - Include only alphanumeric characters and hyphens ( "-" ).
 #  - Name cannot begin with a hyphen or a number, or end with a hyphen.
 #  - Maximum of 49 characters. Wildcard patterns (e.g. ovirt-metrics*) cannot be used.
-# If you are installing oVirt Metrics Store, 'ovirt_env_name' must match 'ovirt_env_name' in metrics-store-config.yml.
 # Default is 'engine'.
 ovirt_env_name: engine
 

@@ -1,6 +1,16 @@
 ---
 #  notify: set failed validation
 
+- name: If output plugin is elasticsearch, validate host address is set
+  debug:
+    msg: "elasticsearch_host is not configured. This host will not be configured to send metrics"
+  when:
+    - elasticsearch_host == None or elasticsearch_host is undefined
+    - fluentd_elasticsearch_host == None or fluentd_elasticsearch_host is undefined
+    - logging_output_type == "elasticsearch"
+  changed_when: true
+  notify: set failed validation
+
 # Task required for backwards compatibility task
 - name: Update fluentd_elasticsearch_host
   set_fact:
@@ -24,8 +34,6 @@
   when: logging_output_type is undefined
 
 # Check collectors base packages availability
-
-
 - block:
     - name: Install Rsyslog packages
       yum:
@@ -111,7 +119,7 @@
         msg: "Please update the 'fluentd_elasticsearch_host' to 'elasticsearch_host' in your configuration file. Please see latest documentation"
       when:
         - logging_collector == "rsyslog"
-        - fluentd_elasticsearch_host != ""
+        - fluentd_elasticsearch_host != None
 
     - name: If logging collector is rsyslog, validate that the output is elasticsearch
       debug:
@@ -122,27 +130,7 @@
       changed_when: true
       notify: set failed validation
 
-    - name: If output plugin is elasticsearch, validate host address is set
-      debug:
-        msg: "oVirt Metrics store is not configured. This host will not be configured to send metrics"
-      when:
-        - logging_collector == "rsyslog"
-        - elasticsearch_host == ""
-        - logging_output_type == "elasticsearch"
-      changed_when: true
-      notify: set failed validation
-
     # Fluentd validations
-    - name: If output plugin is elasticsearch, validate host address is set
-      debug:
-        msg: "oVirt Metrics store is not configured. This host will not be configured to send metrics"
-      when:
-        - logging_collector == "fluentd"
-        - fluentd_elasticsearch_host == ""
-        - logging_output_type == "elasticsearch"
-      changed_when: true
-      notify: set failed validation
-
     - name: If output plugin is fluentd, validate host address is set
       debug:
         msg: "oVirt Metrics store is not configured. This host will not be configured to send metrics"

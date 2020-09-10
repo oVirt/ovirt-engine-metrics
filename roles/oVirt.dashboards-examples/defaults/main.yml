@@ -1,4 +1,6 @@
 ---
+logging_output_type: elasticsearch
+
 ovirt_metrics_pkg_sysconf_dir: /etc/ovirt-engine-metrics
 
 # Path to the dashboard files directory
