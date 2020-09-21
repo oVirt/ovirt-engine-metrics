@@ -5,12 +5,12 @@
     "_type": "visualization",
     "_source": {
       "title": "System CPU Usage",
-      "visState": "{\"title\":\"System CPU Usage\",\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"isDonut\":true},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.cpu.percent\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"collectd.type_instance\",\"size\":8,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"System CPU Usage\",\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"isDonut\":true},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.cpu.percent\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"collectd.type_instance.keyword\",\"size\":8,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:cpu\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:cpu\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -19,12 +19,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Memory Usage over time",
-      "visState": "{\"title\":\"Memory Usage over time\",\"type\":\"area\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"smoothLines\":false,\"scale\":\"linear\",\"interpolate\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.memory.memory\"}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.type_instance\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Memory Usage over time\",\"type\":\"area\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"smoothLines\":false,\"scale\":\"linear\",\"interpolate\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.memory.memory\"}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.type_instance.keyword\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:memory\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:memory\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -33,12 +33,12 @@
     "_type": "visualization",
     "_source": {
       "title": "System File System Usage",
-      "visState": "{\"title\":\"System File System Usage\",\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"isDonut\":true},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.df.percent_bytes\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"collectd.type_instance\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"System File System Usage\",\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"isDonut\":true},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.df.percent_bytes\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"collectd.type_instance.keyword\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:df\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:df\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -47,12 +47,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Memory Usage - Table",
-      "visState": "{\"title\":\"Memory Usage - Table\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"min\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.memory.memory\",\"customLabel\":\"Min\"}},{\"id\":\"2\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.memory.memory\",\"customLabel\":\"Avg\"}},{\"id\":\"3\",\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.memory.memory\",\"customLabel\":\"Max\"}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.type_instance\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Memory Usage - Table\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"min\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.memory.memory\",\"customLabel\":\"Min\"}},{\"id\":\"2\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.memory.memory\",\"customLabel\":\"Avg\"}},{\"id\":\"3\",\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.memory.memory\",\"customLabel\":\"Max\"}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.type_instance.keyword\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:memory\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:memory\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -61,12 +61,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Log warnings and errors over time",
-      "visState": "{\"title\":\"Log warnings and errors over time\",\"type\":\"line\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"showCircles\":true,\"smoothLines\":false,\"interpolate\":\"linear\",\"scale\":\"linear\",\"drawLinesBetweenPoints\":true,\"radiusRatio\":9,\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"level\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Log warnings and errors over time\",\"type\":\"line\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"showCircles\":true,\"smoothLines\":false,\"interpolate\":\"linear\",\"scale\":\"linear\",\"drawLinesBetweenPoints\":true,\"radiusRatio\":9,\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"level.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[{\"meta\":{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"negate\":true,\"key\":\"level\",\"value\":\"INFO\",\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"level\":{\"query\":\"INFO\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"negate\":true,\"key\":\"level\",\"value\":\"DEBUG\",\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"level\":{\"query\":\"DEBUG\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[{\"meta\":{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"negate\":true,\"key\":\"level.keyword\",\"value\":\"INFO\",\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"level.keyword\":{\"query\":\"INFO\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"negate\":true,\"key\":\"level.keyword\",\"value\":\"DEBUG\",\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"level.keyword\":{\"query\":\"DEBUG\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
       }
     }
   },
@@ -75,7 +75,7 @@
     "_type": "visualization",
     "_source": {
       "title": "System Memory Usage",
-      "visState": "{\"title\":\"System Memory Usage\",\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"isDonut\":true},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.memory.percent\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"collectd.type_instance\",\"size\":8,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"System Memory Usage\",\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"isDonut\":true},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.memory.percent\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"collectd.type_instance.keyword\",\"size\":8,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
@@ -89,12 +89,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Network Interface Packets/Sec",
-      "visState": "{\"title\":\"Network Interface Packets/sec\",\"type\":\"area\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"smoothLines\":false,\"scale\":\"linear\",\"interpolate\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_packets.rx\"}},{\"id\":\"2\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_packets.tx\"}},{\"id\":\"3\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.type\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Network Interface Packets/sec\",\"type\":\"area\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"smoothLines\":false,\"scale\":\"linear\",\"interpolate\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_packets.rx\"}},{\"id\":\"2\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_packets.tx\"}},{\"id\":\"3\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.type.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:interface AND collectd.type:if_packets\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:interface AND collectd.type.keyword:if_packets\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -103,12 +103,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Network Interface Bits/Sec",
-      "visState": "{\"title\":\"Network Interface Bits/sec\",\"type\":\"area\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"smoothLines\":false,\"scale\":\"linear\",\"interpolate\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_octets.rx\"}},{\"id\":\"2\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_octets.tx\"}},{\"id\":\"3\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.type\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Network Interface Bits/sec\",\"type\":\"area\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"smoothLines\":false,\"scale\":\"linear\",\"interpolate\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_octets.rx\"}},{\"id\":\"2\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_octets.tx\"}},{\"id\":\"3\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.type.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:interface AND collectd.type:if_octets\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:interface AND collectd.type.keyword:if_octets\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -117,12 +117,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Engine and Clusters",
-      "visState": "{\"title\":\"Engine and Clusters List\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"ovirt.engine_fqdn\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Engine Name\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"ovirt.cluster_name\",\"size\":20,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Cluster Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Engine and Clusters List\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"ovirt.engine_fqdn.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Engine Name\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"ovirt.cluster_name.keyword\",\"size\":20,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Cluster Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:uptime\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:uptime\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -145,12 +145,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Running Hosts",
-      "visState": "{\"title\":\"Running Hosts\",\"type\":\"metric\",\"params\":{\"fontSize\":60,\"handleNoResults\":true},\"aggs\":[{\"id\":\"1\",\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"hostname\",\"customLabel\":\"_\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Running Hosts\",\"type\":\"metric\",\"params\":{\"fontSize\":60,\"handleNoResults\":true},\"aggs\":[{\"id\":\"1\",\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"hostname.keyword\",\"customLabel\":\"_\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"collectd.plugin:memory\"}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"collectd.plugin.keyword:memory\"}},\"filter\":[]}"
       }
     }
   },
@@ -164,7 +164,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:percent\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:virt AND collectd.type.keyword:percent\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -173,12 +173,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 busiest hosts  - CPU",
-      "visState": "{\"title\":\"Top 5 busiest hosts  - CPU\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.cpu.percent\",\"customLabel\":\"Avg. CPU Usage %\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.type_instance\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"User / System CPU\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 busiest hosts  - CPU\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.cpu.percent\",\"customLabel\":\"Avg. CPU Usage %\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.type_instance.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"User / System CPU\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:cpu AND (collectd.type_instance:user or collectd.type_instance:system)\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:cpu AND (collectd.type_instance.keyword:user or collectd.type_instance.keyword:system)\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -187,12 +187,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 busiest hosts  - Memory",
-      "visState": "{\"title\":\"Top 5 busiest hosts  - Memory\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.memory.percent\",\"customLabel\":\"Avg. Mem. Usage %\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 busiest hosts  - Memory\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.memory.percent\",\"customLabel\":\"Avg. Mem. Usage %\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:memory AND collectd.type_instance:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:memory AND collectd.type_instance.keyword:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -201,12 +201,12 @@
     "_type": "visualization",
     "_source": {
       "title": "VMs",
-      "visState": "{\"title\":\"VMs List\",\"type\":\"table\",\"params\":{\"perPage\":50,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"ovirt.cluster_name\",\"size\":10000,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Cluster Name\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance\",\"size\":100000,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname\",\"size\":100000,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"VMs List\",\"type\":\"table\",\"params\":{\"perPage\":50,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"ovirt.cluster_name.keyword\",\"size\":10000,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Cluster Name\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance.keyword\",\"size\":100000,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname.keyword\",\"size\":100000,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:virt\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -215,12 +215,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Hosts",
-      "visState": "{\"title\":\"Hosts List\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname\",\"size\":1000,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"ovirt.cluster_name\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Cluster Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Hosts List\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname.keyword\",\"size\":1000,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"ovirt.cluster_name.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Cluster Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:memory\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:memory\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -229,12 +229,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Running VMs",
-      "visState": "{\"title\":\"Running VMs\",\"type\":\"metric\",\"params\":{\"handleNoResults\":true,\"fontSize\":60},\"aggs\":[{\"id\":\"1\",\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.plugin_instance\",\"customLabel\":\"_\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Running VMs\",\"type\":\"metric\",\"params\":{\"handleNoResults\":true,\"fontSize\":60},\"aggs\":[{\"id\":\"1\",\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.plugin_instance.keyword\",\"customLabel\":\"_\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"ovirt.entity:vms\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"ovirt.entity.keyword:vms\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -248,7 +248,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:if_octets\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:virt AND collectd.type.keyword:if_octets\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -262,7 +262,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"collectd.plugin:virt AND collectd.type:disk_octets\"}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"collectd.plugin.keyword:virt AND collectd.type.keyword:disk_octets\"}},\"filter\":[]}"
       }
     }
   },
@@ -276,7 +276,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:memory AND collectd.type_instance:total\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:virt AND collectd.type.keyword:memory AND collectd.type_instance.keyword:total\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -285,12 +285,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 VMs by Interface - Packets",
-      "visState": "{\"title\":\"Top 5 VMs by Interface - # of dropped packets\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.if_dropped.rx\",\"customLabel\":\"Total Packets Dropped on rx\"}},{\"id\":\"2\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.if_dropped.tx\",\"customLabel\":\"Total Packets Dropped on tx\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 VMs by Interface - # of dropped packets\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.if_dropped.rx\",\"customLabel\":\"Total Packets Dropped on rx\"}},{\"id\":\"2\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.if_dropped.tx\",\"customLabel\":\"Total Packets Dropped on tx\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:if_dropped\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:virt AND collectd.type.keyword:if_dropped\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -299,12 +299,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 VMs by Interface - Errors",
-      "visState": "{\"title\":\"Top 5 VMs by Interface - # of error packets\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.if_errors.rx\",\"customLabel\":\"Total rx Errors\"}},{\"id\":\"2\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.if_errors.tx\",\"customLabel\":\"Total tx Errors\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 VMs by Interface - # of error packets\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.if_errors.rx\",\"customLabel\":\"Total rx Errors\"}},{\"id\":\"2\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.if_errors.tx\",\"customLabel\":\"Total tx Errors\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:if_errors\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:virt AND collectd.type.keyword:if_errors\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -313,12 +313,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 VMs by Interface - Bytes",
-      "visState": "{\"title\":\"Top 5 VMs by Interface\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.if_octets.rx\",\"customLabel\":\"Avg. Bytes Received\"}},{\"id\":\"2\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.if_octets.tx\",\"customLabel\":\"Avg. Bytes Transmitted\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 VMs by Interface\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.if_octets.rx\",\"customLabel\":\"Avg. Bytes Received\"}},{\"id\":\"2\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.if_octets.tx\",\"customLabel\":\"Avg. Bytes Transmitted\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:if_octets\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:virt AND collectd.type.keyword:if_octets\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -327,12 +327,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 VMs by Memory Usage over time",
-      "visState": "{\"title\":\"Top 5 VMs by Memory Usage\",\"type\":\"line\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"showCircles\":true,\"smoothLines\":false,\"interpolate\":\"linear\",\"scale\":\"linear\",\"drawLinesBetweenPoints\":true,\"radiusRatio\":9,\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.memory\",\"customLabel\":\"Avg. Mem. Usage in KBytes\"}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.plugin_instance\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 VMs by Memory Usage\",\"type\":\"line\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"showCircles\":true,\"smoothLines\":false,\"interpolate\":\"linear\",\"scale\":\"linear\",\"drawLinesBetweenPoints\":true,\"radiusRatio\":9,\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.memory\",\"customLabel\":\"Avg. Mem. Usage in KBytes\"}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.plugin_instance.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin: virt AND collectd.type: memory AND collectd.type_instance: total\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword: virt AND collectd.type.keyword: memory AND collectd.type_instance.keyword: total\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -341,12 +341,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 VMs CPU Usage over time",
-      "visState": "{\"title\":\"Top 5 VMs CPU usage over time\",\"type\":\"line\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"showCircles\":true,\"smoothLines\":false,\"interpolate\":\"linear\",\"scale\":\"linear\",\"drawLinesBetweenPoints\":true,\"radiusRatio\":9,\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.percent\",\"customLabel\":\"Avg. CPU Usage %\"}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.plugin_instance\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 VMs CPU usage over time\",\"type\":\"line\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"showCircles\":true,\"smoothLines\":false,\"interpolate\":\"linear\",\"scale\":\"linear\",\"drawLinesBetweenPoints\":true,\"radiusRatio\":9,\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.percent\",\"customLabel\":\"Avg. CPU Usage %\"}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.plugin_instance.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:percent\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:virt AND collectd.type.keyword:percent\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -355,12 +355,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 VMs by Disk Ops",
-      "visState": "{\"title\":\"Top 5 VMs by Disk Ops\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.disk_ops.read\",\"customLabel\":\"Total Read Requests\"}},{\"id\":\"2\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.disk_ops.write\",\"customLabel\":\"Total Write Requests\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 VMs by Disk Ops\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.disk_ops.read\",\"customLabel\":\"Total Read Requests\"}},{\"id\":\"2\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.disk_ops.write\",\"customLabel\":\"Total Write Requests\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:disk_ops\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:virt AND collectd.type.keyword:disk_ops\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -369,12 +369,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 busiest VMs  - Memory",
-      "visState": "{\"title\":\"Top 5 VMs by Memory Usage in KBytes\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.memory\",\"customLabel\":\"Avg. Mem. Usage\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 VMs by Memory Usage in KBytes\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.memory\",\"customLabel\":\"Avg. Mem. Usage\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:memory AND collectd.type_instance:total\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:virt AND collectd.type.keyword:memory AND collectd.type_instance.keyword:total\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -383,12 +383,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 busiest VMs  - CPU",
-      "visState": "{\"title\":\"Top 5 VMs by CPU Usage\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.percent\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 VMs by CPU Usage\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.percent\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:percent\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:virt AND collectd.type.keyword:percent\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -397,12 +397,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Network Interface Error/Sec",
-      "visState": "{\"title\":\"Network Interface Error/Sec\",\"type\":\"area\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"smoothLines\":false,\"scale\":\"linear\",\"interpolate\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":true,\"yAxis\":{\"max\":1,\"min\":0}},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_errors.rx\",\"customLabel\":\"Total rx Errors\"}},{\"id\":\"2\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_errors.tx\",\"customLabel\":\"Total tx Errors\"}},{\"id\":\"3\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.type\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Network Interface Error/Sec\",\"type\":\"area\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"smoothLines\":false,\"scale\":\"linear\",\"interpolate\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":true,\"yAxis\":{\"max\":1,\"min\":0}},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_errors.rx\",\"customLabel\":\"Total rx Errors\"}},{\"id\":\"2\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_errors.tx\",\"customLabel\":\"Total tx Errors\"}},{\"id\":\"3\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.type.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:interface AND collectd.type:if_errors\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:interface AND collectd.type.keyword:if_errors\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -416,7 +416,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:df AND collectd.type_instance:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:df AND collectd.type_instance.keyword:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -425,12 +425,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 busiest VMs  - Read / Write Bytes",
-      "visState": "{\"title\":\"Top 5 VMs by Disk Octets\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.disk_octets.read\",\"customLabel\":\"Total Bytes Read\"}},{\"id\":\"2\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.disk_octets.write\",\"customLabel\":\"Total Bytes Write\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 VMs by Disk Octets\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.disk_octets.read\",\"customLabel\":\"Total Bytes Read\"}},{\"id\":\"2\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.virt.disk_octets.write\",\"customLabel\":\"Total Bytes Write\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"VM Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:virt AND collectd.type:disk_octets\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:virt AND collectd.type.keyword:disk_octets\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -439,12 +439,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 Busiest Hosts - Interface Errors",
-      "visState": "{\"title\":\"Top 5 Hosts by Interface - Errors\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_errors.rx\",\"customLabel\":\"Total rx Errors\"}},{\"id\":\"2\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_errors.tx\",\"customLabel\":\"Total tx Errors\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 Hosts by Interface - Errors\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_errors.rx\",\"customLabel\":\"Total rx Errors\"}},{\"id\":\"2\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_errors.tx\",\"customLabel\":\"Total tx Errors\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:interface AND collectd.type:if_errors\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:interface AND collectd.type.keyword:if_errors\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -453,12 +453,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 Hosts by Interface - Errors",
-      "visState": "{\"title\":\"Top 5 VMs by Interface - Errors\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_errors.rx\",\"customLabel\":\"Total rx Errors\"}},{\"id\":\"2\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_errors.tx\",\"customLabel\":\"Total tx Errors\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 VMs by Interface - Errors\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_errors.rx\",\"customLabel\":\"Total rx Errors\"}},{\"id\":\"2\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.interface.if_errors.tx\",\"customLabel\":\"Total tx Errors\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:interface AND collectd.type:if_errors\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:interface AND collectd.type.keyword:if_errors\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -467,12 +467,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 busiest hosts  - File System",
-      "visState": "{\"title\":\"Top 5 busiest hosts  - DF\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.df.percent_bytes\",\"customLabel\":\"Usage %\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 busiest hosts  - DF\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.df.percent_bytes\",\"customLabel\":\"Usage %\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:df AND collectd.type_instance:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:df AND collectd.type_instance.keyword:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -481,12 +481,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Postgresql - Number of rows in the database per state",
-      "visState": "{\"title\":\"Postgresql - Number of rows in the database per state\",\"type\":\"line\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"showCircles\":true,\"smoothLines\":false,\"interpolate\":\"linear\",\"scale\":\"linear\",\"drawLinesBetweenPoints\":true,\"radiusRatio\":9,\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.postgresql.pg_n_tup_g\",\"customLabel\":\"Avg. Number Of Rows\"}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.type_instance\",\"size\":30,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Row State\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Postgresql - Number of rows in the database per state\",\"type\":\"line\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"showCircles\":true,\"smoothLines\":false,\"interpolate\":\"linear\",\"scale\":\"linear\",\"drawLinesBetweenPoints\":true,\"radiusRatio\":9,\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.postgresql.pg_n_tup_g\",\"customLabel\":\"Avg. Number Of Rows\"}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.type_instance.keyword\",\"size\":30,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Row State\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:postgresql\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:postgresql\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -495,12 +495,12 @@
     "_type": "visualization",
     "_source": {
       "title": "System CPU Usage over time",
-      "visState": "{\"title\":\"System CPU Usage over time\",\"type\":\"area\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"smoothLines\":false,\"scale\":\"linear\",\"interpolate\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.cpu.percent\",\"customLabel\":\"Avg. Usage %\"}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.type_instance\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"System CPU Usage over time\",\"type\":\"area\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"smoothLines\":false,\"scale\":\"linear\",\"interpolate\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.cpu.percent\",\"customLabel\":\"Avg. Usage %\"}},{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.type_instance.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"collectd.plugin:cpu AND (collectd.type_instance:user OR collectd.type_instance:system)\"}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"collectd.plugin.keyword:cpu AND (collectd.type_instance.keyword:user OR collectd.type_instance.keyword:system)\"}},\"filter\":[]}"
       }
     }
   },
@@ -514,7 +514,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:memory AND collectd.type_instance:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:memory AND collectd.type_instance.keyword:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -523,12 +523,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 busiest hosts  - Volumes",
-      "visState": "{\"title\":\"Top 5 busiest hosts  - Volumes\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.df.percent_bytes\",\"customLabel\":\"Avg. Usage %\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Volume Name\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 busiest hosts  - Volumes\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.df.percent_bytes\",\"customLabel\":\"Avg. Usage %\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.plugin_instance.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Volume Name\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:df AND collectd.type:percent_bytes AND collectd.type_instance:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:df AND collectd.type.keyword:percent_bytes AND collectd.type_instance.keyword:used\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -537,12 +537,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 log Warnings",
-      "visState": "{\"title\":\"Top 5 log Warnings\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"ovirt.class\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"oVirt Class\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 log Warnings\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"ovirt.class.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"oVirt Class\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"query\":{\"query_string\":{\"query\":\"level:WARN\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"query\":{\"query_string\":{\"query\":\"level.keyword:WARN\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -551,12 +551,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Top 5 log Errors",
-      "visState": "{\"title\":\"Top 5 log Errors\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"ovirt.class\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"oVirt Class\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Top 5 log Errors\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"hostname.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Host Name\"}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"ovirt.class.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"oVirt Class\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"query\":{\"query_string\":{\"query\":\"level:ERROR\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_logs%].*\",\"query\":{\"query_string\":{\"query\":\"level.keyword:ERROR\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -565,12 +565,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Processes Per State - Table",
-      "visState": "{\"title\":\"Processes per state - table\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"min\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.processes.ps_state\",\"customLabel\":\"Min\"}},{\"id\":\"2\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.processes.ps_state\",\"customLabel\":\"Avg\"}},{\"id\":\"3\",\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.processes.ps_state\",\"customLabel\":\"Max\"}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.type_instance\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Process State\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Processes per state - table\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"min\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.processes.ps_state\",\"customLabel\":\"Min\"}},{\"id\":\"2\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.processes.ps_state\",\"customLabel\":\"Avg\"}},{\"id\":\"3\",\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.processes.ps_state\",\"customLabel\":\"Max\"}},{\"id\":\"4\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"collectd.type_instance.keyword\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Process State\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin:processes AND collectd.type:ps_state\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"query\":\"collectd.plugin.keyword:processes AND collectd.type.keyword:ps_state\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -579,12 +579,12 @@
     "_type": "visualization",
     "_source": {
       "title": "Processes Per State",
-      "visState": "{\"title\":\"Processes per state\",\"type\":\"area\",\"params\":{\"addLegend\":true,\"addTimeMarker\":false,\"addTooltip\":true,\"defaultYExtents\":false,\"interpolate\":\"linear\",\"mode\":\"stacked\",\"scale\":\"linear\",\"setYExtents\":false,\"shareYAxis\":true,\"smoothLines\":false,\"times\":[],\"yAxis\":{}},\"aggs\":[{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.type_instance\",\"size\":100,\"order\":\"desc\",\"orderBy\":\"4\"}},{\"id\":\"4\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.processes.ps_state\",\"customLabel\":\"Avg. # of Processes\"}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Processes per state\",\"type\":\"area\",\"params\":{\"addLegend\":true,\"addTimeMarker\":false,\"addTooltip\":true,\"defaultYExtents\":false,\"interpolate\":\"linear\",\"mode\":\"stacked\",\"scale\":\"linear\",\"setYExtents\":false,\"shareYAxis\":true,\"smoothLines\":false,\"times\":[],\"yAxis\":{}},\"aggs\":[{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"collectd.type_instance.keyword\",\"size\":100,\"order\":\"desc\",\"orderBy\":\"4\"}},{\"id\":\"4\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"collectd.processes.ps_state\",\"customLabel\":\"Avg. # of Processes\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"collectd.plugin:processes AND collectd.type:ps_state\"}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"[%ovirt_metrics_index_prefix_metrics%].*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"collectd.plugin.keyword:processes AND collectd.type.keyword:ps_state\"}},\"filter\":[]}"
       }
     }
   }
