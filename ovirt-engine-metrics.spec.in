@@ -37,15 +37,8 @@ BuildArch:      noarch
 Url:            http://www.ovirt.org
 
 Requires:	ansible >= 2.9
-Requires:	ovirt-ansible-image-template >= 1.2.0
-Requires:	ovirt-ansible-vm-infra >= 1.2.0
 Requires:	python3-jmespath
 Requires:	rhel-system-roles >= 1.0-19
-
-# In oVirt 4.1.0, content of this package was in a different one, which was
-# built from the engine sources.
-Obsoletes:	ovirt-engine-hosts-ansible-inventory
-Provides:	ovirt-engine-hosts-ansible-inventory
 
 %description
 ovirt-engine-metrics allows configuring an oVirt installation to send metrics
@@ -72,6 +65,13 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Wed Oct 07 2020 Sandro Bonazzola <sbonazzo@redhat.com> - 1.4.2-1
+- Fixes BZ#1870133
+- Fixes BZ#1862134
+- Allow adding hosts when sending to external Elasticsearch server
+- Fixes self-obsoletion ovirt-engine-hosts-ansible-inventory obsoletes ovirt-engine-hosts-ansible-inventory
+- Dropped dependencies on ovirt-ansible-image-template and ovirt-ansible-vm-infra
+
 * Tue Jun 30 2020 Shirly Radco <sradco@redhat.com> - 1.4.1.1
 Fixed issues:
 - Bug 1827177 - Remove OCP metrics store installation
