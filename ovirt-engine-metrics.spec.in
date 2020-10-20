@@ -65,6 +65,9 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Oct 20 2020 Shirly Radco <sradco@redhat.com> - 1.4.2.1-1
+- Bug 1889522 - fix typo in set_fact
+
 * Wed Oct 07 2020 Sandro Bonazzola <sbonazzo@redhat.com> - 1.4.2-1
 - Fixes BZ#1870133
 - Fixes BZ#1862134
