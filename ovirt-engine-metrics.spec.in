@@ -65,6 +65,9 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Oct 27 2020 Shirly Radco <sradco@redhat.com> - 1.4.2.2-1
+- Bug 1880015 - Update visualization template with keyword
+
 * Tue Oct 20 2020 Shirly Radco <sradco@redhat.com> - 1.4.2.1-1
 - Bug 1889522 - fix typo in set_fact
 
