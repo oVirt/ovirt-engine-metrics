@@ -145,6 +145,10 @@
           input_type: ovirt
           server_host: '{{ elasticsearch_host }}'
           server_port: '{{ elasticsearch_port|d(9200) }}'
+          template: '{{ rsyslog_elasticsearch_template_logs|d("es_template") }}'
+          searchIndex: '{{ rsyslog_elasticsearch_searchIndex_logs|d("index_template") }}'
+          dynSearchIndex: '{{ rsyslog_elasticsearch_dynSearchIndex_logs|d(true) | ternary("on", "off") }}'
+          searchType: '{{ rsyslog_elasticsearch_searchType_logs|d("com.redhat.viaq.common") }}'
           index_prefix: '{{ rsyslog_elasticsearch_index_prefix_logs|d("project.ovirt-logs") }}'
           bulkmode: '{{ rsyslog_elasticsearch_bulkmode_logs|d("on") }}'
           writeoperation: '{{ rsyslog_elasticsearch_writeoperation_logs|d("create") }}'
@@ -171,6 +175,10 @@
           input_type: ovirt
           server_host: '{{ elasticsearch_host }}'
           server_port: '{{ elasticsearch_port|d(9200) }}'
+          template: '{{ rsyslog_elasticsearch_template_metrics|d("es_template") }}'
+          searchIndex: '{{ rsyslog_elasticsearch_searchIndex_metrics|d("index_template") }}'
+          dynSearchIndex: '{{ rsyslog_elasticsearch_dynSearchIndex_metrics|d(true) | ternary("on", "off") }}'
+          searchType: '{{ rsyslog_elasticsearch_searchType_metrics|d("com.redhat.viaq.common") }}'
           index_prefix: '{{ rsyslog_elasticsearch_index_prefix_metrics|d("project.ovirt-metrics") }}'
           bulkmode: '{{ rsyslog_elasticsearch_bulkmode_metrics|d("on") }}'
           writeoperation: '{{ rsyslog_elasticsearch_writeoperation_metrics|d("create") }}'
