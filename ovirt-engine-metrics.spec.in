@@ -65,6 +65,10 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Wed Jul 28 2021 Aviv Litman <alitman@redhat.com> - 1.4.3
+- Bug 1978655 - Fix  /roles/oVirt.logging/tasks/main.yml to fit linux-system-roles
+- Bug 1985977 - Add missing configuration parameters
+
 * Tue Oct 27 2020 Shirly Radco <sradco@redhat.com> - 1.4.2.2-1
 - Bug 1880015 - Update visualization template with keyword
 
