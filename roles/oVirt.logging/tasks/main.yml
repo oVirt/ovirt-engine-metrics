@@ -134,6 +134,10 @@
           inputs: [ovirt-log-input]
           outputs: [elasticsearch_logs_output]
 
+    - name: Populate logging_elasticsearch_password
+      set_fact:
+        logging_elasticsearch_password: "{{ logging_elasticsearch_password|d() }}"
+
     - name: Populate logging_outputs logs
       set_fact:
         logging_outputs: "{{ logging_outputs|d([]) + [elasticsearch_logs_output] }}"
@@ -163,6 +167,7 @@
           ca_cert_src: '{{ rsyslog_elasticsearch_ca_cert_path|d() }}'
           cert_src: '{{ rsyslog_elasticsearch_client_cert_path|d() }}'
           private_key_src: '{{ rsyslog_elasticsearch_client_key_path|d() }}'
+          uid: '{{ rsyslog_elasticsearch_uid|d("elastic") }}'
 
     - name: Populate logging_outputs metrics
       set_fact:
@@ -193,6 +198,7 @@
           ca_cert_src: '{{ rsyslog_elasticsearch_ca_cert_path|d() }}'
           cert_src: '{{ rsyslog_elasticsearch_client_cert_path|d() }}'
           private_key_src: '{{ rsyslog_elasticsearch_client_key_path|d() }}'
+          uid: '{{ rsyslog_elasticsearch_uid|d("elastic") }}'
 
     - name: Populate logging_inputs and logging_flows metrics
       set_fact:
