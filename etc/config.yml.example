@@ -14,9 +14,10 @@
 ovirt_env_name: engine
 
 # Address or hostname (FQDN) of the Elasticsearch server host
+# The value is a single host or list of hosts
 # If you use oVirt metrics store you can run:
 # oc get routes
 # and use the logging-es HOST/PORT
 # Example:
-# elasticsearch_host: es.{{ public_hosted_zone }}
+# elasticsearch_host: ["logging-es0", "logging-es1"]
 elasticsearch_host:

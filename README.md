@@ -27,7 +27,7 @@ You will need to set the following variables:
 
 - `elasticsearch_host:` (required - no default value)
 
-  Address or hostname (FQDN) of the Elasticsearch server host.
+  Address or hostname (FQDN) of the Elasticsearch server host. The value is a single host or list of hosts.
 
 - `manage_services:` (default: `"true"`)
 
