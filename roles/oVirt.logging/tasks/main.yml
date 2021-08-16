@@ -160,9 +160,9 @@
           allowUnsignedCerts: '{{ rsyslog_elasticsearch_allowunsignedcerts_logs|d("off") }}'
           tls: '{{ rsyslog_elasticsearch_tls_logs|d("true") }}'
           use_cert: '{{ rsyslog_elasticsearch_tls_logs|d("true") }}'
-          ca_cert_src: '{{ rsyslog_elasticsearch_ca_cert_path|d("/etc/pki/tls/certs/elasticsearch_ca_cert.pem") }}'
-          cert_src: '{{ rsyslog_elasticsearch_client_cert_path|d("/etc/pki/tls/certs/elasticsearch_client_cert.pem") }}'
-          private_key_src: '{{ rsyslog_elasticsearch_client_key_path|d("/etc/pki/tls/private/elasticsearch_client_key.pem") }}'
+          ca_cert_src: '{{ rsyslog_elasticsearch_ca_cert_path|d() }}'
+          cert_src: '{{ rsyslog_elasticsearch_client_cert_path|d() }}'
+          private_key_src: '{{ rsyslog_elasticsearch_client_key_path|d() }}'
 
     - name: Populate logging_outputs metrics
       set_fact:
@@ -190,9 +190,9 @@
           allowUnsignedCerts: '{{ rsyslog_elasticsearch_allowunsignedcerts_metrics|d("off") }}'
           tls: '{{ rsyslog_elasticsearch_tls_metrics|d("true") }}'
           use_cert: '{{ rsyslog_elasticsearch_tls_metrics|d("true") }}'
-          ca_cert_src: '{{ rsyslog_elasticsearch_ca_cert_path|d("/etc/pki/tls/certs/elasticsearch_ca_cert.pem") }}'
-          cert_src: '{{ rsyslog_elasticsearch_client_cert_path|d("/etc/pki/tls/certs/elasticsearch_client_cert.pem") }}'
-          private_key_src: '{{ rsyslog_elasticsearch_client_key_path|d("/etc/pki/tls/private/elasticsearch_client_key.pem") }}'
+          ca_cert_src: '{{ rsyslog_elasticsearch_ca_cert_path|d() }}'
+          cert_src: '{{ rsyslog_elasticsearch_client_cert_path|d() }}'
+          private_key_src: '{{ rsyslog_elasticsearch_client_key_path|d() }}'
 
     - name: Populate logging_inputs and logging_flows metrics
       set_fact:
