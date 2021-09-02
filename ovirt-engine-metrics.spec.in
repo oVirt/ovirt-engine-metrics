@@ -65,6 +65,10 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Thu Sep 2 2021 Aviv Litman <alitman@redhat.com> - 1.4.4
+- Bug 1978655 - Delete the defaults certs+key paths, and update LSR version
+- Update elasticsearch_host documentation to a list
+
 * Wed Jul 28 2021 Aviv Litman <alitman@redhat.com> - 1.4.3
 - Bug 1978655 - Fix  /roles/oVirt.logging/tasks/main.yml to fit linux-system-roles
 - Bug 1985977 - Add missing configuration parameters
