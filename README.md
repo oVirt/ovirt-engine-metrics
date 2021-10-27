@@ -1,5 +1,6 @@
 oVirt Engine Metrics
 ====================
+[![Copr build status](https://copr.fedorainfracloud.org/coprs/ovirt/ovirt-master-snapshot/package/ovirt-engine-metrics/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/ovirt/ovirt-master-snapshot/package/ovirt-engine-metrics/)
 
 The `oVirt.metrics` role enables you to deploy and configure rsyslog/fluentd and collectd on the engine and hypervisors to send metrics and logs to a remote Elasticsearch
 and manage the services.
