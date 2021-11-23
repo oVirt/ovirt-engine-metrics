@@ -66,7 +66,7 @@
             type: basics
         logging_outputs:
           - name: default_files
-            type: file
+            type: files
         logging_flows:
           - name: basic-flow
             inputs: [basic_input]

@@ -97,7 +97,7 @@
           type: basics
         default_files_output:
           name: default_files
-          type: file
+          type: files
         basic_flow:
           name: basic_flow
           inputs: [basic_input]
