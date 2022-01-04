@@ -2,6 +2,8 @@ oVirt Engine Metrics
 ====================
 [![Copr build status](https://copr.fedorainfracloud.org/coprs/ovirt/ovirt-master-snapshot/package/ovirt-engine-metrics/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/ovirt/ovirt-master-snapshot/package/ovirt-engine-metrics/)
 
+Welcome to the oVirt Engine Metrics source repository. This repository is hosted on [GitHub:ovirt-engine-metrics](https://github.com/oVirt/ovirt-engine-metrics).
+
 The `oVirt.metrics` role enables you to deploy and configure rsyslog/fluentd and collectd on the engine and hypervisors to send metrics and logs to a remote Elasticsearch
 and manage the services.
 
@@ -77,8 +79,16 @@ In order to run this role you will need to run:
      configure_ovirt_machines_for_metrics.sh --playbook=cleanup-ovirt-metrics.yml -vvv
 
 
-License
--------
+### Submitting patches
 
-Apache License 2.0
+Please submit patches to [GitHub:ovirt-engine-metrics](https://github.com/oVirt/ovirt-engine-metrics). If you are not familiar with the process, you can read about [collaborating with pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests) on the GitHub website.
 
+### Found a bug or documentation issue?
+
+To submit a bug or suggest an enhancement for oVirt Engine Metrics please use [oVirt Bugzilla for ovirt-engine-metrics product](https://bugzilla.redhat.com/enter_bug.cgi?product=ovirt-engine-metrics).
+
+If you don't have a Bugzilla account, you can still report [issues](https://github.com/oVirt/ovirt-engine-metrics/issues). If you find a documentation issue on the oVirt website, please navigate to the page footer and click "Report an issue on GitHub".
+
+## Still need help?
+
+If you have any other questions or suggestions, you can join and contact us on the [oVirt Users forum / mailing list](https://lists.ovirt.org/admin/lists/users.ovirt.org/).
