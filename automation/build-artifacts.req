@@ -1,7 +1,0 @@
-dnf-utils
-autoconf
-automake
-make
-python3-devel
-gettext-devel
-git
