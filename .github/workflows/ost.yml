@@ -5,7 +5,14 @@ on:
     types: [created]
 
 jobs:
+  debug-ost:
+    run: |
+      echo "Event: ${{ github.event }}"
+      echo "Review state: ${{ github.event.review.state }}"
+      echo "Comment body: ${{ github.event.review.state }}"
+
   trigger-ost:
+    needs: debug-ost
     if: ${{ github.event.issue.pull_request && github.event.review.state == 'approved' && github.event.comment.body == '/ost'}}
     uses: oVirt/ovirt-system-tests/.github/workflows/ost.yaml@master
     with:
