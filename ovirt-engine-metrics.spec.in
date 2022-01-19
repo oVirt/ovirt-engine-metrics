@@ -38,7 +38,7 @@ Url:            http://www.ovirt.org
 
 Requires:	ansible >= 2.9
 Requires:	python3-jmespath
-Requires:	rhel-system-roles >= 1.7.2-1
+Requires:	rhel-system-roles >= 1.11.0-1
 
 %description
 ovirt-engine-metrics allows configuring an oVirt installation to send metrics
