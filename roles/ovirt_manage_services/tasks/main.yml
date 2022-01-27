@@ -1,0 +1,97 @@
+---
+- name: Manage services
+  service:
+    name: '{{ item }}'
+    state: '{{ service_state }}'
+    enabled: '{{ service_enabled }}'
+  with_items: '{{ service_name }}'
+  ignore_errors: true
+
+# List hosts that Collectd, Fluentd/Rsyslog are not running on
+- block:
+    - name: Run initial validations sub-role
+      include_role:
+        name: "oVirt.metrics/roles/ovirt_initial_validations"
+
+    - name: Set service_name fact when logging_collector is rsyslog
+      set_fact:
+        service_name:
+          - collectd
+          - rsyslog
+      when: logging_collector == "rsyslog"
+
+    - name: Set service_name fact when logging_collector is fluentd
+      set_fact:
+        service_name:
+          - collectd
+          - fluentd
+      when: logging_collector == "fluentd"
+
+    - name: Check service status
+      ansible.builtin.command: systemctl status "{{ item }}"
+      with_items:
+        - '{{ service_name }}'
+      register: result
+      ignore_errors: yes
+
+    - name: Clean file
+      copy:
+        dest: '{{ hosts_not_configured_for_ovirt_metrics_file_path }}'
+        content: '# This file lists hosts where some of the oVirt metrics related services are not active in'
+        force: yes
+        mode: 0644
+      delegate_to: localhost
+
+    - name: Add line to file if service is not running
+      lineinfile:
+        path: '{{ hosts_not_configured_for_ovirt_metrics_file_path }}'
+        line: "{{ ansible_facts['nodename'] }}\n{{ item.stdout_lines| to_nice_yaml }}"
+      loop: "{{ result.results }}"
+      when:
+        - item.rc != 0
+      delegate_to: localhost
+
+    - debug:
+        msg:
+        - 'Please review hosts list who are not configured for oVirt metrics,'
+        - 'due to inactive ovirt metrics related services, at {{ hosts_not_configured_for_ovirt_metrics_file_path }}'
+      run_once: true
+  when: not cleanup_services|d(false)
+
+# Cleanup oVirt metrics services
+- block:
+    - name: Set facts to Configure rsyslog to default state
+      set_fact:
+        logging_inputs:
+          - name: basic_input
+            type: basics
+        logging_outputs:
+          - name: default_files
+            type: files
+        logging_flows:
+          - name: basic-flow
+            inputs: [basic_input]
+            outputs: [default_files]
+
+    - name: Set logging_purge_confs to remove oVirt metrics store configurations from Rsyslog
+      set_fact:
+        logging_purge_confs: true
+
+    - name: Run rsyslog sub-role
+      include_role:
+        name: linux-system-roles.logging
+
+    - name: Check if elasticsearch_host is set
+      debug:
+        msg: "Please delete the value of 'elasticsearch_host' from your your configuration file."
+      when:
+        - elasticsearch_host is defined
+        - elasticsearch_host|length > 0
+
+    - name: Check if fluentd_elasticsearch_host is set
+      debug:
+        msg: "Please delete the value of 'fluentd_elasticsearch_host' from your your configuration file"
+      when:
+        - fluentd_elasticsearch_host is defined
+        - fluentd_elasticsearch_host|length > 0
+  when: cleanup_services|d(false)

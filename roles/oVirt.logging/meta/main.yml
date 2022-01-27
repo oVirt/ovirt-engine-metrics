@@ -1,5 +1,0 @@
----
-dependencies:
-  - oVirt.ovirt-include-vars-files
-  - oVirt.read-local-engine-defaults
-  - oVirt.read-local-pki-files

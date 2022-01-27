@@ -1,0 +1,143 @@
+---
+#  notify: set failed validation
+
+- name: If output plugin is elasticsearch, validate host address is set
+  debug:
+    msg: "elasticsearch_host is not configured. This host will not be configured to send metrics"
+  when:
+    - elasticsearch_host == None or elasticsearch_host is undefined
+    - fluentd_elasticsearch_host == None or fluentd_elasticsearch_host is undefined
+    - logging_output_type == "elasticsearch"
+  changed_when: true
+  notify: set failed validation
+
+# Task required for backwards compatibility task
+- name: Update fluentd_elasticsearch_host
+  set_fact:
+    fluentd_elasticsearch_host: ""
+  when: (fluentd_elasticsearch_host == "elasticsearch-server.example.com") or (fluentd_elasticsearch_host is undefined)
+
+- name: Update fluentd_elasticsearch_host if elasticsearch_host is defined
+  set_fact:
+    fluentd_elasticsearch_host: "{{ elasticsearch_host }}"
+  when: elasticsearch_host is defined
+
+- name: Set elasticsearch_host if undefined and fluentd_elasticsearch_host is defined
+  set_fact:
+    elasticsearch_host: "{{ fluentd_elasticsearch_host }}"
+  when:
+    - elasticsearch_host is undefined
+
+- name: Set logging_output_type if undefined and fluentd_elasticsearch_host is defined
+  set_fact:
+    logging_output_type: "{{ fluentd_output_plugin }}"
+  when: logging_output_type is undefined
+
+# Check collectors base packages availability
+- block:
+    - name: Install Rsyslog packages
+      yum:
+        name: '{{ rsyslog_base_packages }}'
+        state: present
+      ignore_errors: yes
+
+    - name: Gather the rpm package facts
+      package_facts:
+        manager: rpm
+
+    - name: Check Rsyslog packages are available
+      set_fact:
+        rsyslog_base_packages_available: false
+      with_items:
+        - "{{ rsyslog_base_packages }}"
+      when: item not in ansible_facts.packages
+
+    - name: Set logging_collector as rsyslog
+      set_fact:
+        logging_collector: "rsyslog"
+      when:
+        - rsyslog_base_packages_available
+        - logging_collector is undefined
+  when: logging_collector is undefined or logging_collector == 'rsyslog'
+
+- block:
+    - name: Install Fluentd packages
+      yum:
+        name: '{{ fluentd_base_packages }}'
+        state: present
+      ignore_errors: yes
+
+    - name: Gather the rpm package facts
+      package_facts:
+        manager: rpm
+
+    - name: Check Fluentd packages are available
+      set_fact:
+        fluentd_base_packages_available: false
+      with_items:
+        - "{{ fluentd_base_packages }}"
+      when: item not in ansible_facts.packages
+
+    - name: Set logging_collector as fluentd
+      set_fact:
+        logging_collector: "fluentd"
+      when:
+        - fluentd_base_packages_available
+        - logging_collector is undefined
+  when: not rsyslog_base_packages_available or logging_collector == 'fluentd'
+
+- name: Validate logging_collector is defined
+  debug:
+    msg: "Logs collector base packages are not available. Metrics role will not be able to continue"
+  when: logging_collector is undefined
+  changed_when: true
+  notify: set failed validation
+
+- name: Validate Rsyslog logging_collector base packages are available
+  debug:
+    msg: "Rsyslog collector is missing required base packages. Metrics role will not be able to continue"
+  when:
+    - not rsyslog_base_packages_available
+    - logging_collector|d('') == 'rsyslog'
+  changed_when: true
+  notify: set failed validation
+
+- name: Validate Fluentd logging_collector base packages are available
+  debug:
+    msg: "Fluentd collector is missing required base packages. Metrics role will not be able to continue"
+  when:
+    - not fluentd_base_packages_available
+    - logging_collector|d('') == 'fluentd'
+  changed_when: true
+  notify: set failed validation
+
+- block:
+
+    # Rsyslog validations
+    - name: Update user configuration required
+      debug:
+        msg: "Please update the 'fluentd_elasticsearch_host' to 'elasticsearch_host' in your configuration file. Please see latest documentation"
+      when:
+        - logging_collector == "rsyslog"
+        - fluentd_elasticsearch_host != None
+
+    - name: If logging collector is rsyslog, validate that the output is elasticsearch
+      debug:
+        msg: "The defined output target is not supported in Rsyslog, please check documentation and update you configuration."
+      when:
+        - logging_collector == "rsyslog"
+        - (logging_output_type == "fluentd") or (logging_output_type == "file")
+      changed_when: true
+      notify: set failed validation
+
+    # Fluentd validations
+    - name: If output plugin is fluentd, validate host address is set
+      debug:
+        msg: "oVirt Metrics store is not configured. This host will not be configured to send metrics"
+      when:
+        - logging_collector == "fluentd"
+        - fluentd_fluentd_host is undefined
+        - logging_output_type == "fluentd"
+      changed_when: true
+      notify: set failed validation
+  when: logging_collector is defined

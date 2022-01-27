@@ -3,4 +3,4 @@
   hosts: all
 
   roles:
-    - oVirt.metrics/roles/oVirt.manage-services
+    - oVirt.metrics/roles/ovirt_manage_services

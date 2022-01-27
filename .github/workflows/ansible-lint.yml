@@ -23,5 +23,14 @@ jobs:
       image: quay.io/ovirt/buildcontainer:${{ matrix.container-name }}
 
     steps:
-    - name: Empty step
-      run: echo "Success"
+    - name: Checkout sources
+      uses: actions/checkout@v2
+
+    - name: Install pip deps
+      run: |
+          pip3 install --upgrade pip
+          pip3 install "rich<11.0.0" "ansible-lint<5.0.0"
+
+    - name: Running ansible-lint on roles
+    # 701 - no 'galaxy_info' found
+      run: ansible-lint roles/* -x 701

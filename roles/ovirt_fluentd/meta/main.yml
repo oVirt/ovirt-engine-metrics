@@ -1,0 +1,15 @@
+---
+dependencies:
+  - ovirt_ovirt_include_vars_files
+  - ovirt_read_local_engine_defaults
+  - ovirt_read_local_pki_files
+  - ovirt_ovirt_fluentd/ovirt_fluentd_package
+  - ovirt_ovirt_fluentd/fluentd_setup
+  - ovirt_ovirt_fluentd/set_fluentd_system_configurations
+  - ovirt_ovirt_fluentd/client
+  - ovirt_ovirt_fluentd/http_input
+  - ovirt_ovirt_fluentd/ovirt_host
+  - ovirt_ovirt_fluentd/ovirt_engine
+  - ovirt_ovirt_fluentd/ovirt_host_logs
+  - ovirt_ovirt_fluentd/ovirt_engine_logs
+  - ovirt_ovirt_fluentd/ovirt_post_processing_common

@@ -1,0 +1,10 @@
+---
+dependencies:
+  - ovirt_ovirt_include_vars_files
+  - ovirt_ovirt_collectd/ovirt_collectd_package
+  - ovirt_read_local_engine_defaults
+  - ovirt_ovirt_collectd/collectd_setup
+  - ovirt_ovirt_collectd/ovirt_host
+  - ovirt_ovirt_collectd/ovirt_engine
+  - ovirt_ovirt_collectd/collectd_output
+  - ovirt_ovirt_collectd/restart_collectd_if_needed
