@@ -5,7 +5,7 @@
   tasks:
     - name: Cleanup services
       include_role:
-        name: "oVirt.metrics/roles/oVirt.manage-services"
+        name: "oVirt.metrics/roles/ovirt_manage_services"
       vars:
         service_state: stopped
         service_enabled: no
