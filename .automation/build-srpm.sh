@@ -21,5 +21,4 @@ make dist
 # Build source package
 rpmbuild \
     -D "_topdir rpmbuild" \
-    -D "release_suffix ${SUFFIX}" \
     -ts ovirt-engine-metrics*.tar.gz
