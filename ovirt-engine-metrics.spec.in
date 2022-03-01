@@ -36,7 +36,7 @@ Group:          Virtualization/Management
 BuildArch:      noarch
 Url:            http://www.ovirt.org
 
-Requires:	ansible >= 2.9
+Requires:	ansible-core >= 2.12
 Requires:	python3-jmespath
 Requires:	rhel-system-roles >= 1.11.0-1
 
