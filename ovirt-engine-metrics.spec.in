@@ -65,6 +65,12 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Mon Feb 28 2022 Aviv Litman <alitman@redhat.com> - 1.5.0
+- Bug 2025936 - metrics configuration playbooks failing due to rhel-system-role last refactor
+- Bug 1990462 - Add user name and password to ELK integration
+- Bug 2012569 - Update the LSR version
+- Bug 1804268 - Add ansible-lint, and adjust the role accordingly
+
 * Thu Sep 2 2021 Aviv Litman <alitman@redhat.com> - 1.4.4
 - Bug 1978655 - Delete the defaults certs+key paths, and update LSR version
 - Update elasticsearch_host documentation to a list
