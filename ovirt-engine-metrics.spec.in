@@ -65,6 +65,9 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Apr 5 2022 Aviv Litman <alitman@redhat.com> - 1.6.0
+- Bug 2059521 - Upgrade to ansible-core-2.12
+
 * Mon Feb 28 2022 Aviv Litman <alitman@redhat.com> - 1.5.0
 - Bug 2025936 - metrics configuration playbooks failing due to rhel-system-role last refactor
 - Bug 1990462 - Add user name and password to ELK integration
