@@ -65,6 +65,9 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Wed Jun 1 2022 Aviv Litman <alitman@redhat.com> - 1.6.1
+Mark temp repo directory as safe for COPR
+
 * Tue Apr 5 2022 Aviv Litman <alitman@redhat.com> - 1.6.0
 - Bug 2059521 - Upgrade to ansible-core-2.12
 
