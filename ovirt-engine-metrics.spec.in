@@ -37,7 +37,12 @@ BuildArch:      noarch
 Url:            http://www.ovirt.org
 
 Requires:	ansible-core >= 2.12
+%if 0%{?rhel} < 9
 Requires:	python38-jmespath
+%else
+Requires:	python3-jmespath
+%endif
+
 Requires:	rhel-system-roles >= 1.11.0-1
 
 %description
