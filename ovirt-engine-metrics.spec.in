@@ -70,6 +70,9 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Mon Oct 03 2022 Martin Perina <mperina@redhat.com> - 1.6.1-1
+- Adapt dependencies on EL9
+
 * Tue Apr 5 2022 Aviv Litman <alitman@redhat.com> - 1.6.0
 - Bug 2059521 - Upgrade to ansible-core-2.12
 
