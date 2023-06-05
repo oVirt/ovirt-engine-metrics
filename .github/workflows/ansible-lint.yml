@@ -31,6 +31,9 @@ jobs:
     - name: Install pip deps
       run: ${{ matrix.pip-command }} install "rich<11.0.0" "ansible-lint>=6.0.0,<7.0.0"
 
+    - name: Install ansible.posix
+      run: ansible-galaxy collection install -c ansible.posix
+
     - name: Running ansible-lint on roles
     # 701 - no 'galaxy_info' found
       run: ansible-lint roles/* -x 701
