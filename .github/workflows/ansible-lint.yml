@@ -13,9 +13,11 @@ jobs:
           - name: centos-stream-8
             shortcut: cs8
             container-name: el8stream
+            pip-command: pip3.9
           - name: centos-stream-9
             shortcut: cs9
             container-name: el9stream
+            pip-command: pip3
 
     name: ${{ matrix.name }}
 
@@ -24,12 +26,10 @@ jobs:
 
     steps:
     - name: Checkout sources
-      uses: actions/checkout@v2
+      uses: ovirt/checkout-action@main
 
     - name: Install pip deps
-      run: |
-          pip3 install --upgrade pip
-          pip3 install "rich<11.0.0" "ansible-lint>=6.0.0,<7.0.0"
+      run: ${{ matrix.pip-command }} install "rich<11.0.0" "ansible-lint>=6.0.0,<7.0.0"
 
     - name: Running ansible-lint on roles
     # 701 - no 'galaxy_info' found
