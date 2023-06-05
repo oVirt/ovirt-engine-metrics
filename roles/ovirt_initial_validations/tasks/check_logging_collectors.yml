@@ -5,8 +5,8 @@
   debug:
     msg: "elasticsearch_host is not configured. This host will not be configured to send metrics"
   when:
-    - elasticsearch_host == None or elasticsearch_host is undefined
-    - fluentd_elasticsearch_host == None or fluentd_elasticsearch_host is undefined
+    - elasticsearch_host is undefined or elasticsearch_host == None
+    - fluentd_elasticsearch_host is undefined or fluentd_elasticsearch_host == None
     - logging_output_type == "elasticsearch"
   changed_when: true
   notify: set failed validation
@@ -15,7 +15,7 @@
 - name: Update fluentd_elasticsearch_host
   set_fact:
     fluentd_elasticsearch_host: ""
-  when: (fluentd_elasticsearch_host == "elasticsearch-server.example.com") or (fluentd_elasticsearch_host is undefined)
+  when: (fluentd_elasticsearch_host is undefined) or (fluentd_elasticsearch_host == "elasticsearch-server.example.com")
 
 - name: Update fluentd_elasticsearch_host if elasticsearch_host is defined
   set_fact:
