@@ -1,5 +1,8 @@
 #!/bin/bash -xe
 
+# Mark current directory as safe for git to be able to parse git hash
+git config --global --add safe.directory $(pwd)
+
 # git hash of current commit should be passed as the 1st paraameter
 if [ "${GITHUB_SHA}" == "" ]; then
   GIT_HASH=$(git rev-list HEAD | wc -l)
