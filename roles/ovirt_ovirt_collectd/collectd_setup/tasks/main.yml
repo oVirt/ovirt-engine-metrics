@@ -6,7 +6,7 @@
   when: manage_services|default(true)
 
 - name: Set collectd_tcp_network_connect
-  seboolean:
+  ansible.posix.seboolean:
     name: collectd_tcp_network_connect
     state: yes
     persistent: yes
