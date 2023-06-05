@@ -29,7 +29,7 @@ jobs:
     - name: Install pip deps
       run: |
           pip3 install --upgrade pip
-          pip3 install "rich<11.0.0" "ansible-lint<5.0.0"
+          pip3 install "rich<11.0.0" "ansible-lint>=6.0.0,<7.0.0"
 
     - name: Running ansible-lint on roles
     # 701 - no 'galaxy_info' found
