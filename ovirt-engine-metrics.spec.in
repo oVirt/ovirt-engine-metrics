@@ -31,7 +31,7 @@ Name:           @PACKAGE_NAME@
 Version:        @RPM_VERSION@
 Release:        @RPM_RELEASE@%{?release_suffix}%{?dist}
 Source0:        http://resources.ovirt.org/pub/src/@PACKAGE_NAME@/@PACKAGE_NAME@-@PACKAGE_VERSION@.tar.gz
-License:        ASL 2.0
+License:        Apache-2.0
 Group:          Virtualization/Management
 BuildArch:      noarch
 Url:            http://www.ovirt.org
@@ -70,6 +70,11 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Tue Nov 28 2023 Sandro Bonazzola <sandro.bonazzola@gmail.com> - 1.6.2-1
+- Rebase on upstream 1.6.2.
+- Migrated to SPDX license.
+- Fix comparison logic in ovirt_initial_validations Ansible role https://github.com/oVirt/ovirt-engine/issues/869
+
 * Mon Oct 03 2022 Martin Perina <mperina@redhat.com> - 1.6.1-1
 - Adapt dependencies on EL9
 
