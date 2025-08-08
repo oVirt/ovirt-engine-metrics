@@ -1,35 +1,38 @@
 ---
-- block:
+- name: Execute teasks when logging is set to fluentd
+  when:
+    - logging_collector == 'fluentd'
+    - logging_output_type == 'fluentd'
+  block:
     - name: Check if local fluentd certificate exists
       delegate_to: localhost
       run_once: true
-      stat:
+      ansible.builtin.stat:
         path: "{{ local_fluentd_ca_cert_path }}"
       register: local_fluentd_ca_cert_path_exists
 
     - name: Read fluentd certificate
       delegate_to: localhost
       run_once: true
-      set_fact:
+      ansible.builtin.set_fact:
         fluentd_ca_cert: "{{ lookup('file', local_fluentd_ca_cert_path) }}"
       when:
         - local_fluentd_ca_cert_path_exists.stat.exists
-  when:
-    - logging_collector == 'fluentd'
-    - logging_output_type == 'fluentd'
 
-- block:
+- name: Run actions when logging_output_type is elasticsearch
+  when: logging_output_type == 'elasticsearch'
+  block:
     - name: Check if local fluentd elasticsearch CA certificate exists
       delegate_to: localhost
       run_once: true
-      stat:
+      ansible.builtin.stat:
         path: "{{ local_fluentd_elasticsearch_ca_cert_path }}"
       register: local_fluentd_elasticsearch_ca_cert_path_exists
 
     - name: Read fluentd elasticsearch CA certificate
       delegate_to: localhost
       run_once: true
-      set_fact:
+      ansible.builtin.set_fact:
         fluentd_elasticsearch_ca_cert: "{{ lookup('file', local_fluentd_elasticsearch_ca_cert_path) }}"
       when:
         - local_fluentd_elasticsearch_ca_cert_path_exists.stat.exists
@@ -37,14 +40,14 @@
     - name: Check if local fluentd elasticsearch client certificate exists
       delegate_to: localhost
       run_once: true
-      stat:
+      ansible.builtin.stat:
         path: "{{ local_fluentd_elasticsearch_client_cert_path }}"
       register: local_fluentd_elasticsearch_client_cert_path_exists
 
     - name: Read fluentd elasticsearch client certificate
       delegate_to: localhost
       run_once: true
-      set_fact:
+      ansible.builtin.set_fact:
         fluentd_elasticsearch_client_cert: "{{ lookup('file', local_fluentd_elasticsearch_client_cert_path) }}"
       when:
         - local_fluentd_elasticsearch_client_cert_path_exists.stat.exists
@@ -52,16 +55,15 @@
     - name: Check if local fluentd elasticsearch client key exists
       delegate_to: localhost
       run_once: true
-      stat:
+      ansible.builtin.stat:
         path: "{{ local_fluentd_elasticsearch_client_key_path }}"
       register: local_fluentd_elasticsearch_client_key_path_exists
 
     - name: Read fluentd elasticsearch client key
       delegate_to: localhost
       run_once: true
-      set_fact:
+      ansible.builtin.set_fact:
         fluentd_elasticsearch_client_key: "{{ lookup('file', local_fluentd_elasticsearch_client_key_path) }}"
       no_log: true
       when:
         - local_fluentd_elasticsearch_client_key_path_exists.stat.exists
-  when: logging_output_type == 'elasticsearch'

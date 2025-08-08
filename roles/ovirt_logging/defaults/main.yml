@@ -15,7 +15,7 @@ logging_owner: root
 logging_group: root
 
 # File mode for logging configuration files.
-logging_config_mode: 0640
+logging_config_mode: "0640"
 
 # The maximum supported message size (both for sending and receiving).
 rsyslog_max_message_size: "64k"

@@ -41,4 +41,4 @@ jobs:
 
     - name: Running ansible-lint on roles
     # 701 - no 'galaxy_info' found
-      run: ansible-lint roles/* -x 701 || true
+      run: ansible-lint roles/* -x 701

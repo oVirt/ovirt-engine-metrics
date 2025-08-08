@@ -1,17 +1,18 @@
 ---
-- block:
+- name: Place config files and restart collectd
+  when: ovirt_metrics_host_deploy is undefined and inventory_hostname in groups.engine
+  block:
     - name: Place builtins-conf-for-ovirt-engine-config
-      template:
+      ansible.builtin.template:
         src: builtins-conf-for-ovirt-engine.conf.j2
         dest: /etc/collectd.d/20-builtins-conf-for-ovirt-engine.conf
-        mode: 0644
-      notify: restart collectd
+        mode: "0644"
+      notify: Restart collectd
 
     - name: Place collectd_postgresql config
-      template:
+      ansible.builtin.template:
         src: collectd_postgresql.conf.j2
         dest: /etc/collectd.d/20-collectd_postgresql.conf
-        mode: 0644
-      notify: restart collectd
+        mode: "0644"
+      notify: Restart collectd
       when: configure_collectd_postgresql
-  when: ovirt_metrics_host_deploy is undefined and inventory_hostname in groups.engine

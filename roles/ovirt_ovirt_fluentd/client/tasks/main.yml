@@ -1,6 +1,6 @@
 ---
 - name: Validate fluentd_output_plugin parameter
-  fail:
+  ansible.builtin.fail:
     msg: "'{{ fluentd_output_plugin }}' must be set to either 'elasticsearch' or 'fluentd'."
   when:
     - fluentd_output_plugin != fluentd_output_plugin_elasticsearch
@@ -8,28 +8,28 @@
     - fluentd_output_plugin != fluentd_output_plugin_file
 
 - name: Remove elasticsearch output plugin configuration
-  file:
+  ansible.builtin.file:
     state: absent
     path: '{{ fluentd_config_parts_dir }}/30-elasticsearch-output.conf'
   when: fluentd_output_plugin != fluentd_output_plugin_elasticsearch
-  notify: restart fluentd
+  notify: Restart fluentd
 
 - name: Remove secure_forward output plugin configuration
-  file:
+  ansible.builtin.file:
     state: absent
     path: '{{ fluentd_config_parts_dir }}/30-source-forward.conf'
   when: fluentd_output_plugin != fluentd_output_plugin_fluentd
-  notify: restart fluentd
+  notify: Restart fluentd
 
 - name: Remove file output plugin configuration
-  file:
+  ansible.builtin.file:
     state: absent
     path: '{{ fluentd_config_parts_dir }}/30-file-output.conf'
   when: fluentd_output_plugin != fluentd_output_plugin_file
-  notify: restart fluentd
+  notify: Restart fluentd
 
 - name: Set fluentd_fluentd_port fact (non-ssl)
-  set_fact:
+  ansible.builtin.set_fact:
     fluentd_fluentd_port: 24224
   when:
     - not fluentd_use_ssl
@@ -37,14 +37,14 @@
     - fluentd_output_plugin == fluentd_output_plugin_fluentd
 
 - name: Set fluentd_port fact (ssl)
-  set_fact:
+  ansible.builtin.set_fact:
     fluentd_fluentd_port: 24284
   when:
     - fluentd_use_ssl and not fluentd_fluentd_port is defined
     - fluentd_output_plugin == fluentd_output_plugin_fluentd
 
 - name: Set fluentd_elasticsearch_port fact (ssl)
-  set_fact:
+  ansible.builtin.set_fact:
     fluentd_elasticsearch_port: 9200
   when:
     - fluentd_use_ssl
@@ -52,7 +52,7 @@
     - fluentd_output_plugin == fluentd_output_plugin_elasticsearch
 
 - name: Install non-ssl client
-  template:
+  ansible.builtin.template:
     src: forward_no_ssl.conf
     dest: '{{ fluentd_config_parts_dir }}/30-source-forward.conf'
     owner: '{{ fluentd_owner }}'
@@ -61,10 +61,10 @@
   when:
     - not fluentd_use_ssl
     - fluentd_output_plugin == fluentd_output_plugin_fluentd
-  notify: restart fluentd
+  notify: Restart fluentd
 
 - name: Install ssl client
-  template:
+  ansible.builtin.template:
     src: forward_ssl.conf
     dest: '{{ fluentd_config_parts_dir }}/30-source-forward.conf'
     owner: '{{ fluentd_owner }}'
@@ -73,10 +73,10 @@
   when:
     - fluentd_use_ssl
     - fluentd_output_plugin == fluentd_output_plugin_fluentd
-  notify: restart fluentd
+  notify: Restart fluentd
 
 - name: Install elasticsearch client configuration
-  template:
+  ansible.builtin.template:
     src: elasticsearch_output.conf
     dest: '{{ fluentd_config_parts_dir }}/30-elasticsearch-output.conf'
     owner: '{{ fluentd_owner }}'
@@ -85,10 +85,10 @@
   when:
     - fluentd_use_ssl
     - fluentd_output_plugin == fluentd_output_plugin_elasticsearch
-  notify: restart fluentd
+  notify: Restart fluentd
 
 - name: Create fluentd file output logs directory
-  file:
+  ansible.builtin.file:
     name: '{{ fluentd_file_output_dir }}'
     owner: '{{ fluentd_owner }}'
     group: '{{ fluentd_group }}'
@@ -98,7 +98,7 @@
     - fluentd_output_plugin == fluentd_output_plugin_file
 
 - name: Install README in file output logs directory
-  template:
+  ansible.builtin.template:
     src: file_output_README.md
     dest: '{{ fluentd_file_output_dir }}/README.md'
     owner: '{{ fluentd_owner }}'
@@ -106,10 +106,10 @@
     mode: '{{ fluentd_config_mode }}'
   when:
     - fluentd_output_plugin == fluentd_output_plugin_file
-  notify: restart fluentd
+  notify: Restart fluentd
 
 - name: Install file client configuration
-  template:
+  ansible.builtin.template:
     src: file_output.conf
     dest: '{{ fluentd_config_parts_dir }}/30-file-output.conf'
     owner: '{{ fluentd_owner }}'
@@ -117,4 +117,4 @@
     mode: '{{ fluentd_config_mode }}'
   when:
     - fluentd_output_plugin == fluentd_output_plugin_file
-  notify: restart fluentd
+  notify: Restart fluentd

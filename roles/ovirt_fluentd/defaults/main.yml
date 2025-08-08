@@ -18,10 +18,10 @@ fluentd_owner: root
 fluentd_group: root
 
 # File mode for Fluentd configuration files.
-fluentd_config_mode: 0640
+fluentd_config_mode: "0640"
 
 # File mode for Fluentd configuration directories.
-fluentd_config_dir_mode: 0750
+fluentd_config_dir_mode: "0750"
 
 # Default output type
 logging_output_type: elasticsearch
