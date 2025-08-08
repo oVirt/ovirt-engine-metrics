@@ -1,81 +1,81 @@
 ---
-#  notify: set failed validation
+#  notify: Set failed validation
 
 - name: Check logging collectors
-  include_tasks: check_logging_collectors.yml
+  ansible.builtin.include_tasks: check_logging_collectors.yml
   when: check_logging_collectors
 
 - name: Check if Collectd should be disabled and stopped
-  debug:
+  ansible.builtin.debug:
     msg: "If configured, Collectd will be disabled and stopped since collect_ovirt_collectd_metrics is false"
   when:
     - not collect_ovirt_collectd_metrics|d(true)
   changed_when: true
   notify:
-    - systemd daemon reload
-    - stop collectd service
+    - Systemd daemon reload
+    - Stop collectd service
 
 # Validate ovirt-env-name
 - name: Validate ovirt-env-name parameter is set
-  debug:
+  ansible.builtin.debug:
     msg: "oVirt Metrics store is not configured. This host will not be configured to send metrics"
   when:
     - ovirt_env_name is undefined
   changed_when: true
-  notify: set failed validation
+  notify: Set failed validation
   delegate_to: localhost
   run_once: true
 
-- name: force all notified handlers to run at this point, not waiting for normal sync points
-  meta: flush_handlers
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  ansible.builtin.meta: flush_handlers
 
-- block:
+- name: Run actions when failed validation is undefined
+  when: failed_validation is undefined
+  block:
     - name: Check environment name length
-      debug:
+      ansible.builtin.debug:
         msg: "'{{ ovirt_env_name }}' length must be up to 49 characters. Please update ovirt_env_name variable"
       when: ovirt_env_name | length > 49
       changed_when: true
-      notify: set failed validation
+      notify: Set failed validation
       delegate_to: localhost
       run_once: true
 
     - name: Check environment name does not start with a number
-      debug:
+      ansible.builtin.debug:
         msg: "'{{ ovirt_env_name }}' can not begin with a number. Please update ovirt_env_name variable"
       when: ovirt_env_name is match('^[0-9]')
       changed_when: true
-      notify: set failed validation
+      notify: Set failed validation
       delegate_to: localhost
       run_once: true
 
     - name: Check environment name does not start a with dash
-      debug:
+      ansible.builtin.debug:
         msg: "'{{ ovirt_env_name }}' can not begin with a hyphen ('-'). Please update ovirt_env_name variable"
       when: ovirt_env_name.startswith('-')
       changed_when: true
-      notify: set failed validation
+      notify: Set failed validation
       delegate_to: localhost
       run_once: true
 
     - name: Check environment name does not end a with dash
-      debug:
+      ansible.builtin.debug:
         msg: "'{{ ovirt_env_name }}' can not end with a hyphen ('-'). Please update ovirt_env_name variable"
       when: ovirt_env_name.endswith('-')
       changed_when: true
-      notify: set failed validation
+      notify: Set failed validation
       delegate_to: localhost
       run_once: true
 
     - name: Check environment name includes only alphanum and dashes
-      debug:
+      ansible.builtin.debug:
         msg: "'{{ ovirt_env_name }}' can include only alpahnumerics and hyphens ('-'). Please update ovirt_env_name variable"
       when: ovirt_env_name is match('.*[^a-zA-Z0-9-].*')
       changed_when: true
-      notify: set failed validation
+      notify: Set failed validation
       delegate_to: localhost
       run_once: true
 
-    - name: force all notified handlers to run at this point, not waiting for normal sync points
-      meta: flush_handlers
-
-  when: failed_validation is undefined
+    - name: Force all notified handlers to run at this point, not waiting for normal sync points
+      ansible.builtin.meta: flush_handlers

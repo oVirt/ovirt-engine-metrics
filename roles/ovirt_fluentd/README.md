@@ -3,7 +3,7 @@
 This role runs dependent fluentd roles, Roles list is located in the meta directory.
 
 It is run as part of the `Configure Metrics` play and the default `configure` tag.
-It also includes the `restart fluentd` handler.
+It also includes the `Restart fluentd` handler.
 
 
 The available variables for this role are:

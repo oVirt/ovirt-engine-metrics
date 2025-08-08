@@ -1,22 +1,23 @@
 - name: Run initial validations sub-role
-  include_role:
+  ansible.builtin.include_role:
     name: "oVirt.metrics/roles/ovirt_initial_validations"
 
-- block:
+- name: Run actions during undefined failed validation
+  when: failed_validation is undefined
+  block:
     - name: Run Fluentd sub-role
-      include_role:
+      ansible.builtin.include_role:
         name: "oVirt.metrics/roles/ovirt_fluentd"
       when:
         - logging_collector|d('fluentd') == 'fluentd'
 
     - name: Run logging sub-role
-      include_role:
+      ansible.builtin.include_role:
         name: "oVirt.metrics/roles/ovirt_logging"
       when:
         - logging_collector|d('fluentd') == 'rsyslog'
 
     - name: Run Collectd sub-role
-      include_role:
+      ansible.builtin.include_role:
         name: "oVirt.metrics/roles/ovirt_collectd"
       when: collect_ovirt_collectd_metrics|d(true)|bool
-  when: failed_validation is undefined

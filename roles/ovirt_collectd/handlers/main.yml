@@ -1,5 +1,5 @@
 ---
-- name: restart collectd
-  service:
+- name: Restart collectd
+  ansible.builtin.service:
     name: '{{ collectd_service_name }}'
     state: restarted

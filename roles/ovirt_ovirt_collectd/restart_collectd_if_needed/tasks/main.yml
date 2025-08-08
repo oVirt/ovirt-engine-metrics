@@ -2,113 +2,118 @@
 # In oVirt specific use case we send collectd statistics data to fluentd or rsyslog.
 # If fluentd/rsyslog is not running collectd will log errors messages when trying to connect to fluentd/rsyslog.
 # If fluentd/rsyslog is not running we stop collectd.
-- name: force all notified handlers to run at this point, not waiting for normal sync points
-  meta: flush_handlers
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  ansible.builtin.meta: flush_handlers
 
-- block:
-
-    - name: pause for fluentd to start
-      pause:
+- name: Tasks when logging collector is fluentd
+  when: logging_collector|d('fluentd') == 'fluentd'
+  block:
+    - name: Pause for fluentd to start
+      ansible.builtin.pause:
         seconds: 5
 
     - name: Check if fluentd is running
-      ansible.builtin.command: systemctl is-active fluentd
-      register: service_fluentd_status
-      ignore_errors: yes
+      ansible.builtin.systemd:
+        name: fluentd
+        state: started
+        enabled: false
+      register: fluentd_status_result
       changed_when: false
       failed_when: false
 
-    - name: set fluentd_is_running fact
-      set_fact:
-        fluentd_is_running: >-
-          {{ service_fluentd_status.rc == 0 }}
+    - name: Set fluentd_is_running fact
+      ansible.builtin.set_fact:
+        fluentd_is_running: "{{ fluentd_status_result.status.ActiveState == 'active' }}"
 
     - name: Is fluentd running
-      debug:
-        msg="{{ fluentd_is_running }}"
+      ansible.builtin.debug:
+        msg: "{{ fluentd_is_running }}"
 
-    - name: restart collectd if fluentd is up
-      debug:
-        msg="trigger collectd restart, since fluentd is up"
+    - name: Restart collectd if fluentd is up
+      ansible.builtin.debug:
+        msg: trigger collectd restart, since fluentd is up
       when:
         - fluentd_is_running|default(false)|bool
       changed_when: fluentd_is_running|default(false)|bool
-      notify: restart collectd
+      notify: Restart collectd
 
-    - name: force all notified handlers to run at this point, not waiting for normal sync points
-      meta: flush_handlers
+    - name: Force all notified handlers to run at this point, not waiting for normal sync points
+      ansible.builtin.meta: flush_handlers
 
-    - name: pause for collectd to start
-      pause:
+    - name: Pause for collectd to start
+      ansible.builtin.pause:
         seconds: 5
       when:
         - fluentd_is_running|default(false)|bool
 
     - name: Stop collectd service if fluentd is not running
-      service:
+      ansible.builtin.service:
         name: collectd
         state: stopped
       when: not fluentd_is_running|default(false)|bool
-  when: logging_collector|d('fluentd') == 'fluentd'
 
-- block:
-
-    - name: pause for rsyslog to start
-      pause:
+- name: Actions when logging collector is rsyslog
+  when: logging_collector|d('fluentd') == 'rsyslog'
+  block:
+    - name: Pause for rsyslog to start
+      ansible.builtin.pause:
         seconds: 5
 
     - name: Check if rsyslog is running
-      ansible.builtin.command: systemctl is-active rsyslog
+      ansible.builtin.systemd:
+        name: rsyslog
+        state: started
+        enabled: false
       register: service_rsyslog_status
-      ignore_errors: yes
+      ignore_errors: true
       changed_when: false
       failed_when: false
 
-    - name: set rsyslog_is_running fact
-      set_fact:
-        rsyslog_is_running: >-
-          {{ service_rsyslog_status.rc == 0 }}
+    - name: Set rsyslog_is_running fact
+      ansible.builtin.set_fact:
+        rsyslog_is_running: "{{ service_rsyslog_status.status.ActiveState == 'active' }}"
 
     - name: Is rsyslog running
-      debug:
-        msg="{{ rsyslog_is_running }}"
+      ansible.builtin.debug:
+        msg: "{{ rsyslog_is_running }}"
 
-    - name: restart collectd if rsyslog is up
-      debug:
-        msg="trigger collectd restart, since rsyslog is up"
+    - name: Restart collectd if rsyslog is up
+      ansible.builtin.debug:
+        msg: trigger collectd restart, since rsyslog is up"
       when:
         - rsyslog_is_running|default(false)|bool
       changed_when: rsyslog_is_running|default(false)|bool
-      notify: restart collectd
+      notify: Restart collectd
 
-    - name: force all notified handlers to run at this point, not waiting for normal sync points
-      meta: flush_handlers
+    - name: Force all notified handlers to run at this point, not waiting for normal sync points
+      ansible.builtin.meta: flush_handlers
 
-    - name: pause for collectd to start
-      pause:
+    - name: Pause for collectd to start
+      ansible.builtin.pause:
         seconds: 5
       when:
         - rsyslog_is_running|default(false)|bool
 
     - name: Stop collectd service if rsyslog is not running
-      service:
+      ansible.builtin.service:
         name: collectd
         state: stopped
       when: not rsyslog_is_running|default(false)|bool
-  when: logging_collector|d('fluentd') == 'rsyslog'
 
 - name: Check if collectd is running
-  ansible.builtin.command: systemctl is-active collectd
+  ansible.builtin.systemd:
+    name: collectd
+    state: started
+    enabled: false
   register: service_collectd_status
-  ignore_errors: yes
+  ignore_errors: true
   changed_when: false
   failed_when: false
 
-- name: set collectd_is_running fact
-  set_fact:
-    collectd_is_running: >-
-      {{ service_collectd_status.rc == 0 }}
+- name: Set collectd_is_running fact
+  ansible.builtin.set_fact:
+    collectd_is_running: "{{ service_collectd_status.status.ActiveState == 'active' }}"
 
 - name: Is collectd running
-  debug:
-    msg="{{ collectd_is_running }}"
+  ansible.builtin.debug:
+    msg: "{{ collectd_is_running }}"

@@ -3,7 +3,7 @@
 This role runs dependent collectd roles, Roles list is located in the meta directory.
 
 It is run as part of the `Configure Metrics` play and the default `configure` tag.
-It also includes the `restart collectd` handler.
+It also includes the `Restart collectd` handler.
 
 
 The available variables for this role are:

@@ -1,36 +1,36 @@
 ---
 - name: Remove write_http config
-  file:
+  ansible.builtin.file:
     state: absent
     path: /etc/collectd.d/30-write_http.conf
   when: logging_collector|d('fluentd') == 'rsyslog'
-  notify: restart collectd
+  notify: Restart collectd
 
 - name: Remove write_syslog config
-  file:
+  ansible.builtin.file:
     state: absent
     path: /etc/collectd.d/30-write_syslog.conf
   when: logging_collector|d('fluentd') == 'fluentd'
-  notify: restart collectd
+  notify: Restart collectd
 
 - name: Place write_http config
-  template:
+  ansible.builtin.template:
     src: write-http.conf.j2
     dest: /etc/collectd.d/30-write_http.conf
-    mode: 0644
+    mode: "0644"
   when: logging_collector|d('fluentd') == 'fluentd'
-  notify: restart collectd
+  notify: Restart collectd
 
 - name: Set ovirt_vds_vds_id fact
-  set_fact:
+  ansible.builtin.set_fact:
     ovirt_vds_vds_id: '00000000-0000-0000-0000-000000000000'
   when: not ovirt_vds_vds_id is defined
 
 
 - name: Place write_syslog config
-  template:
+  ansible.builtin.template:
     src: write-rsyslog.conf.j2
     dest: /etc/collectd.d/30-write_syslog.conf
-    mode: 0644
+    mode: "0644"
   when: logging_collector|d('fluentd') == 'rsyslog'
-  notify: restart collectd
+  notify: Restart collectd

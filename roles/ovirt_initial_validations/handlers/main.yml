@@ -1,15 +1,15 @@
 ---
-- name: set failed validation
-  set_fact:
+- name: Set failed validation
+  ansible.builtin.set_fact:
     failed_validation: true
 
-- name: systemd daemon reload
-  systemd:
-    daemon_reload: yes
+- name: Systemd daemon reload
+  ansible.builtin.systemd:
+    daemon_reload: true
 
-- name: stop collectd service
-  service:
+- name: Stop collectd service
+  ansible.builtin.service:
     name: collectd
     state: stopped
     enabled: false
-  ignore_errors: true
+  failed_when: false

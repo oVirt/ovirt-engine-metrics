@@ -4,13 +4,13 @@
 
   tasks:
     - name: Cleanup services
-      include_role:
+      ansible.builtin.include_role:
         name: "oVirt.metrics/roles/ovirt_manage_services"
       vars:
         service_state: stopped
-        service_enabled: no
+        service_enabled: false
         cleanup_services: true
 
-    - debug:
+    - ansible.builtin.debug:
         msg: "It is now safe to delete the oVirt metrics store VMs."
       run_once: true
