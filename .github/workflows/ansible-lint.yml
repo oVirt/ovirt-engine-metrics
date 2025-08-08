@@ -2,6 +2,7 @@ name: Ansible Lint
 on:
   pull_request:
     branches: [master]
+  workflow_dispatch:
 
 jobs:
   ansible-lint:
@@ -10,13 +11,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: centos-stream-8
-            shortcut: cs8
-            container-name: el8stream
-            pip-command: pip3.9
           - name: centos-stream-9
             shortcut: cs9
             container-name: el9stream
+            pip-command: pip3
+          - name: centos-stream-10
+            shortcut: cs10
+            container-name: el10stream
             pip-command: pip3
 
     name: ${{ matrix.name }}
@@ -25,11 +26,15 @@ jobs:
       image: quay.io/ovirt/buildcontainer:${{ matrix.container-name }}
 
     steps:
+
+    - name: Mark repository as safe
+      run: git config --global --add safe.directory "$(pwd)"
+
     - name: Checkout sources
       uses: ovirt/checkout-action@main
 
     - name: Install pip deps
-      run: ${{ matrix.pip-command }} install "rich<11.0.0" "ansible-lint>=6.0.0,<7.0.0"
+      run: ${{ matrix.pip-command }} install ansible-lint==6.22.2
 
     - name: Install ansible.posix
       run: ansible-galaxy collection install -c ansible.posix
