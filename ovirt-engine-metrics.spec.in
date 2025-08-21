@@ -36,6 +36,8 @@ Group:          Virtualization/Management
 BuildArch:      noarch
 Url:            http://www.ovirt.org
 
+BuildRequires:	make
+
 Requires:	ansible-core >= 2.12
 Requires:	python3-jmespath
 
