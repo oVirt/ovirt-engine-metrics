@@ -12,7 +12,7 @@
   block:
     - name: Run initial validations sub-role
       ansible.builtin.include_role:
-        name: "ovirt_initial_validations"
+        name: "oVirt.metrics/roles/ovirt_initial_validations"
 
     - name: Set service_name fact when logging_collector is rsyslog
       ansible.builtin.set_fact:
