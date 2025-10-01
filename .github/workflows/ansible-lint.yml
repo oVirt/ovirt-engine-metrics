@@ -26,19 +26,17 @@ jobs:
       image: quay.io/ovirt/buildcontainer:${{ matrix.container-name }}
 
     steps:
+      - name: Mark repository as safe
+        run: git config --global --add safe.directory "$(pwd)"
 
-    - name: Mark repository as safe
-      run: git config --global --add safe.directory "$(pwd)"
+      - name: Checkout sources
+        uses: ovirt/checkout-action@main
 
-    - name: Checkout sources
-      uses: ovirt/checkout-action@main
+      - name: Install pip deps
+        run: ${{ matrix.pip-command }} install ansible-lint
 
-    - name: Install pip deps
-      run: ${{ matrix.pip-command }} install ansible-lint==6.22.2
+      - name: Install ansible.posix
+        run: ansible-galaxy collection install -c ansible.posix
 
-    - name: Install ansible.posix
-      run: ansible-galaxy collection install -c ansible.posix
-
-    - name: Running ansible-lint on roles
-    # 701 - no 'galaxy_info' found
-      run: ansible-lint roles/* -x 701
+      - name: Running ansible-lint on roles
+        run: ansible-lint

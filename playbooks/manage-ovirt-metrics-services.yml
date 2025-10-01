@@ -2,5 +2,7 @@
 - name: Manage metrics related services
   hosts: all
 
-  roles:
-    - oVirt.metrics/roles/ovirt_manage_services
+  tasks:
+    - name: Manage services
+      ansible.builtin.include_role:
+        name: "oVirt.metrics/roles/ovirt_manage_services"
