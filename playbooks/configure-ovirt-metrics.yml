@@ -44,4 +44,4 @@
         - name: Run Collectd sub-role
           ansible.builtin.include_role:
             name: "oVirt.metrics/roles/ovirt_collectd"
-          when: collect_ovirt_collectd_metrics|d(true)|bool
+          when: collect_ovirt_collectd_metrics | d(true) | bool

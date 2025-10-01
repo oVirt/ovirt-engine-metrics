@@ -37,7 +37,7 @@
   when: logging_collector is undefined or logging_collector == 'rsyslog'
   block:
     - name: Install Rsyslog packages
-      ansible.builtin.yum:
+      ansible.builtin.dnf:
         name: '{{ rsyslog_base_packages }}'
         state: present
       register: rsyslog_install_result
@@ -70,7 +70,7 @@
   when: not rsyslog_base_packages_available or logging_collector == 'fluentd'
   block:
     - name: Install Fluentd packages
-      ansible.builtin.yum:
+      ansible.builtin.dnf:
         name: '{{ fluentd_base_packages }}'
         state: present
       register: fluentd_install_result

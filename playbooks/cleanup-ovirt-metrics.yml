@@ -11,6 +11,6 @@
         service_enabled: false
         cleanup_services: true
 
-    - ansible.builtin.debug:
+    - name: Print safe to delete message
+      ansible.builtin.debug:
         msg: "It is now safe to delete the oVirt metrics store VMs."
-      run_once: true

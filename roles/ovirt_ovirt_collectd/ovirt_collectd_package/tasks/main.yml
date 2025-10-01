@@ -1,13 +1,13 @@
 ---
 - name: Install collectd package
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: '{{ collectd_package_name }}'
     state: present
   when: manage_packages|default(true)
   notify: Restart collectd
 
 - name: Install collectd plugins on engine
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: '{{ collectd_engine_plugin_packages }}'
     state: present
   when:
@@ -17,7 +17,7 @@
   notify: Restart collectd
 
 - name: Install collectd plugins on hosts
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: '{{ collectd_host_plugin_packages }}'
     state: present
   when:
@@ -26,7 +26,7 @@
   notify: Restart collectd
 
 - name: Install collectd write_syslog plugin
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: '{{ collectd_write_syslog_package }}'
     state: present
   when:

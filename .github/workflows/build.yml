@@ -5,7 +5,6 @@ on:
   pull_request:
     branches: [master]
   workflow_dispatch:
-    branches: [master]
 
 jobs:
   build:
@@ -30,18 +29,17 @@ jobs:
       image: quay.io/ovirt/buildcontainer:${{ matrix.container-name }}
 
     steps:
+      - name: Mark repository as safe
+        run: git config --global --add safe.directory "$(pwd)"
 
-    - name: Mark repository as safe
-      run: git config --global --add safe.directory "$(pwd)"
+      - name: Checkout sources
+        uses: ovirt/checkout-action@main
 
-    - name: Checkout sources
-      uses: ovirt/checkout-action@main
+      - name: Perform build
+        run: |
+          .automation/build-rpm.sh $ARTIFACTS_DIR
 
-    - name: Perform build
-      run: |
-        .automation/build-rpm.sh $ARTIFACTS_DIR
-
-    - name: Upload artifacts
-      uses: ovirt/upload-rpms-action@main
-      with:
-        directory: ${{ env.ARTIFACTS_DIR}}
+      - name: Upload artifacts
+        uses: ovirt/upload-rpms-action@main
+        with:
+          directory: ${{ env.ARTIFACTS_DIR}}
