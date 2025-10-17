@@ -68,6 +68,11 @@ rm -rf %{buildroot}
 %doc README.md
 
 %changelog
+* Fri Oct 17 2025 Jean-Louis Dupond <jean-louis@dupond.be> - 1.6.3-1
+- Build for CentOS 10
+- Fix linting in all roles
+- Add BuildRequires on make
+
 * Tue Nov 28 2023 Sandro Bonazzola <sandro.bonazzola@gmail.com> - 1.6.2-1
 - Rebase on upstream 1.6.2.
 - Migrated to SPDX license.
