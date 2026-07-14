@@ -99,6 +99,24 @@ dist:	ovirt-engine-metrics.spec
 	@echo For distro specific packaging refer to http://www.ovirt.org/Build_Binary_Package
 	@echo
 
+TMPREPOS ?= tmp.repos
+
+srpm:	dist
+	rm -fr "$(TMPREPOS)"
+	mkdir -p $(TMPREPOS)/{SPECS,RPMS,SRPMS,SOURCES}
+	TMPREPOS=$(TMPREPOS) ./.automation/build-srpm.sh
+	@echo
+	@echo "srpm available at '$(TMPREPOS)'"
+	@echo
+
+rpm:	srpm
+	TMPREPOS=$(TMPREPOS) ./.automation/build-rpm.sh
+	@echo
+	@echo "rpm(s) available at '$(TMPREPOS)'"
+	@echo
+
+.PHONY: srpm rpm
+
 # copy SOURCEDIR to TARGETDIR
 # exclude EXCLUDEGEN a list of files to exclude with .in
 # exclude EXCLUDE a list of files.
@@ -138,6 +156,7 @@ validations:	generated-files
 	fi
 
 install-artifacts:
+	install -d "$(DESTDIR)$(PKG_DATA_DIR)"
 	install -m 0755 "configure_ovirt_machines_for_metrics.sh" "$(DESTDIR)$(PKG_DATA_DIR)"
 	install -m 0644 "ansible.cfg" "$(DESTDIR)$(PKG_DATA_DIR)"
 	install -m 0644 "README.md" "$(DESTDIR)$(PKG_DATA_DIR)"

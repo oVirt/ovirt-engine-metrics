@@ -1,1 +1,5 @@
 .ansible
+tmp.repos/
+rpmbuild/
+*.tar.gz
+ovirt-engine-metrics.spec
